@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tkperformance.co.uk/sitemap.xml
+Sitemap: https://volodymyr221.github.io/T-K-Performance/sitemap.xml

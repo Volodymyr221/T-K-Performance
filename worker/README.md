@@ -48,7 +48,7 @@ https://api.telegram.org/bot<ТОКЕН>/getUpdates
 |---|---|
 | `TELEGRAM_TOKEN` | токен із кроку 1 |
 | `TELEGRAM_CHAT` | id із кроку 2 |
-| `ALLOWED_ORIGIN` | адреса сайту, напр. `https://volodymyr221.github.io` |
+| `ALLOWED_ORIGIN` | `https://volodymyr221.github.io` (без шляху після домену) |
 
 `ALLOWED_ORIGIN` — щоб форму не смикали з чужих сайтів.
 
