@@ -255,7 +255,60 @@
       });
   });
 
-  /* ── 7. Рік у підвалі ──────────────────────────────────── */
+  /* ── 8. Стрічка відгуків ───────────────────────────────
+     Скрол нативний, зі scroll-snap — свайп на телефоні працює
+     без JS. Тут лише стрілки для миші та крапки-індикатор. */
+  (function reviewsRail() {
+    var rail = $("#revs-rail");
+    if (!rail) return;
+
+    var cards = $$(".rev", rail);
+    var prev = $("#rev-prev"), next = $("#rev-next"), dots = $("#rev-dots");
+    if (!cards.length) return;
+
+    cards.forEach(function () {
+      var i = document.createElement("i");
+      dots.appendChild(i);
+    });
+    var pips = $$("i", dots);
+
+    function step() {
+      if (cards.length < 2) return cards[0].offsetWidth;
+      return cards[1].offsetLeft - cards[0].offsetLeft;
+    }
+
+    function paint() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      var idx = Math.round(rail.scrollLeft / step());
+      idx = Math.max(0, Math.min(idx, cards.length - 1));
+      pips.forEach(function (p, i) { p.classList.toggle("is-on", i === idx); });
+      if (prev) prev.disabled = rail.scrollLeft < 4;
+      if (next) next.disabled = rail.scrollLeft > max - 4;
+    }
+
+    var tick;
+    rail.addEventListener("scroll", function () {
+      clearTimeout(tick);
+      tick = setTimeout(paint, 60);
+    }, { passive: true });
+
+    function slide(dir) {
+      rail.scrollBy({ left: dir * step(), behavior: "smooth" });
+    }
+    if (prev) prev.addEventListener("click", function () { slide(-1); });
+    if (next) next.addEventListener("click", function () { slide(1); });
+
+    /* стрілки з клавіатури, коли стрічка у фокусі */
+    rail.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); slide(1); }
+      if (e.key === "ArrowLeft")  { e.preventDefault(); slide(-1); }
+    });
+
+    window.addEventListener("resize", paint, { passive: true });
+    paint();
+  })();
+
+  /* ── 9. Рік у підвалі ──────────────────────────────────── */
   var yr = $("#yr");
   if (yr) yr.textContent = new Date().getFullYear();
 })();
