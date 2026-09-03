@@ -115,7 +115,6 @@ ul,ol{ margin:0; padding:0; list-style:none }
   text-decoration:none; color:var(--txt-2);
   transition:color .2s; white-space:nowrap;
 }
-.nav a:hover{ color:var(--txt) }
 .nav__cta{ display:none }
 
 .hdr__side{ display:flex; align-items:center; gap:14px; flex:none }
@@ -127,7 +126,6 @@ ul,ol{ margin:0; padding:0; list-style:none }
   letter-spacing:.06em; padding:8px 11px;
   transition:color .2s, background .2s;
 }
-.lang button:hover{ color:var(--txt) }
 .lang button.is-on{ background:var(--txt); color:#08080a }
 
 .hdr__tel{
@@ -138,7 +136,6 @@ ul,ol{ margin:0; padding:0; list-style:none }
   transition:border-color .2s, background .2s;
   white-space:nowrap;
 }
-.hdr__tel:hover{ border-color:var(--m-red); background:rgba(228,0,43,.09) }
 .hdr__tel svg{ width:15px; height:15px; fill:var(--m-red); flex:none }
 
 .burger{
@@ -273,9 +270,7 @@ body.nav-open{ overflow:hidden }
 }
 .btn:active{ transform:translateY(1px) }
 .btn--red{ background:var(--m-red); color:#fff; box-shadow:0 8px 26px -12px rgba(228,0,43,.9) }
-.btn--red:hover{ background:var(--red-hi); box-shadow:0 12px 34px -12px rgba(228,0,43,1) }
 .btn--ghost{ border-color:var(--line-2); color:var(--txt); background:rgba(255,255,255,.02) }
-.btn--ghost:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
 .btn--ghost b{ font-variant-numeric:tabular-nums }
 .btn--wide{ width:100%; padding-block:16px; font-size:16px }
 .btn--sm{ padding:10px 18px; font-size:14px }
@@ -300,8 +295,6 @@ body.nav-open{ overflow:hidden }
   opacity:0; transform:scaleY(.35); transform-origin:center;
   transition:opacity .3s, transform .35s var(--ease);
 }
-.card:hover{ border-color:var(--line-2); background:var(--surface-2); transform:translateY(-3px) }
-.card:hover::before{ opacity:1; transform:scaleY(1) }
 
 .card h3{
   font-size:1.22rem; font-weight:700; font-variation-settings:"wdth" 104;
@@ -365,7 +358,6 @@ body.nav-open{ overflow:hidden }
   background:var(--surface);
   transition:border-color .28s, transform .28s var(--ease);
 }
-.steps li:hover{ border-color:var(--line-2); transform:translateY(-3px) }
 .steps__n{
   display:flex; align-items:center; justify-content:center;
   width:38px; height:38px; margin-bottom:20px;
@@ -391,7 +383,6 @@ body.nav-open{ overflow:hidden }
   width:100%; aspect-ratio:4/3; object-fit:cover; display:block;
   transition:transform .55s var(--ease);
 }
-.gal__i:hover img{ transform:scale(1.04) }
 .gal__i figcaption{ font-size:13.6px; color:var(--txt-2); line-height:1.45 }
 
 /* ═══ ВІДГУКИ ════════════════════════════════════════════ */
@@ -411,9 +402,7 @@ body.nav-open{ overflow:hidden }
   transition:border-color .2s, background .2s, opacity .2s;
 }
 .revs__btn svg{ width:20px; height:20px; fill:var(--txt) }
-.revs__btn:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
 .revs__btn[disabled]{ opacity:.32; cursor:default }
-.revs__btn[disabled]:hover{ border-color:var(--line-2); background:rgba(255,255,255,.02) }
 
 /* ── стрічка ──────────────────────────────────────────────
    Нативний скрол зі scroll-snap: свайп пальцем працює сам,
@@ -455,7 +444,6 @@ body.nav-open{ overflow:hidden }
   padding:clamp(22px,2.4vw,30px);
   transition:border-color .28s, background .28s;
 }
-.rev:hover{ border-color:var(--line-2); background:var(--surface-2) }
 
 .rev__top{ display:grid; grid-template-columns:auto 1fr; gap:13px; align-items:center }
 
@@ -525,7 +513,6 @@ body.nav-open{ overflow:hidden }
   border-bottom:1px solid var(--line-2); padding-bottom:2px;
   transition:color .2s, border-color .2s;
 }
-.book__alt a:hover{ color:var(--m-red); border-color:var(--m-red) }
 
 .form{
   background:var(--surface);
@@ -597,7 +584,6 @@ body.nav-open{ overflow:hidden }
   border-bottom:1px solid var(--line-2); padding-bottom:2px;
   transition:color .2s, border-color .2s;
 }
-.big-link:hover{ color:var(--m-red); border-color:var(--m-red) }
 
 .status{
   display:inline-flex; align-items:center; gap:8px; margin-bottom:14px;
@@ -632,7 +618,6 @@ body.nav-open{ overflow:hidden }
   display:grid; place-items:center; align-content:center; gap:6px;
   font:inherit; transition:border-color .25s, background .25s;
 }
-.map-load:hover{ border-color:var(--line-2); color:var(--txt) }
 .map-load svg{ width:26px; height:26px; fill:var(--m-red) }
 .map-load span{ font-weight:600; font-size:15px }
 .map-load small{ font-size:12.5px; color:var(--txt-3) }
@@ -648,10 +633,8 @@ body.nav-open{ overflow:hidden }
 .ftr__brand p{ color:var(--txt-3); font-size:14px; max-width:30ch }
 .ftr__nav{ display:grid; gap:11px; align-content:start; font-size:14.5px }
 .ftr__nav a{ text-decoration:none; color:var(--txt-2); width:fit-content; transition:color .2s }
-.ftr__nav a:hover{ color:var(--txt) }
 .ftr__meta{ display:grid; gap:11px; align-content:start; font-size:14.5px }
 .ftr__meta a{ text-decoration:none; color:var(--txt-2); width:fit-content; transition:color .2s }
-.ftr__meta a:hover{ color:var(--txt) }
 .ftr__meta p{ color:var(--txt-3); font-size:13px; margin-top:6px }
 
 /* ═══ ПОЯВА ПРИ СКРОЛІ ════════════════════════════════════ */
@@ -707,7 +690,6 @@ body.nav-open{ overflow:hidden }
     background:var(--m-red); color:#fff; border-radius:99px; padding:15px 24px;
     font-weight:600;
   }
-  .nav__cta:hover{ color:#fff }
   .burger{ display:block }
   .hdr__tel span{ display:none }
   .hdr__tel{ padding:9px 12px }
@@ -722,6 +704,34 @@ body.nav-open{ overflow:hidden }
   .hero__act .btn{ flex:1 1 100%; }
   .lang button{ padding:8px 9px }
   .gal{ grid-template-columns:1fr 1fr; gap:10px }
+}
+
+
+/* ═══ НАВЕДЕННЯ — ТІЛЬКИ ДЛЯ МИШІ ═════════════════════════
+   На сенсорному екрані :hover «залипає» після дотику: палець
+   уже прибрали, а підсвітка лишається, поки не торкнешся
+   іншого місця. Найпомітніше це на червоній смужці картки.
+   Тому всі ефекти наведення вмикаємо лише там, де є справжній
+   курсор. Активний стан при натисканні (:active) не чіпаємо —
+   він на дотик працює правильно. */
+@media (hover: hover) and (pointer: fine){
+  .nav a:hover{ color:var(--txt) }
+  .lang button:hover{ color:var(--txt) }
+  .hdr__tel:hover{ border-color:var(--m-red); background:rgba(228,0,43,.09) }
+  .btn--red:hover{ background:var(--red-hi); box-shadow:0 12px 34px -12px rgba(228,0,43,1) }
+  .btn--ghost:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
+  .card:hover{ border-color:var(--line-2); background:var(--surface-2); transform:translateY(-3px) }
+  .card:hover::before{ opacity:1; transform:scaleY(1) }
+  .steps li:hover{ border-color:var(--line-2); transform:translateY(-3px) }
+  .gal__i:hover img{ transform:scale(1.04) }
+  .revs__btn:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
+  .revs__btn[disabled]:hover{ border-color:var(--line-2); background:rgba(255,255,255,.02) }
+  .rev:hover{ border-color:var(--line-2); background:var(--surface-2) }
+  .book__alt a:hover{ color:var(--m-red); border-color:var(--m-red) }
+  .big-link:hover{ color:var(--m-red); border-color:var(--m-red) }
+  .map-load:hover{ border-color:var(--line-2); color:var(--txt) }
+  .ftr__nav a:hover{ color:var(--txt) }
+  .ftr__meta a:hover{ color:var(--txt) }
 }
 
 /* ═══ ЗМЕНШЕНИЙ РУХ ═══════════════════════════════════════ */
