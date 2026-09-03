@@ -75,6 +75,10 @@ window.I18N = {
     "wk.c2": "BMW X5 in the workshop",
     "wk.c3": "BMW 5 Series in for work",
     "wk.c4": "Inside our workshop",
+    "wk.c5": "BMW M8 with carbon aero fitted",
+    "wk.c6": "BMW M8 up on the ramp",
+    "wk.c7": "BMW 5 Series on the ramp",
+    "wk.c8": "Engine out of the car",
 
     "rv.h": "What our customers say",
     "rv.sub": "Reviews left on our Google listing by people who brought their BMW in.",
@@ -198,6 +202,10 @@ window.I18N = {
     "wk.c2": "BMW X5 у майстерні",
     "wk.c3": "BMW 5 серії в роботі",
     "wk.c4": "Усередині нашої майстерні",
+    "wk.c5": "BMW M8 з карбоновим обвісом",
+    "wk.c6": "BMW M8 на підйомнику",
+    "wk.c7": "BMW 5 серії на підйомнику",
+    "wk.c8": "Двигун знято з машини",
 
     "rv.h": "Що кажуть наші клієнти",
     "rv.sub": "Відгуки, які залишили в нашому профілі Google люди, що привозили сюди свою BMW.",
