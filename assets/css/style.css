@@ -657,6 +657,25 @@ body.nav-open{ overflow:hidden }
    десктопна шапка перестає влазити вже на ~940px — меню, мова і телефон
    в один рядок не поміщаються, і сторінка виїжджала вбік. */
 @media (max-width:960px){
+  /* Цілі дотику: Apple радить 44×44, Google 48×48. Кнопки мови були
+     34×28, дзвінок 41×35, бургер 40×40 — палець промахувався.
+     Розмір самих написів не чіпаємо, збільшуємо тільки зону натискання. */
+  .lang button{ min-height:44px; padding-inline:15px }
+  .hdr__tel{ min-height:44px; min-width:44px }
+  .burger{ width:44px; height:44px }
+  .burger span{ left:13px }
+
+  /* Текстові посилання (телефон, Instagram, навігація в підвалі) мали
+     висоту рядка 23–35px. Розширюємо зону дотику невидимим шаром
+     поверх — вигляд і відступи не змінюються, а палець уже не
+     промахується. Саме так це роблять, коли не можна чіпати верстку. */
+  .big-link, .book__alt a, .ftr__nav a, .ftr__meta a, .hdr__logo{ position:relative }
+  .big-link::after, .book__alt a::after,
+  .ftr__nav a::after, .ftr__meta a::after, .hdr__logo::after{
+    content:""; position:absolute; left:0; right:0;
+    top:50%; height:44px; transform:translateY(-50%);
+  }
+
   /* три колонки: логотип ліворуч, мова точно посередині,
      дзвінок і бургер праворуч. Меню випадає окремо (position:fixed),
      тому в сітці місця не займає. */
