@@ -70,6 +70,10 @@ window.I18N = {
     "wk.h": "Our work",
     "wk.sub": "Engines on the bench and cars in the workshop. More on Instagram, updated most weeks.",
     "wk.ig": "See more on Instagram",
+    "wk.c1": "Engine stripped down on the bench",
+    "wk.c2": "BMW X5 in the workshop",
+    "wk.c3": "BMW 5 Series in for work",
+    "wk.c4": "Inside our workshop",
 
     "bk.h": "Tell us what your BMW is doing",
     "bk.lead": "Leave your number and we will call you back — usually the same working day. No obligation, and the quote is free.",
@@ -181,6 +185,10 @@ window.I18N = {
     "wk.h": "Наші роботи",
     "wk.sub": "Двигуни на столі і машини в майстерні. Більше — в Instagram, оновлюємо щотижня.",
     "wk.ig": "Більше в Instagram",
+    "wk.c1": "Двигун, розібраний на стенді",
+    "wk.c2": "BMW X5 у майстерні",
+    "wk.c3": "BMW 5 серії в роботі",
+    "wk.c4": "Усередині нашої майстерні",
 
     "bk.h": "Розкажіть, що з вашою BMW",
     "bk.lead": "Залиште номер — ми передзвонимо, зазвичай того ж робочого дня. Ні до чого не зобовʼязує, оцінка безкоштовна.",
