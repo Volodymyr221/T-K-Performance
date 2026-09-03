@@ -308,7 +308,18 @@
     paint();
   })();
 
-  /* ── 9. Рік у підвалі ──────────────────────────────────── */
+  /* ── 9. Пряме посилання на відгуки Google ──────────────
+     З Place ID відкривається одразу список відгуків. Без нього
+     лишається посилання на картку компанії, яке вже стоїть у HTML —
+     тобто кнопка робоча в будь-якому разі. */
+  (function reviewsLink() {
+    var a = $("#rev-link");
+    if (!a || !CFG.googlePlaceId) return;
+    a.href = "https://search.google.com/local/reviews?placeid=" +
+             encodeURIComponent(CFG.googlePlaceId);
+  })();
+
+  /* ── 10. Рік у підвалі ─────────────────────────────────── */
   var yr = $("#yr");
   if (yr) yr.textContent = new Date().getFullYear();
 })();
