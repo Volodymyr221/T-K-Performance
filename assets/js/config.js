@@ -12,7 +12,7 @@ window.TK = {
   formEndpoint: "",
 
   phone: "+447575051013",
-  instagram: "https://instagram.com/t.k.performance",
+  instagram: "https://www.instagram.com/t.k.performance",
 
   /* Робочі години у форматі [початок, кінець] у хвилинах від опівночі.
      null = вихідний. Індекс = день тижня (0 = неділя). */
