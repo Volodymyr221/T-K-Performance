@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://volodymyr221.github.io/T-K-Performance/sitemap.xml

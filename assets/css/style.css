@@ -1,0 +1,610 @@
+/* ═══════════════════════════════════════════════════════════
+   T&K Performance — темна тема, BMW M як акцент
+   ═══════════════════════════════════════════════════════════ */
+
+:root{
+  /* тло і поверхні */
+  --bg:        #08080a;
+  --bg-alt:    #0d0d10;
+  --surface:   #131317;
+  --surface-2: #17171c;
+  --line:      rgba(255,255,255,.09);
+  --line-2:    rgba(255,255,255,.16);
+
+  /* текст */
+  --txt:   #f4f5f7;
+  --txt-2: #a3a6ae;
+  --txt-3: #7f838d;
+
+  /* BMW M */
+  --m-lblue: #6cb2e4;
+  --m-blue:  #0c63b0;
+  --m-red:   #e4002b;   /* кнопки і плашки — білий на ньому 4.85:1 */
+  --red-txt: #ff3355;   /* дрібний текст на темному — 5.17:1 */
+  --red-hi:  #ff1f45;
+
+  /* сітка */
+  --wrap: 1220px;
+  --pad: clamp(20px, 5vw, 48px);
+  --sec-y: clamp(72px, 11vw, 148px);
+
+  --r: 14px;
+  --ease: cubic-bezier(.22,.7,.2,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box }
+
+html{
+  -webkit-text-size-adjust:100%;
+  scroll-behavior:smooth;
+  scroll-padding-top:96px;
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--txt);
+  font-family:"Archivo","Manrope","Helvetica Neue",Arial,sans-serif;
+  font-size:16.5px;
+  line-height:1.62;
+  font-variation-settings:"wdth" 100;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{ max-width:100%; height:auto; display:block }
+a{ color:inherit }
+h1,h2,h3{ margin:0; line-height:1.03; letter-spacing:-.02em }
+p{ margin:0 }
+ul,ol{ margin:0; padding:0; list-style:none }
+
+::selection{ background:var(--m-red); color:#fff }
+
+:focus-visible{
+  outline:2px solid var(--m-lblue);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.wrap{
+  width:100%;
+  max-width:var(--wrap);
+  margin-inline:auto;
+  padding-inline:var(--pad);
+}
+
+.skip{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--m-red); color:#fff; padding:12px 20px; font-weight:600;
+}
+.skip:focus{ left:0 }
+
+/* ── смуга BMW M ─────────────────────────────────────────── */
+.mstripe{ display:inline-flex; height:9px; width:52px }
+.mstripe i{ flex:1; transform:skewX(-22deg) }
+.mstripe i:nth-child(1){ background:var(--m-lblue) }
+.mstripe i:nth-child(2){ background:var(--m-blue) }
+.mstripe i:nth-child(3){ background:var(--m-red) }
+.mstripe--wide{ display:flex; width:100%; height:4px }
+.mstripe--wide i{ transform:none }
+
+/* ═══ ШАПКА ═══════════════════════════════════════════════ */
+.hdr{
+  position:sticky; top:0; z-index:100;
+  background:rgba(8,8,10,.72);
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, background .3s;
+}
+.hdr.is-stuck{ border-bottom-color:var(--line); background:rgba(8,8,10,.92) }
+
+.hdr__in{
+  display:flex; align-items:center; gap:28px;
+  min-height:72px;
+}
+.hdr__logo img{ height:34px; width:auto }
+.hdr__logo{ flex:none; line-height:0 }
+
+.nav{
+  display:flex; align-items:center; gap:26px;
+  margin-left:auto;
+  font-size:14.5px; font-weight:500;
+}
+.nav a{
+  text-decoration:none; color:var(--txt-2);
+  transition:color .2s; white-space:nowrap;
+}
+.nav a:hover{ color:var(--txt) }
+.nav__cta{ display:none }
+
+.hdr__side{ display:flex; align-items:center; gap:14px; flex:none }
+
+.lang{ display:flex; border:1px solid var(--line); border-radius:99px; overflow:hidden }
+.lang button{
+  appearance:none; background:none; border:0; cursor:pointer;
+  color:var(--txt-3); font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.06em; padding:8px 11px;
+  transition:color .2s, background .2s;
+}
+.lang button:hover{ color:var(--txt) }
+.lang button.is-on{ background:var(--txt); color:#08080a }
+
+.hdr__tel{
+  display:inline-flex; align-items:center; gap:8px;
+  text-decoration:none; font-weight:600; font-size:14.5px;
+  padding:9px 16px; border-radius:99px;
+  border:1px solid var(--line-2);
+  transition:border-color .2s, background .2s;
+  white-space:nowrap;
+}
+.hdr__tel:hover{ border-color:var(--m-red); background:rgba(228,0,43,.09) }
+.hdr__tel svg{ width:15px; height:15px; fill:var(--m-red); flex:none }
+
+.burger{
+  display:none; width:40px; height:40px; padding:0;
+  background:none; border:1px solid var(--line); border-radius:10px;
+  cursor:pointer; position:relative;
+}
+.burger span{
+  position:absolute; left:11px; width:18px; height:1.5px; background:var(--txt);
+  transition:transform .28s var(--ease), opacity .2s;
+}
+.burger span:nth-child(1){ top:15px }
+.burger span:nth-child(2){ top:22px }
+.burger[aria-expanded="true"] span:nth-child(1){ transform:translateY(3.5px) rotate(45deg) }
+.burger[aria-expanded="true"] span:nth-child(2){ transform:translateY(-3.5px) rotate(-45deg) }
+
+/* затемнення сторінки під відкритим меню */
+.veil{
+  position:fixed; inset:0; z-index:90;
+  background:rgba(4,4,6,.72);
+  opacity:0; pointer-events:none;
+  transition:opacity .26s var(--ease);
+}
+.veil.is-on{ opacity:1; pointer-events:auto }
+body.nav-open{ overflow:hidden }
+
+/* ═══ ГЕРОЙ ═══════════════════════════════════════════════ */
+.hero{ position:relative; overflow:hidden; border-bottom:1px solid var(--line) }
+
+.hero__grid{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(60% 55% at 78% 18%, rgba(12,99,176,.18), transparent 70%),
+    radial-gradient(45% 40% at 12% 82%, rgba(228,0,43,.10), transparent 70%),
+    linear-gradient(transparent 0 39px, rgba(255,255,255,.022) 39px 40px) 0 0/100% 40px,
+    linear-gradient(90deg, transparent 0 39px, rgba(255,255,255,.022) 39px 40px) 0 0/40px 100%;
+  mask-image:radial-gradient(120% 90% at 50% 0%, #000 35%, transparent 78%);
+  pointer-events:none;
+}
+
+.hero__in{
+  position:relative;
+  display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  gap:clamp(32px,5vw,72px); align-items:center;
+  padding-block:clamp(56px,9vw,120px) clamp(48px,7vw,96px);
+}
+
+.eyebrow{
+  display:flex; align-items:center; gap:14px;
+  font:500 12.5px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--txt-2);
+  margin-bottom:26px;
+}
+
+.hero__h1{
+  font-size:clamp(2.9rem, 7.4vw, 5.6rem);
+  font-weight:700;
+  font-variation-settings:"wdth" 108;
+  letter-spacing:-.035em;
+  text-wrap:balance;
+}
+.hero__h1 em{
+  font-style:italic; color:var(--m-red);
+  font-variation-settings:"wdth" 96;
+}
+.hero__h1 span:last-child{ color:var(--txt-2); font-weight:500 }
+
+.hero__lead{
+  margin-top:26px; max-width:50ch;
+  font-size:clamp(1rem,1.35vw,1.16rem); color:var(--txt-2);
+}
+
+.hero__act{ display:flex; flex-wrap:wrap; gap:12px; margin-top:36px }
+
+.hero__facts{
+  display:flex; flex-wrap:wrap; gap:12px 40px;
+  margin-top:44px; padding-top:28px; border-top:1px solid var(--line);
+}
+.hero__facts li{ display:flex; flex-direction:column; gap:2px }
+.hero__facts b{
+  font-size:1.02rem; font-weight:700; font-variation-settings:"wdth" 106;
+  letter-spacing:-.01em;
+}
+.hero__facts span{ font-size:13.5px; color:var(--txt-3) }
+
+.hero__mark{ justify-self:center; width:min(100%,420px) }
+.hero__mark picture{ display:block }
+.hero__mark img{ width:100%; filter:drop-shadow(0 24px 60px rgba(0,0,0,.6)) }
+
+/* біжучий рядок */
+.ticker{
+  position:relative; overflow:hidden;
+  border-top:1px solid var(--line);
+  background:var(--bg-alt);
+  padding-block:14px;
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+}
+.ticker__row{
+  display:flex; align-items:center; gap:22px; width:max-content;
+  animation:slide 42s linear infinite;
+  font:500 12.5px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--txt-3);
+  white-space:nowrap;
+}
+.ticker__row i{ width:5px; height:5px; background:var(--m-red); transform:rotate(45deg); flex:none }
+@keyframes slide{ to{ transform:translateX(-50%) } }
+
+/* ═══ СЕКЦІЇ ══════════════════════════════════════════════ */
+.sec{ padding-block:var(--sec-y) }
+.sec--alt{ background:var(--bg-alt); border-block:1px solid var(--line) }
+
+.sec__head{ max-width:62ch; margin-bottom:clamp(40px,5vw,68px) }
+.sec__num{
+  font:500 12px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.2em; color:var(--red-txt); margin-bottom:18px;
+}
+.sec__h2{
+  font-size:clamp(2rem,4.4vw,3.3rem); font-weight:700;
+  font-variation-settings:"wdth" 106; letter-spacing:-.032em;
+  text-wrap:balance;
+}
+.sec__sub{ margin-top:18px; color:var(--txt-2); font-size:1.04rem; max-width:56ch }
+
+/* ── кнопки ──────────────────────────────────────────────── */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:14px 26px; border-radius:99px;
+  font-weight:600; font-size:15px; text-decoration:none;
+  border:1px solid transparent; cursor:pointer;
+  transition:transform .18s var(--ease), background .2s, border-color .2s, box-shadow .2s;
+  white-space:nowrap;
+}
+.btn:active{ transform:translateY(1px) }
+.btn--red{ background:var(--m-red); color:#fff; box-shadow:0 8px 26px -12px rgba(228,0,43,.9) }
+.btn--red:hover{ background:var(--red-hi); box-shadow:0 12px 34px -12px rgba(228,0,43,1) }
+.btn--ghost{ border-color:var(--line-2); color:var(--txt); background:rgba(255,255,255,.02) }
+.btn--ghost:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
+.btn--ghost b{ font-variant-numeric:tabular-nums }
+.btn--wide{ width:100%; padding-block:16px; font-size:16px }
+.btn--sm{ padding:10px 18px; font-size:14px }
+.btn .ico{ width:17px; height:17px; fill:currentColor }
+
+/* ═══ КАРТКИ ПОСЛУГ ═══════════════════════════════════════ */
+.cards{
+  display:grid; gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+}
+.card{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:clamp(24px,2.6vw,34px);
+  transition:border-color .28s, background .28s, transform .28s var(--ease);
+}
+.card::before{
+  content:""; position:absolute; left:-1px; top:22px; bottom:22px; width:2px;
+  background:var(--m-red); border-radius:2px;
+  opacity:0; transform:scaleY(.35); transform-origin:center;
+  transition:opacity .3s, transform .35s var(--ease);
+}
+.card:hover{ border-color:var(--line-2); background:var(--surface-2); transform:translateY(-3px) }
+.card:hover::before{ opacity:1; transform:scaleY(1) }
+
+.card h3{
+  font-size:1.22rem; font-weight:700; font-variation-settings:"wdth" 104;
+  margin-bottom:12px;
+}
+.card p{ color:var(--txt-2); font-size:15.2px }
+
+.card--lead{
+  grid-column:1/-1;
+  background:linear-gradient(150deg, var(--surface-2), var(--surface) 60%);
+}
+.card--lead h3{ font-size:clamp(1.5rem,2.7vw,2.05rem) }
+.card--lead p{ max-width:68ch; font-size:16px }
+.card__tag{
+  display:inline-block; margin-bottom:16px;
+  font:500 11px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--red-txt);
+  border:1px solid rgba(228,0,43,.45); border-radius:99px; padding:7px 12px;
+}
+.chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px }
+.chips li{
+  font:500 12.5px/1 "JetBrains Mono",ui-monospace,monospace; color:var(--txt-2);
+  border:1px solid var(--line); border-radius:99px; padding:8px 13px;
+  background:rgba(255,255,255,.02);
+}
+
+/* на широкому екрані останній ряд не лишає діри:
+   лід на всю ширину · 3 картки · 2 картки по половині */
+@media (min-width:940px){
+  .cards{ grid-template-columns:repeat(6,1fr) }
+  .card{ grid-column:span 2 }
+  .card--lead{ grid-column:1/-1 }
+  .card:nth-last-child(2), .card:last-child{ grid-column:span 3 }
+}
+
+/* ═══ ЧОМУ BMW ════════════════════════════════════════════ */
+.why{
+  display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);
+  gap:clamp(36px,5vw,80px); align-items:start;
+}
+.why__lead{ margin-top:20px; color:var(--txt-2); font-size:1.06rem; max-width:44ch }
+.why__act{ margin-top:32px }
+
+.why__list li{ padding:26px 0; border-top:1px solid var(--line) }
+.why__list li:first-child{ border-top:0; padding-top:0 }
+.why__list h3{
+  font-size:1.14rem; font-weight:700; font-variation-settings:"wdth" 104;
+  margin-bottom:8px;
+}
+.why__list p{ color:var(--txt-2); font-size:15.2px }
+
+/* ═══ ПРОЦЕС ══════════════════════════════════════════════ */
+.steps{
+  display:grid; gap:16px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  counter-reset:s;
+}
+.steps li{
+  position:relative; padding:30px 26px 28px;
+  border:1px solid var(--line); border-radius:var(--r);
+  background:var(--surface);
+  transition:border-color .28s, transform .28s var(--ease);
+}
+.steps li:hover{ border-color:var(--line-2); transform:translateY(-3px) }
+.steps__n{
+  display:flex; align-items:center; justify-content:center;
+  width:38px; height:38px; margin-bottom:20px;
+  border-radius:10px; border:1px solid var(--line-2);
+  font:600 15px/1 "JetBrains Mono",ui-monospace,monospace; color:var(--red-txt);
+  background:rgba(228,0,43,.07);
+}
+.steps h3{ font-size:1.08rem; font-weight:700; margin-bottom:8px }
+.steps p{ color:var(--txt-2); font-size:15px }
+
+/* ═══ ГАЛЕРЕЯ ═════════════════════════════════════════════ */
+.gal{
+  display:grid; gap:14px; margin-bottom:36px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+}
+.gal__i{ margin:0 }
+.ph{
+  position:relative; aspect-ratio:4/3; border-radius:var(--r);
+  border:1px dashed var(--line-2);
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.022) 0 12px, transparent 12px 24px),
+    var(--surface);
+  display:grid; place-items:center;
+}
+.ph::after{
+  content:attr(data-ph);
+  font:500 13px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.2em; color:var(--txt-3);
+}
+
+/* ═══ ФОРМА ═══════════════════════════════════════════════ */
+.book{
+  display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:clamp(36px,5vw,72px); align-items:start;
+}
+.book__lead{ margin-top:20px; color:var(--txt-2); font-size:1.06rem; max-width:44ch }
+
+.book__alt{ margin-top:34px; display:grid; gap:16px }
+.book__alt li{ display:flex; flex-direction:column; gap:3px }
+.book__alt-k{
+  font:500 11.5px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--txt-3);
+}
+.book__alt a{
+  font-size:1.22rem; font-weight:700; text-decoration:none;
+  font-variation-settings:"wdth" 104; width:fit-content;
+  border-bottom:1px solid var(--line-2); padding-bottom:2px;
+  transition:color .2s, border-color .2s;
+}
+.book__alt a:hover{ color:var(--m-red); border-color:var(--m-red) }
+
+.form{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:clamp(24px,3vw,38px);
+  display:grid; gap:18px;
+}
+.form__row{ display:grid; grid-template-columns:1fr 1fr; gap:18px }
+
+.fld{ display:grid; gap:8px; min-width:0 }
+.fld label{
+  font-size:13.5px; font-weight:600; color:var(--txt-2);
+  display:flex; align-items:center; gap:8px;
+}
+.opt{
+  font:400 11px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--txt-3);
+}
+.fld input, .fld select, .fld textarea{
+  width:100%; font:inherit; font-size:15.5px; color:var(--txt);
+  background:var(--bg); border:1px solid var(--line-2); border-radius:10px;
+  padding:13px 15px;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+.fld textarea{ resize:vertical; min-height:110px; line-height:1.55 }
+.fld input::placeholder, .fld textarea::placeholder{ color:var(--txt-3) }
+.fld input:focus, .fld select:focus, .fld textarea:focus{
+  outline:none; border-color:var(--m-lblue);
+  box-shadow:0 0 0 3px rgba(108,178,228,.16);
+}
+.fld select{
+  appearance:none; cursor:pointer;
+  background-image:url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a3a6ae'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 12px center; background-size:20px;
+  padding-right:42px;
+}
+.fld select option{ background:var(--bg-alt); color:var(--txt) }
+
+.fld.is-bad input, .fld.is-bad select{ border-color:var(--m-red) }
+.fld__err{
+  font-size:12.8px; color:var(--red-hi); min-height:0;
+  display:none;
+}
+.fld.is-bad .fld__err{ display:block }
+
+.hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden }
+
+.form__note{ font-size:12.8px; color:var(--txt-3); text-align:center }
+.form__msg{ font-size:14.5px; text-align:center; display:none }
+.form__msg.is-ok{ display:block; color:var(--m-lblue) }
+.form__msg.is-bad{ display:block; color:var(--red-hi) }
+
+/* ═══ КОНТАКТИ ════════════════════════════════════════════ */
+.find{
+  display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
+  gap:clamp(32px,4vw,60px); align-items:start;
+}
+.find__info{ display:grid; gap:34px }
+.find__blk h3{
+  font:500 11.5px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--txt-3); margin-bottom:14px;
+}
+.find__blk address{ font-style:normal; font-size:1.06rem; line-height:1.75; margin-bottom:18px }
+
+.big-link{
+  font-size:1.16rem; font-weight:700; text-decoration:none;
+  font-variation-settings:"wdth" 104;
+  border-bottom:1px solid var(--line-2); padding-bottom:2px;
+  transition:color .2s, border-color .2s;
+}
+.big-link:hover{ color:var(--m-red); border-color:var(--m-red) }
+
+.status{
+  display:inline-flex; align-items:center; gap:8px; margin-bottom:14px;
+  font:500 12.5px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.08em;
+  text-transform:uppercase;
+  border:1px solid var(--line); border-radius:99px; padding:8px 13px;
+}
+.status::before{ content:""; width:7px; height:7px; border-radius:99px; background:var(--txt-3) }
+.status.is-open{ color:#63d68a; border-color:rgba(99,214,138,.35) }
+.status.is-open::before{ background:#63d68a; box-shadow:0 0 0 3px rgba(99,214,138,.18) }
+.status.is-shut{ color:var(--txt-2) }
+
+.hours{ width:100%; border-collapse:collapse; font-size:15.2px }
+.hours tr{ border-top:1px solid var(--line) }
+.hours tr:first-child{ border-top:0 }
+.hours th, .hours td{ padding:12px 0; text-align:left; font-weight:400 }
+.hours th{ color:var(--txt-2) }
+.hours td{ text-align:right; font-variant-numeric:tabular-nums }
+.hours tr.is-today th{ color:var(--txt); font-weight:600 }
+.hours tr.is-today td{ color:var(--txt); font-weight:600 }
+
+.find__map{ min-height:340px }
+.map-load, .find__map iframe{
+  width:100%; height:100%; min-height:340px;
+  border:1px solid var(--line); border-radius:var(--r); display:block;
+}
+.map-load{
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.02) 0 14px, transparent 14px 28px),
+    var(--surface);
+  color:var(--txt-2); cursor:pointer;
+  display:grid; place-items:center; align-content:center; gap:6px;
+  font:inherit; transition:border-color .25s, background .25s;
+}
+.map-load:hover{ border-color:var(--line-2); color:var(--txt) }
+.map-load svg{ width:26px; height:26px; fill:var(--m-red) }
+.map-load span{ font-weight:600; font-size:15px }
+.map-load small{ font-size:12.5px; color:var(--txt-3) }
+.find__map iframe{ filter:grayscale(1) invert(.92) hue-rotate(180deg) contrast(.86) }
+
+/* ═══ ПІДВАЛ ══════════════════════════════════════════════ */
+.ftr{ border-top:1px solid var(--line); background:var(--bg-alt) }
+.ftr__in{
+  display:grid; grid-template-columns:1.2fr 1fr 1fr;
+  gap:36px; padding-block:clamp(44px,6vw,72px);
+}
+.ftr__brand img{ height:40px; width:auto; margin-bottom:16px }
+.ftr__brand p{ color:var(--txt-3); font-size:14px; max-width:30ch }
+.ftr__nav{ display:grid; gap:11px; align-content:start; font-size:14.5px }
+.ftr__nav a{ text-decoration:none; color:var(--txt-2); width:fit-content; transition:color .2s }
+.ftr__nav a:hover{ color:var(--txt) }
+.ftr__meta{ display:grid; gap:11px; align-content:start; font-size:14.5px }
+.ftr__meta a{ text-decoration:none; color:var(--txt-2); width:fit-content; transition:color .2s }
+.ftr__meta a:hover{ color:var(--txt) }
+.ftr__meta p{ color:var(--txt-3); font-size:13px; margin-top:6px }
+
+/* ═══ ПОЯВА ПРИ СКРОЛІ ════════════════════════════════════ */
+.reveal{
+  opacity:0; transform:translateY(18px);
+  transition:opacity .62s var(--ease), transform .62s var(--ease);
+  transition-delay:calc(var(--d,0) * 70ms);
+}
+.reveal.is-in{ opacity:1; transform:none }
+
+/* ═══ АДАПТИВ ═════════════════════════════════════════════ */
+@media (max-width:1000px){
+  .hero__in{ grid-template-columns:1fr }
+  .hero__mark{ grid-row:1; width:min(72%,300px); justify-self:start }
+  .why, .book, .find, .ftr__in{ grid-template-columns:1fr }
+  .ftr__in{ gap:30px }
+}
+
+@media (max-width:840px){
+  .nav{
+    position:fixed; inset:72px 0 auto; margin:0;
+    flex-direction:column; align-items:stretch; gap:0;
+    /* суцільний фон, без backdrop-filter: меню лежить усередині
+       шапки, яка вже розмиває фон, а вкладене розмиття в Chromium
+       не малює фон дочірнього елемента як слід */
+    background:var(--bg);
+    box-shadow:0 24px 48px -12px rgba(0,0,0,.8);
+    border-bottom:1px solid var(--line);
+    padding:8px var(--pad) 22px;
+    transform:translateY(-12px); opacity:0; pointer-events:none; visibility:hidden;
+    transition:opacity .26s var(--ease), transform .26s var(--ease), visibility .26s;
+    max-height:calc(100dvh - 72px); overflow-y:auto;
+  }
+  .nav.is-open{ transform:none; opacity:1; pointer-events:auto; visibility:visible }
+  .nav a{ padding:15px 0; border-bottom:1px solid var(--line); font-size:16px }
+  .nav__cta{
+    display:block; margin-top:18px; border:0!important; text-align:center;
+    background:var(--m-red); color:#fff; border-radius:99px; padding:15px 24px;
+    font-weight:600;
+  }
+  .nav__cta:hover{ color:#fff }
+  .burger{ display:block }
+  .hdr__tel span{ display:none }
+  .hdr__tel{ padding:9px 12px }
+}
+
+@media (max-width:600px){
+  body{ font-size:16px }
+  .hero__mark{ display:none }
+  .hero__in{ padding-block:44px 56px }
+  .form__row{ grid-template-columns:1fr }
+  .hero__facts{ gap:16px 28px }
+  .hero__act .btn{ flex:1 1 100%; }
+  .lang button{ padding:8px 9px }
+  .gal{ grid-template-columns:1fr 1fr; gap:10px }
+}
+
+/* ═══ ЗМЕНШЕНИЙ РУХ ═══════════════════════════════════════ */
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto }
+  *,*::before,*::after{
+    animation-duration:.01ms!important; animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  .reveal{ opacity:1; transform:none }
+}
