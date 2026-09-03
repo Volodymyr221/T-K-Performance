@@ -100,8 +100,8 @@ window.I18N = {
     "f.errName": "Please tell us your name.",
     "f.errPhone": "Please enter a phone number we can call you back on.",
     "f.ok": "Thank you. We have your details and will call you back shortly.",
-    "f.fail": "Something went wrong sending this. Please call us on 07575 051013.",
-    "f.offline": "The form is not connected yet. Please call us on 07575 051013.",
+    "f.fail": "Something went wrong sending this. Please call us on +44 7575 051013.",
+    "f.offline": "The form is not connected yet. Please call us on +44 7575 051013.",
 
     "fu.h": "Find us",
     "fu.addr": "Address",
@@ -215,8 +215,8 @@ window.I18N = {
     "f.errName": "Будь ласка, вкажіть імʼя.",
     "f.errPhone": "Вкажіть номер, на який вам передзвонити.",
     "f.ok": "Дякуємо. Ми отримали ваші дані і скоро передзвонимо.",
-    "f.fail": "Не вдалося надіслати. Зателефонуйте, будь ласка: 07575 051013.",
-    "f.offline": "Форму ще не підключено. Зателефонуйте, будь ласка: 07575 051013.",
+    "f.fail": "Не вдалося надіслати. Зателефонуйте, будь ласка: +44 7575 051013.",
+    "f.offline": "Форму ще не підключено. Зателефонуйте, будь ласка: +44 7575 051013.",
 
     "fu.h": "Як нас знайти",
     "fu.addr": "Адреса",
