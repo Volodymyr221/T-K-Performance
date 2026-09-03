@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-400_800.woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/logo.png">
+<link rel="preload" as="image" href="assets/img/logo.webp" type="image/webp">
 <link rel="stylesheet" href="assets/css/fonts.css">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -30,7 +30,10 @@
 <header class="hdr" id="hdr">
   <div class="wrap hdr__in">
     <a class="hdr__logo" href="#top" aria-label="T&amp;K Performance — home">
-      <img src="assets/img/logo-nav.png" alt="T&amp;K Performance" width="430" height="120" fetchpriority="high">
+      <picture>
+        <source srcset="assets/img/logo-nav.webp" type="image/webp">
+        <img src="assets/img/logo-nav.png" alt="T&amp;K Performance" width="430" height="120" fetchpriority="high">
+      </picture>
     </a>
 
     <nav class="nav" id="nav" aria-label="Main">
@@ -99,7 +102,10 @@
     </div>
 
     <div class="hero__mark reveal" data-d="2">
-      <img src="assets/img/logo.png" alt="" width="800" height="451" fetchpriority="high">
+      <picture>
+        <source srcset="assets/img/logo.webp" type="image/webp">
+        <img src="assets/img/logo.png" alt="" width="800" height="451" fetchpriority="high">
+      </picture>
     </div>
   </div>
 
@@ -399,7 +405,10 @@
 <footer class="ftr">
   <div class="wrap ftr__in">
     <div class="ftr__brand">
-      <img src="assets/img/logo-nav.png" alt="T&amp;K Performance" width="430" height="120" loading="lazy">
+      <picture>
+        <source srcset="assets/img/logo-nav.webp" type="image/webp">
+        <img src="assets/img/logo-nav.png" alt="T&amp;K Performance" width="430" height="120" loading="lazy">
+      </picture>
       <p data-i18n="ft.tag">BMW specialists · Bognor Regis, West Sussex</p>
     </div>
     <nav class="ftr__nav" aria-label="Footer">
