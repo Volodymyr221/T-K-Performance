@@ -10,7 +10,6 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* ── 1. Мова ───────────────────────────────────────────── */
-  var LS_KEY = "tk-lang";
   var lang = "en";
 
   function t(key) {
@@ -39,21 +38,18 @@
       b.setAttribute("aria-pressed", on ? "true" : "false");
     });
 
-    try { localStorage.setItem(LS_KEY, next); } catch (e) {}
     paintHours();
+    paintDates();
   }
 
   (function initLang() {
-    var saved = null;
-    try { saved = localStorage.getItem(LS_KEY); } catch (e) {}
-    if (!saved) {
-      var nav = (navigator.language || "en").toLowerCase();
-      saved = nav.indexOf("uk") === 0 || nav.indexOf("ru") === 0 ? "uk" : "en";
-    }
+    /* Сайт ЗАВЖДИ відкривається англійською: це основна мова бізнесу
+       в Британії. Українську вмикає тільки сам відвідувач кнопкою, і
+       вибір діє до закриття вкладки — нічого не зберігаємо і мову
+       браузера не вгадуємо. */
     $$(".lang button").forEach(function (b) {
       b.addEventListener("click", function () { applyLang(b.dataset.lang); });
     });
-    if (saved !== "en") applyLang(saved);
   })();
 
   /* ── 2. Шапка: тінь при скролі + бургер ────────────────── */
@@ -147,6 +143,50 @@
   }
   paintHours();
   setInterval(paintHours, 60000);
+
+  /* ── Скільки минуло від відгуку ─────────────────────────
+     Дата публікації лежить у <time datetime>, а «4 дні тому»
+     рахується щоразу при відкритті сторінки. Intl.RelativeTimeFormat
+     сам дає правильні форми обома мовами: «1 день», «4 дні»,
+     «5 днів» — руками ці відмінки не виписуємо.
+     Без JS лишається статичний текст у розмітці. */
+  function paintDates() {
+    var nodes = $$(".rev__date");
+    if (!nodes.length) return;
+
+    var RTF = window.Intl && Intl.RelativeTimeFormat;
+    if (!RTF) return;                    // старий браузер — лишається розмітка
+
+    /* Два форматувальники навмисно:
+       для днів "auto" дає «today» і «yesterday» — так і треба;
+       для тижнів той самий "auto" дав би «last week» замість
+       «1 week ago», а для відгуку це читається дивно. */
+    var loc = lang === "uk" ? "uk" : "en-GB", fmtDay, fmtBig;
+    try {
+      fmtDay = new RTF(loc, { numeric: "auto" });
+      fmtBig = new RTF(loc, { numeric: "always" });
+    } catch (e) { return; }
+
+    var now = Date.now();
+    nodes.forEach(function (el) {
+      var iso = el.getAttribute("datetime");
+      if (!iso) return;
+      var then = Date.parse(iso + "T12:00:00Z");
+      if (isNaN(then)) return;
+
+      var days = Math.floor((now - then) / 86400000);
+      if (days < 0) days = 0;
+
+      var value, unit, fmt = fmtBig;
+      if (days < 7)        { value = days; unit = "day"; fmt = fmtDay; }
+      else if (days < 31)  { value = Math.floor(days / 7);      unit = "week"; }
+      else if (days < 365) { value = Math.floor(days / 30.44);  unit = "month"; }
+      else                 { value = Math.floor(days / 365.25); unit = "year"; }
+
+      el.textContent = fmt.format(-value, unit);
+    });
+  }
+  paintDates();
 
   /* ── 5. Карта вантажиться тільки на клік ───────────────── */
   var mapBtn = $("#map-load");
