@@ -394,6 +394,60 @@ body.nav-open{ overflow:hidden }
 .gal__i:hover img{ transform:scale(1.04) }
 .gal__i figcaption{ font-size:13.6px; color:var(--txt-2); line-height:1.45 }
 
+/* ═══ ВІДГУКИ ════════════════════════════════════════════ */
+.revs{
+  display:grid; gap:16px; margin-bottom:36px;
+  grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+}
+
+.rev{
+  display:grid; gap:18px; align-content:start;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:clamp(24px,2.6vw,32px);
+  transition:border-color .28s, background .28s;
+}
+.rev:hover{ border-color:var(--line-2); background:var(--surface-2) }
+
+.rev__top{ display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:center }
+
+/* ініціали замість фото: аватарки з Google тягнути не можемо —
+   це був би запит до чужого сервера з кожного відкриття сторінки */
+.rev__ava{
+  display:grid; place-items:center;
+  width:42px; height:42px; border-radius:99px;
+  background:linear-gradient(150deg, rgba(12,99,176,.5), rgba(228,0,43,.4));
+  border:1px solid var(--line-2);
+  font:600 14px/1 "Archivo","Manrope",sans-serif; letter-spacing:.02em;
+  color:var(--txt);
+}
+.rev__who{ display:grid; gap:2px; min-width:0 }
+.rev__name{ font-size:15.5px; font-weight:700; font-variation-settings:"wdth" 104 }
+.rev__meta{
+  font:500 11px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--txt-3);
+}
+
+.rev__stars{ display:flex; gap:2px; align-self:start }
+.rev__stars svg{ width:15px; height:15px; fill:#f5b301; flex:none }
+
+.rev__text{ margin:0 }
+.rev__text p{ color:var(--txt-2); font-size:15.4px; line-height:1.62 }
+
+/* що саме робили — прив'язує похвалу до конкретної роботи */
+.rev__work{
+  padding-top:16px; border-top:1px solid var(--line);
+  font:500 12px/1.5 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.06em; color:var(--red-txt);
+}
+
+@media (max-width:520px){
+  .revs{ grid-template-columns:1fr }
+  .rev__top{ grid-template-columns:auto 1fr; row-gap:10px }
+  .rev__stars{ grid-column:1/-1 }
+}
+
 /* ═══ ФОРМА ═══════════════════════════════════════════════ */
 .book{
   display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);

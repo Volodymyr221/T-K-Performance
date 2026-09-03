@@ -12,6 +12,7 @@ window.I18N = {
     "nav.why": "Why BMW only",
     "nav.process": "How it works",
     "nav.work": "Our work",
+    "nav.rev": "Reviews",
     "nav.find": "Find us",
     "nav.book": "Book a callback",
 
@@ -75,6 +76,13 @@ window.I18N = {
     "wk.c3": "BMW 5 Series in for work",
     "wk.c4": "Inside our workshop",
 
+    "rv.h": "What our customers say",
+    "rv.sub": "Reviews left on our Google listing by people who brought their BMW in.",
+    "rv.src": "Google review",
+    "rv.w1": "Splitter · undertrays · grilles · guibo",
+    "rv.w2": "Engine bearings replaced",
+    "rv.all": "Read all reviews on Google",
+
     "bk.h": "Tell us what your BMW is doing",
     "bk.lead": "Leave your number and we will call you back — usually the same working day. No obligation, and the quote is free.",
     "bk.alt1": "Prefer to talk now?",
@@ -127,6 +135,7 @@ window.I18N = {
     "nav.why": "Чому лише BMW",
     "nav.process": "Як це працює",
     "nav.work": "Наші роботи",
+    "nav.rev": "Відгуки",
     "nav.find": "Як нас знайти",
     "nav.book": "Замовити дзвінок",
 
@@ -189,6 +198,13 @@ window.I18N = {
     "wk.c2": "BMW X5 у майстерні",
     "wk.c3": "BMW 5 серії в роботі",
     "wk.c4": "Усередині нашої майстерні",
+
+    "rv.h": "Що кажуть наші клієнти",
+    "rv.sub": "Відгуки, які залишили в нашому профілі Google люди, що привозили сюди свою BMW.",
+    "rv.src": "Відгук у Google",
+    "rv.w1": "Сплітер · захисні щитки · решітки · гнучкий диск",
+    "rv.w2": "Заміна вкладишів двигуна",
+    "rv.all": "Усі відгуки в Google",
 
     "bk.h": "Розкажіть, що з вашою BMW",
     "bk.lead": "Залиште номер — ми передзвонимо, зазвичай того ж робочого дня. Ні до чого не зобовʼязує, оцінка безкоштовна.",
