@@ -19,6 +19,15 @@
 <link rel="icon" href="assets/img/favicon-512.png" sizes="512x512">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 
+<!-- Без manifest iOS запам'ятовує адресу, з якої додали ярлик на
+     головний екран, разом із #якорем — і потім щоразу відкриває
+     сайт на тій секції. start_url прив'язує запуск до головної. -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="T&amp;K Performance">
+
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/archivo-latin-400_800.woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/logo.webp" type="image/webp">
 <link rel="stylesheet" href="assets/css/fonts.css">

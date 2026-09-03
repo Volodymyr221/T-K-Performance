@@ -4,6 +4,11 @@
 (function () {
   "use strict";
 
+  /* Браузер за замовчуванням відновлює позицію прокрутки при
+     поверненні на сторінку. У вікні PWA це виглядає так, ніби сайт
+     сам відкривається десь посередині — беремо керування на себе. */
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
   var CFG  = window.TK   || {};
   var DICT = window.I18N || {};
   var $  = function (s, r) { return (r || document).querySelector(s); };
