@@ -704,7 +704,11 @@ body.nav-open{ overflow:hidden }
   }
   .nav.is-open{ transform:none; opacity:1; pointer-events:auto; visibility:visible }
   .nav a{ padding:15px 0; border-bottom:1px solid var(--line); font-size:16px }
-  .nav__cta{
+  /* .nav a має вищу специфічність (клас + тег), ніж .nav__cta (клас),
+     тому сірий color:var(--txt-2) перебивав тут білий — напис на
+     червоній кнопці виходив сіруватим. Селектор .nav a.nav__cta
+     повертає той самий чистий білий, що й .btn--red на сторінці. */
+  .nav a.nav__cta{
     display:block; margin-top:18px; border:0!important; text-align:center;
     background:var(--m-red); color:#fff; border-radius:99px; padding:15px 24px;
     font-weight:600;
