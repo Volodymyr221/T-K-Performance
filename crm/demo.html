@@ -1,0 +1,1542 @@
+<title>T&K Workshop Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   T&K Workshop Desk — стилі
+
+   Токени взяті ОДИН В ОДИН з assets/css/style.css сайту.
+   Жодного нового кольору: CRM і сайт мають бути одного роду.
+
+   Але щільність інша. Лендінг живе великими відступами — це продає.
+   Адмінка так не працює: у неї дивляться сорок разів на день, і їй
+   потрібні щільні рядки, а не повітря.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --bg:#08080a; --bg-alt:#0d0d10; --surface:#131317; --surface-2:#17171c; --surface-3:#1d1d23;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  --txt:#f4f5f7; --txt-2:#a3a6ae; --txt-3:#7f838d;
+  --m-lblue:#6cb2e4; --m-blue:#0c63b0; --m-red:#e4002b; --red-txt:#ff3355;
+  /* Стан роботи — окремі від акценту BMW M. Синій M зарезервований
+     виключно під атрибуцію: одна фарба — один сенс. */
+  --ok:#4fbf87; --wait:#d9a441;
+  --r:12px;
+  --ui:"Archivo","Manrope","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+  --side:214px;
+}
+
+*,*::before,*::after{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0; background:var(--bg); color:var(--txt); font-family:var(--ui);
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+h1,h2,h3,h4,h5{ margin:0; line-height:1.1; letter-spacing:-.02em }
+p{ margin:0 } ul,ol{ margin:0; padding:0; list-style:none }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer }
+input,select{ font:inherit; color:inherit }
+a{ color:inherit; text-decoration:none }
+:focus-visible{ outline:2px solid var(--m-lblue); outline-offset:2px; border-radius:5px }
+
+.mstripe{ display:inline-flex; height:8px; width:44px; flex:none }
+.mstripe i{ flex:1; transform:skewX(-22deg) }
+.mstripe i:nth-child(1){ background:var(--m-lblue) }
+.mstripe i:nth-child(2){ background:var(--m-blue) }
+.mstripe i:nth-child(3){ background:var(--m-red) }
+
+/* ═══ Каркас ═══════════════════════════════════════════════════════ */
+.shell{ display:grid; grid-template-columns:var(--side) 1fr; height:100vh; height:100dvh }
+
+.side{ background:#0a0a0d; border-right:1px solid var(--line); display:flex; flex-direction:column; padding:16px 0; overflow-y:auto }
+.side__brand{ display:flex; align-items:center; gap:10px; padding:0 16px 18px }
+.side__brand b{ font-size:15px; font-weight:800 }
+.side__nav{ padding:0 9px; margin-bottom:auto }
+.side__label{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt-3); padding:14px 8px 6px }
+.side__nav button{
+  display:flex; align-items:center; gap:10px; width:100%; padding:9px 10px;
+  border-radius:9px; color:var(--txt-2); font-size:14px; font-weight:500; text-align:left;
+}
+.side__nav button .dot{ width:6px; height:6px; border-radius:2px; background:var(--line-2); flex:none }
+.side__nav button.on{ background:var(--surface-2); color:var(--txt); font-weight:600 }
+.side__nav button.on .dot{ background:var(--m-red) }
+.side__nav button .cnt{ margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--txt-3) }
+.side__nav button.on .cnt{ color:var(--m-lblue) }
+@media (hover:hover) and (pointer:fine){
+  .side__nav button:hover{ background:var(--surface); color:var(--txt) }
+}
+
+.side__lang{ padding:14px 13px 0; margin-top:12px; border-top:1px solid var(--line) }
+.side__lang .k{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt-3); margin-bottom:6px }
+.seg{ display:flex; border:1px solid var(--line-2); border-radius:7px; overflow:hidden }
+.seg button{ flex:1; padding:6px 0; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.05em; color:var(--txt-3) }
+.seg button+button{ border-left:1px solid var(--line) }
+.seg button[aria-pressed="true"]{ background:var(--surface-3); color:var(--txt) }
+
+.side__user{ padding:12px 13px 0; margin-top:12px; border-top:1px solid var(--line) }
+.side__user .k{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt-3); margin-bottom:6px }
+.side__user select{
+  width:100%; background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:8px 10px; font-size:13px; cursor:pointer;
+}
+.side__user .role{ font-size:11px; color:var(--txt-3); margin-top:6px; line-height:1.4 }
+
+/* ═══ Головна частина ══════════════════════════════════════════════ */
+.main{ display:flex; flex-direction:column; min-width:0; overflow:hidden }
+.top{ display:flex; align-items:center; gap:12px; padding:13px 20px; border-bottom:1px solid var(--line); flex:none }
+.top h1{ font-size:17px; font-weight:700 }
+.top .sub{ font-family:var(--mono); font-size:11.5px; color:var(--txt-3) }
+.top .spacer{ margin-left:auto }
+.search{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:8px 13px; font-size:13px; min-width:250px; color:var(--txt);
+}
+.search::placeholder{ color:var(--txt-3) }
+.btn{ background:var(--m-red); color:#fff; font-weight:600; font-size:13px; padding:9px 15px; border-radius:8px; white-space:nowrap; min-height:38px }
+.btn--ghost{ background:transparent; border:1px solid var(--line-2); color:var(--txt-2); font-weight:500 }
+.btn:disabled{ opacity:.45; cursor:default }
+@media (hover:hover) and (pointer:fine){
+  .btn:hover:not(:disabled){ background:#ff1f45 }
+  .btn--ghost:hover:not(:disabled){ background:var(--surface-2); color:var(--txt) }
+}
+
+.scroll{ flex:1; overflow-y:auto; padding:18px 20px 40px; display:flex; flex-direction:column; gap:16px }
+
+/* ═══ Смуга попередження ═══════════════════════════════════════════ */
+.warn{
+  display:flex; gap:11px; align-items:flex-start; padding:12px 14px; border-radius:var(--r);
+  border:1px solid rgba(217,164,65,.34); background:rgba(217,164,65,.07); flex:none;
+}
+.warn .ic{ color:var(--wait); font-weight:700; flex:none; line-height:1.5 }
+.warn b{ display:block; font-size:13.5px; margin-bottom:2px }
+.warn p{ font-size:12.5px; color:var(--txt-2); line-height:1.5 }
+
+/* ═══ Плитки ═══════════════════════════════════════════════════════ */
+.tiles{ display:grid; grid-template-columns:repeat(4,1fr); gap:11px }
+.tile{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 15px }
+.tile .k{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--txt-3); font-weight:600 }
+.tile .v{ font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-.02em; margin-top:5px; font-variant-numeric:tabular-nums }
+.tile .d{ font-size:11.5px; color:var(--txt-3); margin-top:2px }
+.tile--accent{ border-color:rgba(108,178,228,.34) }
+.tile--accent .v{ color:var(--m-lblue) }
+
+/* ═══ Панелі ═══════════════════════════════════════════════════════ */
+.cols{ display:grid; grid-template-columns:1fr 300px; gap:16px; align-items:start }
+.stack{ display:flex; flex-direction:column; gap:16px }
+.panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden }
+.panel__h{ display:flex; align-items:center; gap:10px; padding:12px 15px; border-bottom:1px solid var(--line) }
+.panel__h h2{ font-size:13.5px; font-weight:600 }
+.panel__h .n{ font-family:var(--mono); font-size:11px; color:var(--txt-3); margin-left:auto }
+.empty{ padding:28px 16px; text-align:center; color:var(--txt-3); font-size:13px }
+
+/* ═══ Рядок розкладу ═══════════════════════════════════════════════ */
+.slot{ display:grid; grid-template-columns:56px 1fr 160px 128px 96px auto; gap:12px; align-items:center; padding:11px 15px; border-bottom:1px solid var(--line) }
+.slot:last-child{ border-bottom:0 }
+.slot .t{ font-family:var(--mono); font-size:13.5px; font-weight:600; font-variant-numeric:tabular-nums }
+.slot .nm{ font-size:14px; font-weight:600 }
+.slot .jb{ font-size:12px; color:var(--txt-3); margin-top:1px }
+.slot .car{ font-size:12.5px; color:var(--txt-2) }
+.slot .reg{ font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; color:var(--txt-3); border:1px solid var(--line); border-radius:4px; padding:1px 5px; display:inline-block; margin-top:3px }
+.slot .act .btn{ padding:6px 11px; font-size:12px; min-height:32px }
+
+/* ═══ Плашки ═══════════════════════════════════════════════════════ */
+.pill{ display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; border:1px solid transparent }
+.pill::before{ content:""; width:6px; height:6px; border-radius:50%; background:currentColor; flex:none }
+.pill--in_progress{ color:var(--ok); background:rgba(79,191,135,.11); border-color:rgba(79,191,135,.3) }
+.pill--waiting_parts{ color:var(--wait); background:rgba(217,164,65,.11); border-color:rgba(217,164,65,.32) }
+.pill--booked{ color:var(--txt-2); background:var(--surface-2); border-color:var(--line-2) }
+.pill--collected{ color:var(--txt-3); background:transparent; border-color:var(--line) }
+
+.src{ display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:6px; font-family:var(--mono); font-size:10px; letter-spacing:.05em; font-weight:600; white-space:nowrap; color:var(--txt-3); border:1px solid var(--line) }
+.src--ours{ color:var(--m-lblue); border-color:rgba(108,178,228,.4); background:rgba(108,178,228,.09) }
+.src--ours::before{ content:""; width:11px; height:2px; background:var(--m-lblue); flex:none }
+
+/* ═══ Заявки ═══════════════════════════════════════════════════════ */
+.lead{ padding:12px 15px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:7px }
+.lead:last-child{ border-bottom:0 }
+.lead__top{ display:flex; align-items:baseline; gap:8px }
+.lead__top b{ font-size:13.5px; font-weight:600 }
+.lead__top time{ font-family:var(--mono); font-size:10.5px; color:var(--txt-3); margin-left:auto }
+.lead .ln{ font-family:var(--mono); font-size:12px; color:var(--txt-2) }
+.lead .msg{ font-size:12.5px; color:var(--txt-3); line-height:1.5 }
+.lead .utm{ font-family:var(--mono); font-size:10.5px; color:var(--m-lblue) }
+.lead__act{ display:flex; gap:7px }
+.lead__act .btn{ padding:6px 12px; font-size:12px; min-height:32px }
+
+/* ═══ Таблиці ══════════════════════════════════════════════════════ */
+.tw{ overflow-x:auto }
+table{ width:100%; border-collapse:collapse; min-width:520px }
+th{ text-align:left; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; font-weight:600; color:var(--txt-3); padding:10px 15px; border-bottom:1px solid var(--line); white-space:nowrap }
+td{ padding:11px 15px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top }
+tbody tr:last-child td{ border-bottom:0 }
+.num{ font-family:var(--mono); text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap }
+.dt{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap }
+.ours{ color:var(--m-lblue); font-weight:600 }
+.muted{ color:var(--txt-3) }
+tfoot td{ border-top:1px solid var(--line-2); border-bottom:0; font-weight:700; background:var(--surface-2) }
+
+/* ═══ Клієнти ══════════════════════════════════════════════════════ */
+.crow{ display:grid; grid-template-columns:1fr 190px 150px 108px; gap:12px; align-items:center; padding:11px 15px; border-bottom:1px solid var(--line); width:100%; text-align:left }
+.crow:last-child{ border-bottom:0 }
+.crow .nm{ font-size:14px; font-weight:600 }
+.crow .ph{ font-family:var(--mono); font-size:12px; color:var(--txt-3); margin-top:1px }
+.crow .cars{ font-size:12.5px; color:var(--txt-2) }
+.crow .vis{ font-family:var(--mono); font-size:12px; color:var(--txt-3) }
+@media (hover:hover) and (pointer:fine){ .crow:hover{ background:var(--surface-2) } }
+
+.chead{ display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap }
+.chead h2{ font-size:23px; font-weight:700 }
+.chead .meta{ font-family:var(--mono); font-size:12.5px; color:var(--txt-2); margin-top:5px }
+
+.attr{ border:1px solid rgba(108,178,228,.34); border-radius:var(--r); background:linear-gradient(180deg,rgba(108,178,228,.07),rgba(108,178,228,.02)); padding:15px 17px; display:grid; grid-template-columns:1fr 1fr 1.6fr; gap:16px }
+.attr--dead{ border-color:var(--line-2); background:var(--surface) }
+.attr .f .k{ font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--txt-3); font-weight:600 }
+.attr .f .v{ font-size:14.5px; font-weight:600; margin-top:3px }
+.attr .f .v.mono{ font-family:var(--mono); font-size:13px; font-variant-numeric:tabular-nums }
+.attr .f .v.blue{ color:var(--m-lblue) }
+.bar{ height:5px; border-radius:3px; background:var(--surface-3); overflow:hidden; margin-top:7px }
+.bar i{ display:block; height:100%; background:var(--m-lblue); border-radius:3px }
+
+.veh{ display:flex; align-items:center; gap:12px; padding:12px 15px; border-bottom:1px solid var(--line) }
+.veh:last-child{ border-bottom:0 }
+.veh .badge{ width:40px; height:40px; border-radius:9px; background:var(--surface-2); border:1px solid var(--line); display:grid; place-items:center; font-family:var(--mono); font-size:10.5px; font-weight:600; color:var(--txt-2); flex:none }
+.veh b{ font-size:13.5px; font-weight:600 }
+.veh .l{ font-size:12px; color:var(--txt-3) }
+.veh .r{ margin-left:auto; text-align:right; font-family:var(--mono); font-size:11px; color:var(--txt-2); line-height:1.5 }
+.veh .r em{ font-style:normal; color:var(--txt-3) }
+
+.trail li{ display:grid; grid-template-columns:118px 1fr; gap:12px; padding:10px 15px; border-bottom:1px solid var(--line); font-size:12.5px }
+.trail li:last-child{ border-bottom:0 }
+.trail time{ font-family:var(--mono); font-size:11px; color:var(--txt-3) }
+.trail .by{ color:var(--txt-3); font-size:12px }
+
+/* ═══ Звіт ═════════════════════════════════════════════════════════ */
+.hero3{ display:grid; grid-template-columns:repeat(3,1fr); gap:11px }
+.hero3 .h{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:17px 18px }
+.hero3 .h .k{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--txt-3); font-weight:600 }
+.hero3 .h .v{ font-family:var(--mono); font-size:32px; font-weight:600; letter-spacing:-.03em; margin-top:6px; font-variant-numeric:tabular-nums }
+.hero3 .h .d{ font-size:12px; color:var(--txt-3); margin-top:3px }
+.hero3 .h--pay{ border-color:rgba(108,178,228,.4); background:linear-gradient(180deg,rgba(108,178,228,.08),transparent) }
+.hero3 .h--pay .v{ color:var(--m-lblue) }
+
+.chart{ padding:16px 18px 12px }
+.chart__h{ display:flex; align-items:baseline; margin-bottom:16px }
+.chart__h h2{ font-size:13.5px; font-weight:600 }
+.chart__h .u{ font-family:var(--mono); font-size:11px; color:var(--txt-3); margin-left:auto }
+.bars{ display:grid; gap:11px; align-items:end; height:132px }
+.bars .col{ display:flex; flex-direction:column; justify-content:flex-end; height:100%; gap:6px }
+.bars .val{ font-family:var(--mono); font-size:11px; color:var(--txt-2); text-align:center; font-variant-numeric:tabular-nums }
+.bars .stem{ background:rgba(108,178,228,.3); border-radius:4px 4px 0 0; min-height:2px }
+.bars .col--now .stem{ background:var(--m-lblue) }
+.bars .col--now .val{ color:var(--m-lblue); font-weight:600 }
+.axis{ border-top:1px solid var(--line-2); padding-top:7px; display:grid; gap:11px }
+.axis .mo{ font-family:var(--mono); font-size:10px; color:var(--txt-3); text-align:center; letter-spacing:.04em }
+
+/* ═══ Вікно закриття роботи ════════════════════════════════════════ */
+.modal{ position:fixed; inset:0; background:rgba(4,4,6,.78); display:grid; place-items:center; padding:18px; z-index:60 }
+.modal__box{ background:var(--bg-alt); border:1px solid var(--line-2); border-radius:16px; width:100%; max-width:400px; overflow:hidden; max-height:92vh; display:flex; flex-direction:column }
+.modal__h{ display:flex; align-items:center; gap:10px; padding:15px 18px; border-bottom:1px solid var(--line) }
+.modal__h h2{ font-size:16px; font-weight:700 }
+.modal__h .reg{ font-family:var(--mono); font-size:11px; color:var(--txt-3); margin-left:auto }
+.modal__b{ padding:16px 18px; display:flex; flex-direction:column; gap:13px; overflow-y:auto }
+.fld .k{ font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--txt-3); font-weight:600; margin-bottom:5px }
+.fld .in{ display:flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:0 13px }
+.fld .in .cur{ font-family:var(--mono); color:var(--txt-3) }
+.fld .in input{ flex:1; background:none; border:0; padding:12px 0; font-family:var(--mono); font-size:16px; width:100%; min-height:44px }
+.fld .in:focus-within{ border-color:var(--m-lblue); box-shadow:0 0 0 3px rgba(108,178,228,.14) }
+.pays{ display:flex; gap:7px }
+.pays button{ flex:1; padding:11px 0; border:1px solid var(--line); border-radius:9px; font-size:13px; color:var(--txt-2); background:var(--surface); min-height:44px }
+.pays button[aria-pressed="true"]{ border-color:var(--m-lblue); background:rgba(108,178,228,.11); color:var(--txt); font-weight:600 }
+.sum{ background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:6px }
+.sum .row{ display:flex; font-size:13px; color:var(--txt-2) }
+.sum .row .n{ margin-left:auto; font-family:var(--mono); font-variant-numeric:tabular-nums }
+.sum .row--tot{ border-top:1px solid var(--line); padding-top:8px; color:var(--txt); font-weight:700; font-size:15px }
+.note{ font-size:11.5px; color:var(--txt-3); line-height:1.5 }
+.note b{ color:var(--txt-2) }
+.modal__f{ display:flex; gap:9px; padding:0 18px 18px }
+.modal__f .btn{ flex:1; padding:13px; font-size:14px; min-height:46px }
+
+/* ═══ Сповіщення ═══════════════════════════════════════════════════ */
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%);
+  background:var(--surface-3); border:1px solid var(--line-2); color:var(--txt);
+  padding:11px 20px; border-radius:999px; font-size:13.5px; font-weight:600; z-index:80;
+  animation:pop .18s cubic-bezier(.22,.7,.2,1);
+}
+@keyframes pop{ from{ opacity:0; transform:translate(-50%,7px) } }
+
+/* ═══ Нижнє меню — тільки на телефоні ══════════════════════════════ */
+.tabs{ display:none }
+
+/* Рядок розкладу стає карткою раніше за решту: шість колонок на
+   вузькому ноутбуці (900px, бічна колонка ще на місці) стискаються
+   так, що текст починає обрізатись. Знайдено вимірюванням, не на око. */
+@media (max-width:1100px){
+  .slot{
+    grid-template-columns:52px 1fr auto;
+    grid-template-areas:"t nm act" ". car car" ". tags tags";
+    row-gap:7px; padding:13px 15px;
+  }
+  .slot .t{ grid-area:t } .slot .who{ grid-area:nm } .slot .car-wrap{ grid-area:car }
+  .slot .tags{ grid-area:tags; display:flex; gap:6px; flex-wrap:wrap }
+  .slot .act{ grid-area:act }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ТЕЛЕФОН
+
+   Це не «зменшена версія». На телефоні працює механік у боксі,
+   часто в рукавичках: бічна колонка ховається, зʼявляється нижнє
+   меню, цілі дотику не менші за 44px, таблиці стають картками.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width:860px){
+  .shell{ grid-template-columns:1fr }
+  .side{ display:none }
+  .scroll{ padding:14px 14px 88px }
+  .cols{ grid-template-columns:1fr }
+  .tiles{ grid-template-columns:repeat(2,1fr) }
+  .hero3{ grid-template-columns:1fr }
+  .attr{ grid-template-columns:1fr; gap:13px }
+  .top{ padding:11px 14px; gap:9px }
+  .top h1{ font-size:16px }
+  .search{ min-width:0; width:100% }
+
+  .slot{ padding:13px 14px }
+
+  /* 🔴 44px — норма цілі дотику. У боксі механік працює в рукавичках,
+     а дрібні кнопки там не працюють узагалі. Та сама норма, яку ми вже
+     витримали на сайті. Знайдено вимірюванням у браузері, не на око. */
+  .btn,
+  .slot .act .btn,
+  .lead__act .btn{ min-height:44px; padding:11px 16px; font-size:13.5px }
+  .side__user select{ min-height:44px }
+
+  .crow{ grid-template-columns:1fr auto; gap:8px; padding:13px 14px }
+  .crow .cars{ grid-column:1/-1 }
+  .crow .vis{ display:none }
+
+  .tabs{
+    display:flex; position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:#0a0a0d; border-top:1px solid var(--line);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .tabs button{ flex:1; padding:10px 0 12px; color:var(--txt-3); font-size:10px; letter-spacing:.04em; text-transform:uppercase; font-weight:600; min-height:52px }
+  .tabs button i{ display:block; width:16px; height:16px; margin:0 auto 4px; border:1.6px solid currentColor; border-radius:5px }
+  .tabs button.on{ color:var(--m-red) }
+  .tabs button.on i{ background:rgba(228,0,43,.16) }
+}
+
+@media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important } }
+
+
+/* ── Тільки для демо ──────────────────────────────────────────────
+   Демо відкривається у вбудованому вікні, і 100vh там може дати
+   смужку в кілька сантиметрів. Нижня межа тримає робочу висоту. */
+.shell{ min-height:640px }
+body{ overflow:auto }
+</style>
+
+<div class="shell">
+    <nav class="side" id="side" aria-label="Меню"></nav>
+
+    <div class="main">
+      <header class="top">
+        <h1 id="title">Сьогодні</h1>
+        <span class="sub" id="sub"></span>
+        <span class="spacer"></span>
+        <div id="tools"></div>
+      </header>
+      <div class="scroll" id="scroll"></div>
+    </div>
+  </div>
+
+  <!-- Нижнє меню зʼявляється тільки на телефоні: бічна колонка там ховається -->
+  <nav class="tabs" id="tabs" aria-label="Меню"></nav>
+
+<script>
+/* ── js/mock.js ── */
+/* ═══════════════════════════════════════════════════════════════════
+   ФАЛЬШИВІ ДАНІ — рівно ті самі люди, що в crm/migrations/0004_seed_dev.sql
+
+   🛑 Жодного реального британця. Телефони з діапазону 07700 900xxx,
+   який Ofcom тримає саме для вигаданих номерів у фільмах і прикладах.
+
+   Навіщо це існує: щоб робити інтерфейс, не чекаючи, поки власники СТО
+   заведуть пошту й базу. Коли база зʼявиться, зміниться ТІЛЬКИ data.js —
+   цей файл просто перестане використовуватись.
+   ═══════════════════════════════════════════════════════════════════ */
+window.TK = window.TK || {};
+
+TK.mock = (function () {
+  'use strict';
+
+  // Дати рахуються від сьогодні, тому дані завжди свіжі.
+  const DAY = 86400000;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const d = (offset) => new Date(today.getTime() + offset * DAY);
+  const iso = (dt) => dt.toISOString().slice(0, 10);
+  const at = (h, m) => { const x = new Date(today); x.setHours(h, m, 0, 0); return x; };
+
+  // ── Налаштування ─────────────────────────────────────────────────
+  // 🔴 Цифри — ПРИПУЩЕННЯ, не домовленість. Вова з Дімою ще вирішують.
+  const settings = {
+    business_name: 'T&K Performance',
+    launch_date: iso(d(-90)),
+    currency: '£',
+    rate_labour: 0.10,
+    rate_parts: 0.04,
+    threshold_gbp: 150,
+    window_months: 12,
+    agreed: false          // ← поки false, інтерфейс показує попередження
+  };
+
+  // ── Працівники ───────────────────────────────────────────────────
+  const staff = [
+    // Мова в кожного своя. Власник тут україномовний — головна мова
+    // системи українська; англійську видно кнопкою в лівій колонці.
+    { id: 's1', name: 'Tom Keane',       role: 'owner',    lang: 'ua', initials: 'TK' },
+    { id: 's2', name: 'Kateryna Bondar', role: 'manager',  lang: 'ua', initials: 'KB' },
+    { id: 's3', name: 'Andriy Melnyk',   role: 'mechanic', lang: 'ua', initials: 'AM' },
+    { id: 's4', name: 'Вова',            role: 'partner',  lang: 'ua', initials: 'В' }
+  ];
+
+  // ── Клієнти ──────────────────────────────────────────────────────
+  const clients = [
+    { id: 'c1', name: 'James Whitlock', phone: '+447700900318', postcode: 'PO21 1AA',
+      source: 'website',   attributed: iso(d(-60)),  expires: iso(d(305)), pre_existing: false },
+    { id: 'c2', name: 'Callum Reid',    phone: '+447700900204', postcode: 'PO22 9SX',
+      source: 'website',   attributed: iso(d(-45)),  expires: iso(d(320)), pre_existing: false },
+    { id: 'c3', name: 'Hannah Brooks',  phone: '+447700900142', postcode: 'PO19 3BB',
+      source: 'website',   attributed: iso(d(-30)),  expires: iso(d(335)), pre_existing: false },
+    { id: 'c4', name: 'Ivan Petrenko',  phone: '+447700900771', postcode: 'PO21 5CD',
+      source: 'website',   attributed: iso(d(-10)),  expires: iso(d(355)), pre_existing: false },
+    { id: 'c5', name: 'Sophie Adams',   phone: '+447700900655', postcode: 'PO20 7EF',
+      source: 'instagram', attributed: iso(d(-20)),  expires: iso(d(345)), pre_existing: false },
+    { id: 'c6', name: 'Daniel Okafor',  phone: '+447700900983', postcode: 'PO22 6GH',
+      source: 'website',   attributed: iso(d(0)),    expires: iso(d(365)), pre_existing: false },
+    { id: 'c7', name: 'Priya Sandhu',   phone: '+447700900511', postcode: 'PO21 2JK',
+      source: 'walk_in',   attributed: null, expires: null, pre_existing: false },
+    { id: 'c8', name: 'Marek Nowak',    phone: '+447700900037', postcode: 'PO18 8LM',
+      source: 'referral',  attributed: null, expires: null, pre_existing: false },
+    { id: 'c9', name: 'Robert Fenn',    phone: '+447700900420', postcode: 'PO22 4NP',
+      source: 'walk_in',   attributed: null, expires: null, pre_existing: true },
+    { id: 'c10', name: 'Gemma Hollis',  phone: '+447700900866', postcode: 'PO19 6QR',
+      source: 'website',   attributed: iso(d(-400)), expires: iso(d(-35)), pre_existing: false }
+  ];
+
+  // ── Авто ─────────────────────────────────────────────────────────
+  const vehicles = [
+    { id: 'v1',  client: 'c1',  reg: 'AB12 CDE', model: '320d Sport',   series: 'F30', engine: 'N47', year: 2014, mileage: 118000, mot: iso(d(190)) },
+    { id: 'v2',  client: 'c1',  reg: 'SP08 MXR', model: '325i Touring', series: 'E91', engine: 'N53', year: 2008, mileage: 141000, mot: iso(d(331)) },
+    { id: 'v3',  client: 'c2',  reg: 'YR11 HNP', model: '335i',         series: 'E92', engine: 'N55', year: 2011, mileage:  96000, mot: iso(d(44)) },
+    { id: 'v4',  client: 'c3',  reg: 'KX63 TLD', model: '520d',         series: 'F10', engine: 'N47', year: 2013, mileage: 132000, mot: iso(d(9)) },
+    { id: 'v5',  client: 'c4',  reg: 'WD16 PYU', model: '330d Touring', series: 'F31', engine: 'N57', year: 2016, mileage: 104000, mot: iso(d(260)) },
+    { id: 'v6',  client: 'c5',  reg: 'OU17 BZA', model: 'M140i',        series: 'F21', engine: 'B58', year: 2017, mileage:  61000, mot: iso(d(120)) },
+    { id: 'v7',  client: 'c6',  reg: 'GK15 VTC', model: '330d',         series: 'F31', engine: 'N57', year: 2015, mileage: 121000, mot: iso(d(75)) },
+    { id: 'v8',  client: 'c7',  reg: 'LV65 KRT', model: '118i',         series: 'F20', engine: 'B38', year: 2016, mileage:  73000, mot: iso(d(210)) },
+    { id: 'v9',  client: 'c8',  reg: 'RE19 OWD', model: '520d',         series: 'G30', engine: 'B47', year: 2019, mileage:  58000, mot: iso(d(15)) },
+    { id: 'v10', client: 'c9',  reg: 'HY60 EJW', model: 'X5 30d',       series: 'E70', engine: 'M57', year: 2010, mileage: 178000, mot: iso(d(88)) },
+    { id: 'v11', client: 'c10', reg: 'MT14 ZQS', model: '116d',         series: 'F20', engine: 'N47', year: 2014, mileage:  99000, mot: iso(d(33)) }
+  ];
+
+  // ── Заявки з сайту ───────────────────────────────────────────────
+  // 🔴 message лежить дослівно, англійською. Не перекладається.
+  const enquiries = [
+    { id: 'e1', name: 'Daniel Okafor', phone: '+447700900983', at: at(9, 12),
+      message: 'Hi, 330d F31, turbo actuator error P0299. Can you look at it this week?',
+      vehicle: '330d F31 2015', status: 'new',
+      utm: { source: 'google', campaign: 'engine-repair-bognor' } },
+    { id: 'e2', name: 'Hannah Brooks', phone: '+447700900142', at: new Date(today.getTime() - DAY + 17.6 * 3600000),
+      message: 'MOT due on the 14th, and there is a knock over bumps at the front. Saturday morning any good?',
+      vehicle: '520d F10', status: 'new',
+      utm: { source: 'google', campaign: 'mot-bognor' } },
+    { id: 'e3', name: 'Ivan Petrenko', phone: '+447700900771', at: new Date(today.getTime() - 2 * DAY + 14 * 3600000),
+      message: 'N47 timing chain — do you do this job? Rough price? Car is a 2016 330d.',
+      vehicle: '330d F31', status: 'new',
+      utm: { source: 'instagram', campaign: 'engine-rebuild' } }
+  ];
+
+  // ── Записи на сьогодні ───────────────────────────────────────────
+  const bookings = [
+    { id: 'b1', client: 'c1', vehicle: 'v1', from: at(8, 30),  to: at(10, 0),
+      job: { ua: 'MOT + повне ТО', en: 'MOT + full service' }, status: 'in_progress', bay: 1 },
+    { id: 'b2', client: 'c7', vehicle: 'v8', from: at(9, 15),  to: at(10, 15),
+      job: { ua: 'Горить чек — діагностика', en: 'Engine light — diagnostics' }, status: 'in_progress', bay: 2 },
+    { id: 'b3', client: 'c2', vehicle: 'v3', from: at(10, 0),  to: at(12, 0),
+      job: { ua: 'N55 — стукіт вейстгейта', en: 'N55 wastegate rattle' }, status: 'waiting_parts', bay: 3 },
+    { id: 'b4', client: 'c8', vehicle: 'v9', from: at(11, 30), to: at(12, 15),
+      job: { ua: 'Заміна оливи й фільтрів', en: 'Oil & filter service' }, status: 'booked', bay: 1 },
+    { id: 'b5', client: 'c5', vehicle: 'v6', from: at(12, 0),  to: at(13, 0),
+      job: { ua: 'Передні колодки + гальмівна рідина', en: 'Front pads + brake fluid' }, status: 'booked', bay: 2 },
+    { id: 'b6', client: 'c6', vehicle: 'v7', from: at(12, 30), to: at(14, 30),
+      job: { ua: 'Заміна актуатора турбіни', en: 'Turbo actuator replacement' }, status: 'booked', bay: 3 }
+  ];
+
+  // ── Виконані роботи ──────────────────────────────────────────────
+  // Комісії тут НЕ вказані — їх рахує data.js тим самим правилом,
+  // що й тригер у базі. Набір підібраний так, щоб спрацював КОЖЕН
+  // вид виключення: інакше панель «Що НЕ рахували» не перевіриш.
+  const jobs = [
+    { id: 'j1',  client: 'c1',  vehicle: 'v1',  done: iso(d(-55)), labour: 180,  parts: 95,
+      desc: { ua: 'MOT + повне ТО', en: 'MOT + full service' }, pay: 'card' },
+    { id: 'j2',  client: 'c1',  vehicle: 'v1',  done: iso(d(-20)), labour: 210,  parts: 340,
+      desc: { ua: 'Передні диски й колодки', en: 'Front discs & pads' }, pay: 'card' },
+    { id: 'j3',  client: 'c1',  vehicle: 'v2',  done: iso(d(-3)),  labour: 960,  parts: 720,
+      desc: { ua: 'N47 — ланцюг ГРМ', en: 'N47 timing chain' }, pay: 'transfer' },
+    { id: 'j4',  client: 'c2',  vehicle: 'v3',  done: iso(d(-12)), labour: 420,  parts: 610,
+      desc: { ua: 'N55 — вейстгейт', en: 'N55 wastegate' }, pay: 'card' },
+    { id: 'j5',  client: 'c3',  vehicle: 'v4',  done: iso(d(-8)),  labour: 340,  parts: 285,
+      desc: { ua: 'MOT + важелі підвіски', en: 'MOT + suspension arms' }, pay: 'card' },
+    { id: 'j6',  client: 'c4',  vehicle: 'v5',  done: iso(d(-5)),  labour: 1020, parts: 880,
+      desc: { ua: 'N57 — ланцюг + оливний насос', en: 'N57 chain + oil pump' }, pay: 'transfer' },
+    { id: 'j7',  client: 'c5',  vehicle: 'v6',  done: iso(d(-14)), labour: 160,  parts: 210,
+      desc: { ua: 'Гальмівна рідина + колодки', en: 'Brake fluid + pads' }, pay: 'card' },
+    // ── нижче порогу ──
+    { id: 'j8',  client: 'c3',  vehicle: 'v4',  done: iso(d(-2)),  labour: 40,   parts: 55,
+      desc: { ua: 'Щітки + долив рідин', en: 'Wiper blades + top-up' }, pay: 'cash' },
+    // ── джерело не наше ──
+    { id: 'j9',  client: 'c7',  vehicle: 'v8',  done: iso(d(-9)),  labour: 90,   parts: 140,
+      desc: { ua: 'Діагностика + котушка', en: 'Diagnostics + coil pack' }, pay: 'card' },
+    { id: 'j10', client: 'c8',  vehicle: 'v9',  done: iso(d(-6)),  labour: 120,  parts: 95,
+      desc: { ua: 'Заміна оливи й фільтрів', en: 'Oil & filter service' }, pay: 'cash' },
+    // ── був у базі до запуску реклами ──
+    { id: 'j11', client: 'c9',  vehicle: 'v10', done: iso(d(-4)),  labour: 780,  parts: 1150,
+      desc: { ua: 'M57 — турбіна + патрубки', en: 'M57 turbo + intercooler pipes' }, pay: 'transfer' },
+    // ── вікно вийшло ──
+    { id: 'j12', client: 'c10', vehicle: 'v11', done: iso(d(-1)),  labour: 640,  parts: 520,
+      desc: { ua: 'Зчеплення й маховик', en: 'Clutch & flywheel' }, pay: 'card' }
+  ];
+
+  // ── Журнал змін ──────────────────────────────────────────────────
+  const audit = [
+    { at: new Date(today.getTime() - 60 * DAY + 9.2 * 3600000), entity: 'c1',
+      actor: null, field: 'source', from: null, to: 'website',
+      note: { ua: 'автоматично — форма на сайті', en: 'automatically — enquiry form' } },
+    { at: new Date(today.getTime() - 60 * DAY + 9.7 * 3600000), entity: 'c1',
+      actor: 'Tom Keane', field: 'booked', from: null, to: null,
+      note: { ua: 'записав із заявки №1042', en: 'booked in from enquiry #1042' } }
+  ];
+
+  return { settings, staff, clients, vehicles, enquiries, bookings, jobs, audit };
+})();
+
+
+/* ── js/i18n.js ── */
+/* ═══════════════════════════════════════════════════════════════════
+   МОВА ІНТЕРФЕЙСУ
+
+   Головна — українська. Англійська перемикається кнопкою.
+   Вибір зберігається за працівником, не за пристроєм: власник може
+   сидіти в англійській, механік поруч — в українській, одночасно.
+
+   🔴 Мова інтерфейсу ≠ мова документів.
+   Рахунок, SMS і лист клієнту — ЗАВЖДИ англійською, бо їх отримує
+   британець. Другого перемикача в системі немає навмисно.
+
+   Не перекладається ніколи: MOT · £ · dd/mm/yyyy · номерні знаки ·
+   імена клієнтів · заводські індекси BMW (F30, N47) · текст заявки.
+   ═══════════════════════════════════════════════════════════════════ */
+window.TK = window.TK || {};
+
+TK.i18n = (function () {
+  'use strict';
+
+  const S = {
+    // навігація
+    nav_today:    ['Сьогодні', 'Today'],
+    nav_diary:    ['Розклад', 'Diary'],
+    nav_enq:      ['Заявки', 'Enquiries'],
+    nav_clients:  ['Клієнти', 'Clients'],
+    nav_report:   ['Звіт', 'Report'],
+    nav_money:    ['Гроші', 'Money'],
+    nav_setup:    ['Налаштування', 'Setup'],
+    nav_search:   ['Пошук', 'Search'],
+    nav_more:     ['Ще', 'More'],
+
+    // ролі
+    role_owner:    ['Власник', 'Owner'],
+    role_manager:  ['Приймальник', 'Manager'],
+    role_mechanic: ['Механік', 'Mechanic'],
+    role_partner:  ['Партнер', 'Partner'],
+    role_full:     ['повний доступ', 'full access'],
+    role_nomoney:  ['без комісій', 'no commissions'],
+    role_nonames:  ['без імен клієнтів', 'no client names'],
+
+    // сьогодні
+    booked_in:   ['Записано', 'Booked in'],
+    in_shop:     ['У боксі', 'In workshop'],
+    waiting:     ['Чекає запчастини', 'Waiting on parts'],
+    from_site:   ['З сайту', 'From website'],
+    of_today:    ['з {n} записаних сьогодні', 'of {n} booked in today'],
+    not_arrived: ['ще не приїхали', 'not arrived yet'],
+    diary_for:   ['Розклад на сьогодні', "Today's diary"],
+    slots:       ['{n} записів', '{n} slots'],
+    new_enq:     ['Нові заявки', 'New enquiries'],
+    from_site_n: ['{n} · з сайту', '{n} · from site'],
+    book_in:     ['Записати', 'Book in'],
+    call_back:   ['Передзвонити', 'Call back'],
+    booked_ok:   ['Записано ✓', 'Booked ✓'],
+    no_enq:      ['Нових заявок немає', 'No new enquiries'],
+
+    // статуси
+    st_booked:        ['Записаний', 'Booked'],
+    st_in_progress:   ['У боксі', 'In workshop'],
+    st_waiting_parts: ['Чекає запчастини', 'Waiting on parts'],
+    st_collected:     ['Забрали', 'Collected'],
+
+    // джерела
+    src_website:   ['З САЙТУ', 'WEBSITE'],
+    src_phone_ad:  ['З РЕКЛАМИ', 'PHONE AD'],
+    src_instagram: ['INSTAGRAM', 'INSTAGRAM'],
+    src_walk_in:   ['З ВУЛИЦІ', 'WALK-IN'],
+    src_referral:  ['ПОРАДИЛИ', 'REFERRAL'],
+    src_other:     ['ІНШЕ', 'OTHER'],
+
+    // клієнти
+    clients_h:    ['Клієнти', 'Clients'],
+    search_ph:    ['Пошук: імʼя, номер авто, телефон…', 'Search name, reg or phone…'],
+    visits:       ['візитів', 'visits'],
+    nothing:      ['Нічого не знайдено', 'Nothing found'],
+    source:       ['Джерело', 'Source'],
+    ours_from:    ['Наш з', 'Attributed from'],
+    window_till:  ['Вікно комісії', 'Commission window'],
+    days_left:    ['до {d} · лишилось {n} днів', 'until {d} · {n} days left'],
+    window_over:  ['вікно закрилось {d}', 'window closed {d}'],
+    no_window:    ['вікна немає — джерело не наше', 'no window — not our source'],
+    pre_exist:    ['Був у базі до запуску реклами', 'In the base before launch'],
+    history:      ['Історія візитів', 'Visit history'],
+    vehicles_h:   ['Авто', 'Vehicles'],
+    src_history:  ['Історія джерела', 'Source history'],
+    no_manual:    ['Руками не змінювали', 'No manual changes'],
+    no_manual_d:  ['джерело жодного разу не правили вручну', 'source never edited by hand'],
+    back:         ['Назад', 'Back'],
+
+    // таблиці
+    th_date:    ['Дата', 'Date'],
+    th_job:     ['Що робили', 'Job'],
+    th_client:  ['Клієнт', 'Client'],
+    th_labour:  ['Робота', 'Labour'],
+    th_parts:   ['Запчастини', 'Parts'],
+    th_total:   ['Разом', 'Total'],
+    th_ours:    ['Наші', 'Commission'],
+    total_win:  ['Разом у вікні', 'Total in window'],
+
+    // звіт
+    report_h:     ['Звіт по рекламі', 'Marketing report'],
+    r_clients:    ['Клієнтів з сайту', 'Website clients'],
+    r_revenue:    ['Виручка з них', 'Revenue from them'],
+    r_due:        ['До сплати нам', 'Commission due'],
+    r_of_jobs:    ['з {n} робіт за місяць', 'of {n} jobs this month'],
+    r_split:      ['робота {l} · запчастини {p}', 'labour {l} · parts {p}'],
+    r_formula:    ['{a}% з роботи + {b}% із запчастин', '{a}% labour + {b}% parts'],
+    r_counted:    ['Що порахували', 'Jobs counted'],
+    r_notcounted: ['Що НЕ рахували', 'Not counted'],
+    r_bymonth:    ['Комісія по місяцях', 'Commission by month'],
+    r_nothing:    ['Цього місяця робіт не було', 'No jobs this month'],
+    ex_below:     ['Менше {t}', 'Under {t}'],
+    ex_below_d:   ['нижче порогу за домовленістю', 'below the agreed threshold'],
+    ex_pre:       ['Були в базі', 'Existing clients'],
+    ex_pre_d:     ['ще до запуску реклами', 'in the base before launch'],
+    ex_window:    ['Вікно вийшло', 'Window expired'],
+    ex_window_d:  ['минуло {n} міс', '{n} months passed'],
+    ex_source:    ['Джерело не наше', 'Not our source'],
+    ex_source_d:  ['з вулиці або порадили', 'walk-in or referral'],
+    jobs_n:       ['{n} робіт', '{n} jobs'],
+    all_in_win:   ['{n} · усі у вікні', '{n} · all within window'],
+
+    // закриття роботи
+    close_job:  ['Закрити роботу', 'Close job'],
+    labour:     ['Робота', 'Labour'],
+    parts:      ['Запчастини', 'Parts'],
+    paid_by:    ['Чим платив', 'Paid by'],
+    pay_card:   ['Картка', 'Card'],
+    pay_cash:   ['Готівка', 'Cash'],
+    pay_transf: ['Переказ', 'Transfer'],
+    total:      ['Разом', 'Total'],
+    mark_paid:  ['Оплачено — закрити', 'Mark as paid & close'],
+    invoice_en: ['Рахунок клієнту піде англійською.', 'Invoice goes to the client in English.'],
+    mot_set:    ['Нагадування про MOT — на {d}.', 'MOT reminder set for {d}.'],
+    cancel:     ['Скасувати', 'Cancel'],
+    closed_ok:  ['Роботу закрито ✓', 'Job closed ✓'],
+
+    // попередження
+    demo_title: ['Демонстрація на вигаданих даних',
+                 'Demo on made-up data'],
+    demo_body:  ['Бази ще немає. Люди, авто й суми вигадані — жодного реального клієнта. Кнопки працюють, але зміни живуть до перезавантаження сторінки.',
+                 'No database yet. People, cars and amounts are made up — no real clients. Buttons work, but changes live until you reload.'],
+    rates_warn: ['Ставки не узгоджені: {a}% / {b}%, поріг {t}, вікно {w} міс — припущення, не домовленість.',
+                 'Rates not agreed: {a}% / {b}%, threshold {t}, window {w} months — an assumption, not an agreement.'],
+    no_access:  ['Цього ви не бачите', 'You do not see this'],
+    no_access_d:['Ця роль не має доступу до цього екрана. Так вирішує база, не інтерфейс.',
+                 'This role has no access to this screen. The database decides that, not the interface.'],
+    viewing_as: ['Дивимось очима', 'Viewing as']
+  };
+
+  let lang = 'ua';
+  const idx = () => (lang === 'ua' ? 0 : 1);
+
+  function t(key, vars) {
+    const row = S[key];
+    if (!row) return key;
+    let out = row[idx()];
+    if (vars) {
+      Object.keys(vars).forEach(k => {
+        out = out.split('{' + k + '}').join(vars[k]);
+      });
+    }
+    return out;
+  }
+
+  return {
+    t,
+    get lang() { return lang; },
+    set(l) { lang = (l === 'en' ? 'en' : 'ua'); document.documentElement.lang = (l === 'en' ? 'en-GB' : 'uk'); },
+    toggle() { this.set(lang === 'ua' ? 'en' : 'ua'); }
+  };
+})();
+
+
+/* ── js/data.js ── */
+/* ═══════════════════════════════════════════════════════════════════
+   ШАР ДОСТУПУ ДО ДАНИХ
+
+   🔴 Це єдине місце, яке знає, ЗВІДКИ беруться дані.
+   Решта застосунку працює тільки через TK.db і не здогадується,
+   що зараз під ним фальшивка.
+
+   Коли зʼявиться Supabase, міняється ТІЛЬКИ цей файл: кожна функція
+   стає запитом. Екрани не чіпаються взагалі. Саме заради цього шар
+   і відокремлений — інакше запити розповзлися б по всьому інтерфейсу
+   і переїзд означав би переписати все.
+
+   Усі функції async навмисно, хоч зараз і повертають миттєво:
+   з базою вони стануть справді асинхронними, і викликаючий код
+   не доведеться переписувати.
+   ═══════════════════════════════════════════════════════════════════ */
+window.TK = window.TK || {};
+
+TK.db = (function () {
+  'use strict';
+
+  const m = TK.mock;
+  let currentUserId = 's1';           // хто «залогінений»
+
+  const clientById  = (id) => m.clients.find(c => c.id === id);
+  const vehicleById = (id) => m.vehicles.find(v => v.id === id);
+
+  /* ── ПРАВА ──────────────────────────────────────────────────────
+     ⚠️ Це НЕ захист. Це лише те, що малювати на екрані.
+     Справжній захист — правила RLS у базі (crm/migrations/0003_rls.sql),
+     перевірені злим тестом. Приховати колонку в браузері нічого не
+     захищає: дані вже приїхали, і їх видно за десять секунд. */
+  const CAN = {
+    owner:    { money: true,  clients: true,  commissions: true,  settings: true },
+    manager:  { money: true,  clients: true,  commissions: false, settings: false },
+    mechanic: { money: true,  clients: true,  commissions: false, settings: false },
+    partner:  { money: false, clients: false, commissions: true,  settings: false }
+  };
+
+  function me() { return m.staff.find(s => s.id === currentUserId); }
+  function can(what) { return !!CAN[me().role][what]; }
+
+  /* ── ПРАВИЛО НАРАХУВАННЯ ─────────────────────────────────────────
+     Дослівно те саме, що в тригері apply_commission (0002_logic.sql).
+     🪤 Якщо тут і там розійдеться — цифри в інтерфейсі перестануть
+     збігатися з базою. Міняєш одне — міняй друге. */
+  function commissionFor(job) {
+    const c = clientById(job.client);
+    const s = m.settings;
+    const total = job.labour + job.parts;
+    const base = { job, total, amount: 0, status: 'excluded', reason: null };
+
+    if (c.pre_existing)                       return { ...base, reason: 'pre_existing' };
+    if (!['website', 'phone_ad', 'instagram'].includes(c.source))
+                                              return { ...base, reason: 'not_our_source' };
+    if (!c.expires || job.done > c.expires)   return { ...base, reason: 'window_expired' };
+    if (total < s.threshold_gbp)              return { ...base, reason: 'below_threshold' };
+
+    const amount = Math.round((job.labour * s.rate_labour + job.parts * s.rate_parts) * 100) / 100;
+    return { ...base, amount, status: 'due', reason: null };
+  }
+
+  const wait = (v) => Promise.resolve(v);
+
+  return {
+    /* ── хто працює ── */
+    me,
+    can,
+    staff: () => m.staff,
+    switchUser(id) { currentUserId = id; },
+
+    settings: () => m.settings,
+
+    /* ── сьогодні ── */
+    async today() {
+      return wait(m.bookings.map(b => ({
+        ...b,
+        clientRef: clientById(b.client),
+        vehicleRef: vehicleById(b.vehicle)
+      })));
+    },
+
+    async newEnquiries() {
+      return wait(m.enquiries.filter(e => e.status === 'new'));
+    },
+
+    async todayStats() {
+      const list = m.bookings;
+      const fromSite = list.filter(b => {
+        const c = clientById(b.client);
+        return ['website', 'phone_ad', 'instagram'].includes(c.source);
+      }).length;
+      return wait({
+        booked: list.length,
+        inShop: list.filter(b => b.status === 'in_progress').length,
+        waiting: list.filter(b => b.status === 'waiting_parts').length,
+        fromSite
+      });
+    },
+
+    /* ── клієнти ── */
+    async clients(query) {
+      let list = m.clients.slice();
+      if (query) {
+        const q = query.toLowerCase().replace(/\s+/g, '');
+        list = list.filter(c =>
+          c.name.toLowerCase().includes(query.toLowerCase()) ||
+          c.phone.replace(/\s+/g, '').includes(q) ||
+          m.vehicles.some(v => v.client === c.id &&
+            v.reg.toLowerCase().replace(/\s+/g, '').includes(q))
+        );
+      }
+      return wait(list.map(c => ({
+        ...c,
+        vehicles: m.vehicles.filter(v => v.client === c.id),
+        visits: m.jobs.filter(j => j.client === c.id).length
+      })));
+    },
+
+    async client(id) {
+      const c = clientById(id);
+      if (!c) return wait(null);
+      const jobs = m.jobs
+        .filter(j => j.client === id)
+        .sort((a, b) => b.done.localeCompare(a.done))
+        .map(j => ({ ...j, commission: commissionFor(j) }));
+
+      return wait({
+        ...c,
+        vehicles: m.vehicles.filter(v => v.client === id),
+        jobs,
+        audit: m.audit.filter(a => a.entity === id),
+        totals: jobs.reduce((acc, j) => ({
+          labour: acc.labour + j.labour,
+          parts: acc.parts + j.parts,
+          total: acc.total + j.labour + j.parts,
+          commission: acc.commission + j.commission.amount
+        }), { labour: 0, parts: 0, total: 0, commission: 0 })
+      });
+    },
+
+    /* ── звіт ── */
+    async report(period) {
+      const rows = m.jobs
+        .filter(j => j.done.slice(0, 7) === period)
+        .map(j => {
+          const c = clientById(j.client);
+          const cm = commissionFor(j);
+          return {
+            ...j,
+            clientRef: c,
+            vehicleRef: vehicleById(j.vehicle),
+            // 🔴 партнер бачить ініціали й три цифри — не імʼя.
+            // У базі це робить окреме подання partner_report.
+            display: this.can('clients')
+              ? c.name
+              : c.name.split(' ').map(w => w[0].toUpperCase()).join('.') +
+                ' · …' + c.phone.slice(-3),
+            commission: cm
+          };
+        })
+        .sort((a, b) => b.done.localeCompare(a.done));
+
+      const counted = rows.filter(r => r.commission.status === 'due');
+      const excluded = rows.filter(r => r.commission.status === 'excluded');
+      const tally = (reason) => excluded.filter(r => r.commission.reason === reason).length;
+
+      return wait({
+        period, rows,
+        clients: new Set(counted.map(r => r.client)).size,
+        labour: counted.reduce((s, r) => s + r.labour, 0),
+        parts: counted.reduce((s, r) => s + r.parts, 0),
+        revenue: counted.reduce((s, r) => s + r.labour + r.parts, 0),
+        commission: Math.round(counted.reduce((s, r) => s + r.commission.amount, 0) * 100) / 100,
+        totalJobs: rows.length,
+        excluded: {
+          below_threshold: tally('below_threshold'),
+          pre_existing:    tally('pre_existing'),
+          window_expired:  tally('window_expired'),
+          not_our_source:  tally('not_our_source')
+        }
+      });
+    },
+
+    /* Місяці, у яких взагалі є роботи — для перемикача періодів. */
+    async periods() {
+      const set = new Set(m.jobs.map(j => j.done.slice(0, 7)));
+      return wait([...set].sort().reverse());
+    },
+
+    /* Комісія по місяцях — для стовпчиків у звіті. */
+    async commissionByMonth(count) {
+      const out = [];
+      const now = new Date();
+      for (let i = count - 1; i >= 0; i--) {
+        const dt = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const key = dt.toISOString().slice(0, 7);
+        const sum = m.jobs
+          .filter(j => j.done.slice(0, 7) === key)
+          .map(commissionFor)
+          .reduce((s, c) => s + c.amount, 0);
+        out.push({ period: key, month: dt.getMonth(), amount: Math.round(sum * 100) / 100 });
+      }
+      return wait(out);
+    },
+
+    /* ── дія: закрити роботу ─────────────────────────────────────
+       Механік вводить лише роботу й запчастини. Комісію не бачить
+       і ввести не може — її рахує система. */
+    async closeJob(bookingId, labour, parts, pay) {
+      const b = m.bookings.find(x => x.id === bookingId);
+      if (!b) throw new Error('Запис не знайдено');
+      const job = {
+        id: 'j' + (m.jobs.length + 1),
+        client: b.client, vehicle: b.vehicle,
+        done: new Date().toISOString().slice(0, 10),
+        labour: Number(labour) || 0,
+        parts: Number(parts) || 0,
+        desc: b.job, pay: pay || 'card'
+      };
+      m.jobs.push(job);
+      b.status = 'collected';
+      return wait(job);
+    },
+
+    /* ── дія: заявка з сайту → клієнт + запис ───────────────────
+       Один клік. Джерело 'website' проставляється САМО — саме тому
+       його не забудуть, і саме тому атрибуція взагалі працює. */
+    async bookEnquiry(enquiryId) {
+      const e = m.enquiries.find(x => x.id === enquiryId);
+      if (!e) throw new Error('Заявку не знайдено');
+
+      let c = m.clients.find(x => x.phone === e.phone);
+      if (!c) {
+        const now = new Date();
+        const exp = new Date(now); exp.setMonth(exp.getMonth() + m.settings.window_months);
+        c = {
+          id: 'c' + (m.clients.length + 1),
+          name: e.name, phone: e.phone, postcode: '',
+          source: 'website',
+          attributed: now.toISOString().slice(0, 10),
+          expires: exp.toISOString().slice(0, 10),
+          pre_existing: false
+        };
+        m.clients.push(c);
+        m.audit.push({
+          at: new Date(), entity: c.id, actor: null, field: 'source',
+          from: null, to: 'website',
+          note: { ua: 'автоматично — форма на сайті', en: 'automatically — enquiry form' }
+        });
+      }
+      e.status = 'booked';
+      return wait(c);
+    },
+
+    /* Довідка: чи ставки взагалі узгоджені. Поки ні — інтерфейс
+       чесно про це попереджає, а не вдає, що цифри справжні. */
+    ratesAgreed: () => m.settings.agreed
+  };
+})();
+
+
+/* ── js/app.js ── */
+/* ═══════════════════════════════════════════════════════════════════
+   T&K Workshop Desk — екрани і стан
+
+   Ванільний JS без бібліотек, як і сайт. Дані беруться ТІЛЬКИ через
+   TK.db — цей файл не знає, що під ним зараз фальшивка, і не має знати.
+   ═══════════════════════════════════════════════════════════════════ */
+window.TK = window.TK || {};
+
+(function () {
+  'use strict';
+
+  const t = (k, v) => TK.i18n.t(k, v);
+  const db = TK.db;
+  const $ = (sel, root) => (root || document).querySelector(sel);
+
+  const state = { screen: 'today', clientId: null, query: '', period: null, closing: null };
+
+  /* ── дрібні помічники ─────────────────────────────────────────── */
+  const esc = (s) => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  // 🔴 Британський формат дати. Перевернути на mm/dd — це записати
+  // клієнта не на той день.
+  const fmtDate = (isoStr) => {
+    if (!isoStr) return '—';
+    const [y, m, d] = isoStr.split('-');
+    return `${d}/${m}/${y}`;
+  };
+  const fmtDay = (isoStr) => isoStr ? isoStr.split('-').slice(1).reverse().join('/') : '—';
+  const fmtTime = (dt) => String(dt.getHours()).padStart(2, '0') + ':' + String(dt.getMinutes()).padStart(2, '0');
+  const money = (n) => db.settings().currency + Number(n).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money0 = (n) => db.settings().currency + Math.round(Number(n)).toLocaleString('en-GB');
+  const daysBetween = (isoStr) => Math.round((new Date(isoStr) - new Date()) / 86400000);
+  const OURS = ['website', 'phone_ad', 'instagram'];
+  const isOurs = (src) => OURS.includes(src);
+
+  const srcChip = (src) =>
+    `<span class="src ${isOurs(src) ? 'src--ours' : ''}">${esc(t('src_' + src))}</span>`;
+
+  const localised = (v) => (v && typeof v === 'object') ? v[TK.i18n.lang] : v;
+
+  function toast(msg) {
+    const old = $('.toast'); if (old) old.remove();
+    const el = document.createElement('div');
+    el.className = 'toast'; el.setAttribute('role', 'status'); el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2600);
+  }
+
+  /* ═══ БІЧНА КОЛОНКА ═════════════════════════════════════════════ */
+  function renderSide(counts) {
+    const me = db.me();
+    const nav = [
+      ['today',   'nav_today',   counts.bookings],
+      ['clients', 'nav_clients', null],
+      ['report',  'nav_report',  null]
+    ];
+    const roleNote = {
+      owner: t('role_full'), manager: t('role_nomoney'),
+      mechanic: t('role_nomoney'), partner: t('role_nonames')
+    }[me.role];
+
+    $('#side').innerHTML = `
+      <div class="side__brand">
+        <span class="mstripe" aria-hidden="true"><i></i><i></i><i></i></span>
+        <b>T&amp;K Desk</b>
+      </div>
+      <nav class="side__nav">
+        ${nav.map(([id, key, n]) => `
+          <button data-go="${id}" class="${state.screen === id ? 'on' : ''}">
+            <span class="dot"></span>${esc(t(key))}
+            ${n ? `<span class="cnt">${n}</span>` : ''}
+          </button>`).join('')}
+      </nav>
+
+      <div class="side__lang">
+        <div class="k">${TK.i18n.lang === 'ua' ? 'Мова' : 'Language'}</div>
+        <div class="seg" role="group">
+          <button data-lang="ua" aria-pressed="${TK.i18n.lang === 'ua'}">УКР</button>
+          <button data-lang="en" aria-pressed="${TK.i18n.lang === 'en'}">ENG</button>
+        </div>
+      </div>
+
+      <div class="side__user">
+        <div class="k">${esc(t('viewing_as'))}</div>
+        <select id="who">
+          ${db.staff().map(s => `<option value="${s.id}" ${s.id === me.id ? 'selected' : ''}>
+             ${esc(s.name)} — ${esc(t('role_' + s.role))}</option>`).join('')}
+        </select>
+        <div class="role">${esc(roleNote)}</div>
+      </div>`;
+  }
+
+  function renderTabs() {
+    const tabs = [['today', 'nav_today'], ['clients', 'nav_clients'], ['report', 'nav_report']];
+    $('#tabs').innerHTML = tabs.map(([id, key]) => `
+      <button data-go="${id}" class="${state.screen === id ? 'on' : ''}">
+        <i></i>${esc(t(key))}
+      </button>`).join('');
+  }
+
+  /* ═══ ПОПЕРЕДЖЕННЯ ══════════════════════════════════════════════ */
+  function warnings() {
+    const s = db.settings();
+    let out = `
+      <div class="warn">
+        <span class="ic">▲</span>
+        <div><b>${esc(t('demo_title'))}</b><p>${esc(t('demo_body'))}</p></div>
+      </div>`;
+    if (!db.ratesAgreed()) {
+      out += `
+      <div class="warn">
+        <span class="ic">▲</span>
+        <div><p>${esc(t('rates_warn', {
+          a: s.rate_labour * 100, b: s.rate_parts * 100,
+          t: money0(s.threshold_gbp), w: s.window_months
+        }))}</p></div>
+      </div>`;
+    }
+    return out;
+  }
+
+  function denied() {
+    return `<div class="panel"><div class="empty">
+      <b style="display:block;color:var(--txt);margin-bottom:6px">${esc(t('no_access'))}</b>
+      ${esc(t('no_access_d'))}
+    </div></div>`;
+  }
+
+  /* ═══ ЕКРАН: СЬОГОДНІ ═══════════════════════════════════════════ */
+  async function screenToday() {
+    // Партнер бачить лише цифри — операційний день не його справа.
+    if (!db.can('clients')) {
+      $('#title').textContent = t('nav_today');
+      $('#sub').textContent = '';
+      $('#tools').innerHTML = '';
+      $('#scroll').innerHTML = warnings() + denied();
+      return;
+    }
+
+    const [list, enq, stats] = await Promise.all([db.today(), db.newEnquiries(), db.todayStats()]);
+    const today = new Date();
+
+    $('#title').textContent = t('nav_today');
+    $('#sub').textContent = fmtDate(today.toISOString().slice(0, 10));
+    $('#tools').innerHTML = '';
+
+    $('#scroll').innerHTML = warnings() + `
+      <div class="tiles">
+        <div class="tile"><div class="k">${esc(t('booked_in'))}</div><div class="v">${stats.booked}</div>
+          <div class="d">${stats.booked - stats.inShop} ${esc(t('not_arrived'))}</div></div>
+        <div class="tile"><div class="k">${esc(t('in_shop'))}</div><div class="v">${stats.inShop}</div></div>
+        <div class="tile"><div class="k">${esc(t('waiting'))}</div><div class="v">${stats.waiting}</div></div>
+        <div class="tile tile--accent"><div class="k">${esc(t('from_site'))}</div>
+          <div class="v">${stats.fromSite}</div>
+          <div class="d">${esc(t('of_today', { n: stats.booked }))}</div></div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <div class="panel__h"><h2>${esc(t('diary_for'))}</h2>
+            <span class="n">${esc(t('slots', { n: list.length }))}</span></div>
+          ${list.map(b => {
+            const done = b.status === 'collected';
+            return `
+            <div class="slot">
+              <span class="t">${fmtTime(b.from)}</span>
+              <div class="who">
+                <div class="nm">${esc(b.clientRef.name)}</div>
+                <div class="jb">${esc(localised(b.job))}</div>
+              </div>
+              <div class="car-wrap">
+                <div class="car">${esc(b.vehicleRef.model)} ${esc(b.vehicleRef.series)}</div>
+                <span class="reg">${esc(b.vehicleRef.reg)}</span>
+              </div>
+              <div class="tags"><span class="pill pill--${b.status}">${esc(t('st_' + b.status))}</span></div>
+              <div class="tags">${srcChip(b.clientRef.source)}</div>
+              <div class="act">
+                <button class="btn ${done ? 'btn--ghost' : ''}" data-close="${b.id}" ${done ? 'disabled' : ''}>
+                  ${done ? esc(t('st_collected')) : esc(t('close_job'))}
+                </button>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+
+        <div class="panel">
+          <div class="panel__h"><h2>${esc(t('new_enq'))}</h2>
+            <span class="n">${esc(t('from_site_n', { n: enq.length }))}</span></div>
+          ${enq.length ? enq.map(e => `
+            <div class="lead">
+              <div class="lead__top"><b>${esc(e.name)}</b><time>${fmtTime(e.at)}</time></div>
+              <div class="ln">${esc(e.phone)}</div>
+              <p class="msg">“${esc(e.message)}”</p>
+              <div class="utm">${esc(e.utm.source)} · ${esc(e.utm.campaign)}</div>
+              <div class="lead__act">
+                <button class="btn" data-book="${e.id}">${esc(t('book_in'))}</button>
+                <button class="btn btn--ghost">${esc(t('call_back'))}</button>
+              </div>
+            </div>`).join('') : `<div class="empty">${esc(t('no_enq'))}</div>`}
+        </div>
+      </div>`;
+  }
+
+  /* ═══ ЕКРАН: КЛІЄНТИ ════════════════════════════════════════════ */
+  async function screenClients() {
+    if (!db.can('clients')) {
+      $('#title').textContent = t('clients_h');
+      $('#sub').textContent = ''; $('#tools').innerHTML = '';
+      $('#scroll').innerHTML = warnings() + denied();
+      return;
+    }
+    if (state.clientId) return screenClientCard();
+
+    const list = await db.clients(state.query);
+    $('#title').textContent = t('clients_h');
+    $('#sub').textContent = list.length;
+    $('#tools').innerHTML =
+      `<input class="search" id="q" type="search" placeholder="${esc(t('search_ph'))}" value="${esc(state.query)}">`;
+
+    $('#scroll').innerHTML = warnings() + `
+      <div class="panel">
+        ${list.length ? list.map(c => `
+          <button class="crow" data-client="${c.id}">
+            <div>
+              <div class="nm">${esc(c.name)}</div>
+              <div class="ph">${esc(c.phone)}</div>
+            </div>
+            <div class="cars">${c.vehicles.map(v => esc(v.model) + ' ' + esc(v.series)).join(' · ') || '—'}</div>
+            <div>${srcChip(c.source)}</div>
+            <div class="vis">${c.visits} ${esc(t('visits'))}</div>
+          </button>`).join('') : `<div class="empty">${esc(t('nothing'))}</div>`}
+      </div>`;
+
+    const q = $('#q');
+    if (q) {
+      q.addEventListener('input', () => {
+        state.query = q.value;
+        clearTimeout(q._tm);
+        q._tm = setTimeout(async () => {
+          await screenClients();
+          const nq = $('#q'); if (nq) { nq.focus(); nq.setSelectionRange(nq.value.length, nq.value.length); }
+        }, 160);
+      });
+    }
+  }
+
+  async function screenClientCard() {
+    const c = await db.client(state.clientId);
+    if (!c) { state.clientId = null; return screenClients(); }
+
+    const left = c.expires ? daysBetween(c.expires) : null;
+    const live = left !== null && left > 0 && !c.pre_existing && isOurs(c.source);
+    const pct = live ? Math.max(2, Math.min(100, 100 - (left / (db.settings().window_months * 30.4) * 100))) : 0;
+
+    $('#title').textContent = t('clients_h');
+    $('#sub').textContent = '/ ' + c.name;
+    $('#tools').innerHTML = `<button class="btn btn--ghost" data-go="clients">← ${esc(t('back'))}</button>`;
+
+    let windowCell;
+    if (c.pre_existing) {
+      windowCell = `<div class="v">${esc(t('pre_exist'))}</div>`;
+    } else if (!isOurs(c.source)) {
+      windowCell = `<div class="v mono muted">${esc(t('no_window'))}</div>`;
+    } else if (live) {
+      windowCell = `<div class="v mono blue">${esc(t('days_left', { d: fmtDate(c.expires), n: left }))}</div>
+                    <div class="bar"><i style="width:${pct.toFixed(0)}%"></i></div>`;
+    } else {
+      windowCell = `<div class="v mono muted">${esc(t('window_over', { d: fmtDate(c.expires) }))}</div>`;
+    }
+
+    $('#scroll').innerHTML = warnings() + `
+      <div class="chead">
+        <div>
+          <h2>${esc(c.name)}</h2>
+          <div class="meta">${esc(c.phone)} · ${esc(c.postcode || '—')} · ${c.jobs.length} ${esc(t('visits'))}</div>
+        </div>
+      </div>
+
+      <div class="attr ${live ? '' : 'attr--dead'}">
+        <div class="f"><div class="k">${esc(t('source'))}</div>
+          <div class="v ${isOurs(c.source) ? 'blue' : ''}">${esc(t('src_' + c.source))}</div></div>
+        <div class="f"><div class="k">${esc(t('ours_from'))}</div>
+          <div class="v mono">${c.attributed ? fmtDate(c.attributed) : '—'}</div></div>
+        <div class="f"><div class="k">${esc(t('window_till'))}</div>${windowCell}</div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <div class="panel__h"><h2>${esc(t('history'))}</h2>
+            <span class="n">${c.jobs.length} ${esc(t('visits'))}</span></div>
+          <div class="tw"><table>
+            <thead><tr>
+              <th>${esc(t('th_date'))}</th><th>${esc(t('th_job'))}</th>
+              <th class="num">${esc(t('th_labour'))}</th><th class="num">${esc(t('th_parts'))}</th>
+              <th class="num">${esc(t('th_total'))}</th>
+              ${db.can('commissions') ? `<th class="num">${esc(t('th_ours'))}</th>` : ''}
+            </tr></thead>
+            <tbody>
+              ${c.jobs.map(j => `<tr>
+                <td class="dt">${fmtDate(j.done)}</td>
+                <td>${esc(localised(j.desc))}</td>
+                <td class="num">${j.labour.toFixed(2)}</td>
+                <td class="num">${j.parts.toFixed(2)}</td>
+                <td class="num">${(j.labour + j.parts).toFixed(2)}</td>
+                ${db.can('commissions') ? `<td class="num ${j.commission.amount ? 'ours' : 'muted'}">
+                   ${j.commission.amount ? j.commission.amount.toFixed(2) : '—'}</td>` : ''}
+              </tr>`).join('')}
+            </tbody>
+            ${db.can('commissions') ? `<tfoot><tr>
+              <td colspan="2">${esc(t('total_win'))}</td>
+              <td class="num">${c.totals.labour.toFixed(2)}</td>
+              <td class="num">${c.totals.parts.toFixed(2)}</td>
+              <td class="num">${c.totals.total.toFixed(2)}</td>
+              <td class="num ours">${c.totals.commission.toFixed(2)}</td>
+            </tr></tfoot>` : ''}
+          </table></div>
+        </div>
+
+        <div class="stack">
+          <div class="panel">
+            <div class="panel__h"><h2>${esc(t('vehicles_h'))}</h2></div>
+            ${c.vehicles.map(v => `
+              <div class="veh">
+                <span class="badge">${esc(v.series)}</span>
+                <div><b>${esc(v.model)}</b>
+                  <div class="l">${v.year} · ${esc(v.engine)} · ${(v.mileage / 1000).toFixed(0)}k</div></div>
+                <div class="r">${esc(v.reg)}<br><em>MOT ${fmtDate(v.mot)}</em></div>
+              </div>`).join('')}
+          </div>
+
+          <div class="panel">
+            <div class="panel__h"><h2>${esc(t('src_history'))}</h2><span class="n">audit</span></div>
+            <ul class="trail">
+              ${c.audit.map(a => `<li>
+                <time>${fmtDate(a.at.toISOString().slice(0, 10))} ${fmtTime(a.at)}</time>
+                <div><b>${a.to ? esc(t('src_' + a.to)) : esc(a.actor || '')}</b>
+                  <div class="by">${esc(localised(a.note))}</div></div>
+              </li>`).join('')}
+              <li><time>—</time><div><b>${esc(t('no_manual'))}</b>
+                <div class="by">${esc(t('no_manual_d'))}</div></div></li>
+            </ul>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* ═══ ЕКРАН: ЗВІТ ═══════════════════════════════════════════════ */
+  async function screenReport() {
+    if (!db.can('commissions')) {
+      $('#title').textContent = t('report_h');
+      $('#sub').textContent = ''; $('#tools').innerHTML = '';
+      $('#scroll').innerHTML = warnings() + denied();
+      return;
+    }
+
+    const periods = await db.periods();
+    if (!state.period || !periods.includes(state.period)) {
+      // За замовчуванням — попередній ПОВНИЙ місяць, не поточний.
+      // Гроші звіряють за місяць, який уже закінчився; поточний ще йде,
+      // і 5-го числа він показував би «1 клієнт» і виглядав зламаним.
+      const now = new Date();
+      const prev = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        .toISOString().slice(0, 7);
+      state.period = periods.includes(prev) ? prev : periods[0];
+    }
+    const [r, months] = await Promise.all([db.report(state.period), db.commissionByMonth(6)]);
+    const s = db.settings();
+
+    const MONTHS_UA = ['СІЧ','ЛЮТ','БЕР','КВІ','ТРА','ЧЕР','ЛИП','СЕР','ВЕР','ЖОВ','ЛИС','ГРУ'];
+    const MONTHS_EN = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const mn = TK.i18n.lang === 'ua' ? MONTHS_UA : MONTHS_EN;
+    // Стеля 80%, не 100%: над стовпчиком стоїть підпис, і на повній
+    // висоті він вилазить за межі графіка.
+    const peak = Math.max(1, ...months.map(m => m.amount));
+
+    $('#title').textContent = t('report_h');
+    $('#sub').textContent = state.period;
+    $('#tools').innerHTML = `<select class="search" id="period">
+      ${periods.map(p => `<option ${p === state.period ? 'selected' : ''}>${p}</option>`).join('')}
+    </select>`;
+
+    const exRows = [
+      ['below_threshold', t('ex_below', { t: money0(s.threshold_gbp) }), t('ex_below_d')],
+      ['pre_existing',    t('ex_pre'),    t('ex_pre_d')],
+      ['window_expired',  t('ex_window'), t('ex_window_d', { n: s.window_months })],
+      ['not_our_source',  t('ex_source'), t('ex_source_d')]
+    ].filter(([k]) => r.excluded[k] > 0);
+
+    $('#scroll').innerHTML = warnings() + `
+      <div class="hero3">
+        <div class="h"><div class="k">${esc(t('r_clients'))}</div><div class="v">${r.clients}</div>
+          <div class="d">${esc(t('r_of_jobs', { n: r.totalJobs }))}</div></div>
+        <div class="h"><div class="k">${esc(t('r_revenue'))}</div><div class="v">${money0(r.revenue)}</div>
+          <div class="d">${esc(t('r_split', { l: money0(r.labour), p: money0(r.parts) }))}</div></div>
+        <div class="h h--pay"><div class="k">${esc(t('r_due'))}</div><div class="v">${money0(r.commission)}</div>
+          <div class="d">${esc(t('r_formula', { a: s.rate_labour * 100, b: s.rate_parts * 100 }))}</div></div>
+      </div>
+
+      <div class="cols">
+        <div class="panel">
+          <div class="panel__h"><h2>${esc(t('r_counted'))}</h2>
+            <span class="n">${esc(t('all_in_win', { n: r.rows.filter(x => x.commission.status === 'due').length }))}</span></div>
+          ${r.rows.length ? `<div class="tw"><table>
+            <thead><tr>
+              <th>${esc(t('th_date'))}</th><th>${esc(t('th_client'))}</th><th>${esc(t('th_job'))}</th>
+              <th class="num">${esc(t('th_labour'))}</th><th class="num">${esc(t('th_parts'))}</th>
+              <th class="num">${esc(t('th_ours'))}</th>
+            </tr></thead>
+            <tbody>
+              ${r.rows.map(x => `<tr>
+                <td class="dt">${fmtDay(x.done)}</td>
+                <td>${esc(x.display)}</td>
+                <td>${esc(localised(x.desc))}</td>
+                <td class="num">${x.labour.toFixed(2)}</td>
+                <td class="num">${x.parts.toFixed(2)}</td>
+                <td class="num ${x.commission.amount ? 'ours' : 'muted'}">
+                  ${x.commission.amount ? x.commission.amount.toFixed(2) : '—'}</td>
+              </tr>`).join('')}
+            </tbody>
+            <tfoot><tr>
+              <td colspan="3">${esc(state.period)}</td>
+              <td class="num">${r.labour.toFixed(2)}</td>
+              <td class="num">${r.parts.toFixed(2)}</td>
+              <td class="num ours">${r.commission.toFixed(2)}</td>
+            </tr></tfoot>
+          </table></div>` : `<div class="empty">${esc(t('r_nothing'))}</div>`}
+        </div>
+
+        <div class="stack">
+          <div class="panel"><div class="chart">
+            <div class="chart__h"><h2>${esc(t('r_bymonth'))}</h2><span class="u">${s.currency}</span></div>
+            <div class="bars" style="grid-template-columns:repeat(${months.length},1fr)">
+              ${months.map((m, i) => `
+                <div class="col ${i === months.length - 1 ? 'col--now' : ''}">
+                  <span class="val">${m.amount ? Math.round(m.amount) : '0'}</span>
+                  <span class="stem" style="height:${(m.amount / peak * 80).toFixed(1)}%"></span>
+                </div>`).join('')}
+            </div>
+            <div class="axis" style="grid-template-columns:repeat(${months.length},1fr)">
+              ${months.map(m => `<span class="mo">${mn[m.month]}</span>`).join('')}
+            </div>
+          </div></div>
+
+          <div class="panel">
+            <div class="panel__h"><h2>${esc(t('r_notcounted'))}</h2></div>
+            ${exRows.length ? `<ul class="trail">
+              ${exRows.map(([k, title, sub]) => `<li>
+                <time>${esc(t('jobs_n', { n: r.excluded[k] }))}</time>
+                <div><b>${esc(title)}</b><div class="by">${esc(sub)}</div></div>
+              </li>`).join('')}
+            </ul>` : `<div class="empty">—</div>`}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  /* ═══ ВІКНО «ЗАКРИТИ РОБОТУ» ════════════════════════════════════
+     🔴 Механік вводить лише роботу й запчастини. Жодного відсотка на
+     екрані немає — комісію рахує система. Хто вводить факти, той не
+     має бачити, як від них рахуються чужі гроші. */
+  async function openClose(bookingId) {
+    const list = await db.today();
+    const b = list.find(x => x.id === bookingId);
+    if (!b) return;
+    state.closing = { id: bookingId, labour: '', parts: '', pay: 'card' };
+
+    const box = document.createElement('div');
+    box.className = 'modal';
+    box.innerHTML = `
+      <div class="modal__box" role="dialog" aria-modal="true" aria-label="${esc(t('close_job'))}">
+        <div class="modal__h">
+          <h2>${esc(t('close_job'))}</h2>
+          <span class="reg">${esc(b.vehicleRef.reg)}</span>
+        </div>
+        <div class="modal__b">
+          <div class="fld"><div class="k">${esc(t('labour'))}</div>
+            <div class="in"><span class="cur">${db.settings().currency}</span>
+              <input id="labour" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" autofocus></div></div>
+          <div class="fld"><div class="k">${esc(t('parts'))}</div>
+            <div class="in"><span class="cur">${db.settings().currency}</span>
+              <input id="parts" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00"></div></div>
+          <div class="fld"><div class="k">${esc(t('paid_by'))}</div>
+            <div class="pays">
+              <button data-pay="card" aria-pressed="true">${esc(t('pay_card'))}</button>
+              <button data-pay="cash" aria-pressed="false">${esc(t('pay_cash'))}</button>
+              <button data-pay="transfer" aria-pressed="false">${esc(t('pay_transf'))}</button>
+            </div></div>
+          <div class="sum">
+            <div class="row"><span>${esc(t('labour'))}</span><span class="n" id="sl">${money(0)}</span></div>
+            <div class="row"><span>${esc(t('parts'))}</span><span class="n" id="sp">${money(0)}</span></div>
+            <div class="row row--tot"><span>${esc(t('total'))}</span><span class="n" id="st">${money(0)}</span></div>
+          </div>
+          <p class="note"><b>${esc(t('invoice_en'))}</b> ${esc(t('mot_set', { d: fmtDate(b.vehicleRef.mot) }))}</p>
+        </div>
+        <div class="modal__f">
+          <button class="btn btn--ghost" data-cancel>${esc(t('cancel'))}</button>
+          <button class="btn" data-save>${esc(t('mark_paid'))}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(box);
+
+    const recount = () => {
+      const l = Number($('#labour', box).value) || 0;
+      const p = Number($('#parts', box).value) || 0;
+      $('#sl', box).textContent = money(l);
+      $('#sp', box).textContent = money(p);
+      $('#st', box).textContent = money(l + p);
+    };
+    $('#labour', box).addEventListener('input', recount);
+    $('#parts', box).addEventListener('input', recount);
+    $('#labour', box).focus();
+
+    box.addEventListener('click', async (e) => {
+      const pay = e.target.closest('[data-pay]');
+      if (pay) {
+        box.querySelectorAll('[data-pay]').forEach(x => x.setAttribute('aria-pressed', String(x === pay)));
+        state.closing.pay = pay.dataset.pay;
+        return;
+      }
+      if (e.target.closest('[data-cancel]') || e.target === box) { box.remove(); state.closing = null; return; }
+      if (e.target.closest('[data-save]')) {
+        await db.closeJob(bookingId,
+          $('#labour', box).value, $('#parts', box).value, state.closing.pay);
+        box.remove(); state.closing = null;
+        toast(t('closed_ok'));
+        render();
+      }
+    });
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { box.remove(); state.closing = null; }
+    });
+  }
+
+  /* ═══ РЕНДЕР ════════════════════════════════════════════════════ */
+  async function render() {
+    const list = await db.today();
+    renderSide({ bookings: list.length });
+    renderTabs();
+    if (state.screen === 'today') await screenToday();
+    else if (state.screen === 'clients') await screenClients();
+    else await screenReport();
+  }
+
+  /* ═══ ПОДІЇ ═════════════════════════════════════════════════════ */
+  document.addEventListener('click', async (e) => {
+    const go = e.target.closest('[data-go]');
+    if (go) {
+      state.screen = go.dataset.go;
+      if (state.screen === 'clients') state.clientId = null;
+      return render();
+    }
+    const lang = e.target.closest('[data-lang]');
+    if (lang) { TK.i18n.set(lang.dataset.lang); return render(); }
+
+    const cl = e.target.closest('[data-client]');
+    if (cl) { state.clientId = cl.dataset.client; state.screen = 'clients'; return render(); }
+
+    const close = e.target.closest('[data-close]');
+    if (close && !close.disabled) return openClose(close.dataset.close);
+
+    const bk = e.target.closest('[data-book]');
+    if (bk) { await db.bookEnquiry(bk.dataset.book); toast(t('booked_ok')); return render(); }
+  });
+
+  document.addEventListener('change', (e) => {
+    if (e.target.id === 'who') { db.switchUser(e.target.value); state.clientId = null; render(); }
+    if (e.target.id === 'period') { state.period = e.target.value; render(); }
+  });
+
+  // Мова працівника — його власна: перемикаємо разом з користувачем.
+  TK.i18n.set(db.me().lang);
+  render();
+})();
+
+</script>

@@ -16,6 +16,8 @@
 - [x] Права доступу RLS + знеособлений звіт партнера
 - [x] Злий тест прав — `crm/tests/rls_test.sql`, **28/28 PASS**
 - [x] Інтерфейс на фальшивих даних — `crm/app/`
+- [x] Живе демо за посиланням — `crm/demo.html`, збирається `build-demo.js`
+      https://claude.ai/code/artifact/f45fb920-43fe-445d-b13e-545907879b67
 
 ---
 
