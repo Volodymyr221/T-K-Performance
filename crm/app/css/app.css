@@ -1,0 +1,327 @@
+/* ═══════════════════════════════════════════════════════════════════
+   T&K Workshop Desk — стилі
+
+   Токени взяті ОДИН В ОДИН з assets/css/style.css сайту.
+   Жодного нового кольору: CRM і сайт мають бути одного роду.
+
+   Але щільність інша. Лендінг живе великими відступами — це продає.
+   Адмінка так не працює: у неї дивляться сорок разів на день, і їй
+   потрібні щільні рядки, а не повітря.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root{
+  --bg:#08080a; --bg-alt:#0d0d10; --surface:#131317; --surface-2:#17171c; --surface-3:#1d1d23;
+  --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+  --txt:#f4f5f7; --txt-2:#a3a6ae; --txt-3:#7f838d;
+  --m-lblue:#6cb2e4; --m-blue:#0c63b0; --m-red:#e4002b; --red-txt:#ff3355;
+  /* Стан роботи — окремі від акценту BMW M. Синій M зарезервований
+     виключно під атрибуцію: одна фарба — один сенс. */
+  --ok:#4fbf87; --wait:#d9a441;
+  --r:12px;
+  --ui:"Archivo","Manrope","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+  --side:214px;
+}
+
+*,*::before,*::after{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0; background:var(--bg); color:var(--txt); font-family:var(--ui);
+  font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+h1,h2,h3,h4,h5{ margin:0; line-height:1.1; letter-spacing:-.02em }
+p{ margin:0 } ul,ol{ margin:0; padding:0; list-style:none }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer }
+input,select{ font:inherit; color:inherit }
+a{ color:inherit; text-decoration:none }
+:focus-visible{ outline:2px solid var(--m-lblue); outline-offset:2px; border-radius:5px }
+
+.mstripe{ display:inline-flex; height:8px; width:44px; flex:none }
+.mstripe i{ flex:1; transform:skewX(-22deg) }
+.mstripe i:nth-child(1){ background:var(--m-lblue) }
+.mstripe i:nth-child(2){ background:var(--m-blue) }
+.mstripe i:nth-child(3){ background:var(--m-red) }
+
+/* ═══ Каркас ═══════════════════════════════════════════════════════ */
+.shell{ display:grid; grid-template-columns:var(--side) 1fr; height:100vh; height:100dvh }
+
+.side{ background:#0a0a0d; border-right:1px solid var(--line); display:flex; flex-direction:column; padding:16px 0; overflow-y:auto }
+.side__brand{ display:flex; align-items:center; gap:10px; padding:0 16px 18px }
+.side__brand b{ font-size:15px; font-weight:800 }
+.side__nav{ padding:0 9px; margin-bottom:auto }
+.side__label{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt-3); padding:14px 8px 6px }
+.side__nav button{
+  display:flex; align-items:center; gap:10px; width:100%; padding:9px 10px;
+  border-radius:9px; color:var(--txt-2); font-size:14px; font-weight:500; text-align:left;
+}
+.side__nav button .dot{ width:6px; height:6px; border-radius:2px; background:var(--line-2); flex:none }
+.side__nav button.on{ background:var(--surface-2); color:var(--txt); font-weight:600 }
+.side__nav button.on .dot{ background:var(--m-red) }
+.side__nav button .cnt{ margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--txt-3) }
+.side__nav button.on .cnt{ color:var(--m-lblue) }
+@media (hover:hover) and (pointer:fine){
+  .side__nav button:hover{ background:var(--surface); color:var(--txt) }
+}
+
+.side__lang{ padding:14px 13px 0; margin-top:12px; border-top:1px solid var(--line) }
+.side__lang .k{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt-3); margin-bottom:6px }
+.seg{ display:flex; border:1px solid var(--line-2); border-radius:7px; overflow:hidden }
+.seg button{ flex:1; padding:6px 0; font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.05em; color:var(--txt-3) }
+.seg button+button{ border-left:1px solid var(--line) }
+.seg button[aria-pressed="true"]{ background:var(--surface-3); color:var(--txt) }
+
+.side__user{ padding:12px 13px 0; margin-top:12px; border-top:1px solid var(--line) }
+.side__user .k{ font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt-3); margin-bottom:6px }
+.side__user select{
+  width:100%; background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:8px 10px; font-size:13px; cursor:pointer;
+}
+.side__user .role{ font-size:11px; color:var(--txt-3); margin-top:6px; line-height:1.4 }
+
+/* ═══ Головна частина ══════════════════════════════════════════════ */
+.main{ display:flex; flex-direction:column; min-width:0; overflow:hidden }
+.top{ display:flex; align-items:center; gap:12px; padding:13px 20px; border-bottom:1px solid var(--line); flex:none }
+.top h1{ font-size:17px; font-weight:700 }
+.top .sub{ font-family:var(--mono); font-size:11.5px; color:var(--txt-3) }
+.top .spacer{ margin-left:auto }
+.search{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:8px 13px; font-size:13px; min-width:250px; color:var(--txt);
+}
+.search::placeholder{ color:var(--txt-3) }
+.btn{ background:var(--m-red); color:#fff; font-weight:600; font-size:13px; padding:9px 15px; border-radius:8px; white-space:nowrap; min-height:38px }
+.btn--ghost{ background:transparent; border:1px solid var(--line-2); color:var(--txt-2); font-weight:500 }
+.btn:disabled{ opacity:.45; cursor:default }
+@media (hover:hover) and (pointer:fine){
+  .btn:hover:not(:disabled){ background:#ff1f45 }
+  .btn--ghost:hover:not(:disabled){ background:var(--surface-2); color:var(--txt) }
+}
+
+.scroll{ flex:1; overflow-y:auto; padding:18px 20px 40px; display:flex; flex-direction:column; gap:16px }
+
+/* ═══ Смуга попередження ═══════════════════════════════════════════ */
+.warn{
+  display:flex; gap:11px; align-items:flex-start; padding:12px 14px; border-radius:var(--r);
+  border:1px solid rgba(217,164,65,.34); background:rgba(217,164,65,.07); flex:none;
+}
+.warn .ic{ color:var(--wait); font-weight:700; flex:none; line-height:1.5 }
+.warn b{ display:block; font-size:13.5px; margin-bottom:2px }
+.warn p{ font-size:12.5px; color:var(--txt-2); line-height:1.5 }
+
+/* ═══ Плитки ═══════════════════════════════════════════════════════ */
+.tiles{ display:grid; grid-template-columns:repeat(4,1fr); gap:11px }
+.tile{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:14px 15px }
+.tile .k{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--txt-3); font-weight:600 }
+.tile .v{ font-family:var(--mono); font-size:26px; font-weight:600; letter-spacing:-.02em; margin-top:5px; font-variant-numeric:tabular-nums }
+.tile .d{ font-size:11.5px; color:var(--txt-3); margin-top:2px }
+.tile--accent{ border-color:rgba(108,178,228,.34) }
+.tile--accent .v{ color:var(--m-lblue) }
+
+/* ═══ Панелі ═══════════════════════════════════════════════════════ */
+.cols{ display:grid; grid-template-columns:1fr 300px; gap:16px; align-items:start }
+.stack{ display:flex; flex-direction:column; gap:16px }
+.panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden }
+.panel__h{ display:flex; align-items:center; gap:10px; padding:12px 15px; border-bottom:1px solid var(--line) }
+.panel__h h2{ font-size:13.5px; font-weight:600 }
+.panel__h .n{ font-family:var(--mono); font-size:11px; color:var(--txt-3); margin-left:auto }
+.empty{ padding:28px 16px; text-align:center; color:var(--txt-3); font-size:13px }
+
+/* ═══ Рядок розкладу ═══════════════════════════════════════════════ */
+.slot{ display:grid; grid-template-columns:56px 1fr 160px 128px 96px auto; gap:12px; align-items:center; padding:11px 15px; border-bottom:1px solid var(--line) }
+.slot:last-child{ border-bottom:0 }
+.slot .t{ font-family:var(--mono); font-size:13.5px; font-weight:600; font-variant-numeric:tabular-nums }
+.slot .nm{ font-size:14px; font-weight:600 }
+.slot .jb{ font-size:12px; color:var(--txt-3); margin-top:1px }
+.slot .car{ font-size:12.5px; color:var(--txt-2) }
+.slot .reg{ font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; color:var(--txt-3); border:1px solid var(--line); border-radius:4px; padding:1px 5px; display:inline-block; margin-top:3px }
+.slot .act .btn{ padding:6px 11px; font-size:12px; min-height:32px }
+
+/* ═══ Плашки ═══════════════════════════════════════════════════════ */
+.pill{ display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; border:1px solid transparent }
+.pill::before{ content:""; width:6px; height:6px; border-radius:50%; background:currentColor; flex:none }
+.pill--in_progress{ color:var(--ok); background:rgba(79,191,135,.11); border-color:rgba(79,191,135,.3) }
+.pill--waiting_parts{ color:var(--wait); background:rgba(217,164,65,.11); border-color:rgba(217,164,65,.32) }
+.pill--booked{ color:var(--txt-2); background:var(--surface-2); border-color:var(--line-2) }
+.pill--collected{ color:var(--txt-3); background:transparent; border-color:var(--line) }
+
+.src{ display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:6px; font-family:var(--mono); font-size:10px; letter-spacing:.05em; font-weight:600; white-space:nowrap; color:var(--txt-3); border:1px solid var(--line) }
+.src--ours{ color:var(--m-lblue); border-color:rgba(108,178,228,.4); background:rgba(108,178,228,.09) }
+.src--ours::before{ content:""; width:11px; height:2px; background:var(--m-lblue); flex:none }
+
+/* ═══ Заявки ═══════════════════════════════════════════════════════ */
+.lead{ padding:12px 15px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:7px }
+.lead:last-child{ border-bottom:0 }
+.lead__top{ display:flex; align-items:baseline; gap:8px }
+.lead__top b{ font-size:13.5px; font-weight:600 }
+.lead__top time{ font-family:var(--mono); font-size:10.5px; color:var(--txt-3); margin-left:auto }
+.lead .ln{ font-family:var(--mono); font-size:12px; color:var(--txt-2) }
+.lead .msg{ font-size:12.5px; color:var(--txt-3); line-height:1.5 }
+.lead .utm{ font-family:var(--mono); font-size:10.5px; color:var(--m-lblue) }
+.lead__act{ display:flex; gap:7px }
+.lead__act .btn{ padding:6px 12px; font-size:12px; min-height:32px }
+
+/* ═══ Таблиці ══════════════════════════════════════════════════════ */
+.tw{ overflow-x:auto }
+table{ width:100%; border-collapse:collapse; min-width:520px }
+th{ text-align:left; font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; font-weight:600; color:var(--txt-3); padding:10px 15px; border-bottom:1px solid var(--line); white-space:nowrap }
+td{ padding:11px 15px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top }
+tbody tr:last-child td{ border-bottom:0 }
+.num{ font-family:var(--mono); text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap }
+.dt{ font-family:var(--mono); font-variant-numeric:tabular-nums; white-space:nowrap }
+.ours{ color:var(--m-lblue); font-weight:600 }
+.muted{ color:var(--txt-3) }
+tfoot td{ border-top:1px solid var(--line-2); border-bottom:0; font-weight:700; background:var(--surface-2) }
+
+/* ═══ Клієнти ══════════════════════════════════════════════════════ */
+.crow{ display:grid; grid-template-columns:1fr 190px 150px 108px; gap:12px; align-items:center; padding:11px 15px; border-bottom:1px solid var(--line); width:100%; text-align:left }
+.crow:last-child{ border-bottom:0 }
+.crow .nm{ font-size:14px; font-weight:600 }
+.crow .ph{ font-family:var(--mono); font-size:12px; color:var(--txt-3); margin-top:1px }
+.crow .cars{ font-size:12.5px; color:var(--txt-2) }
+.crow .vis{ font-family:var(--mono); font-size:12px; color:var(--txt-3) }
+@media (hover:hover) and (pointer:fine){ .crow:hover{ background:var(--surface-2) } }
+
+.chead{ display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap }
+.chead h2{ font-size:23px; font-weight:700 }
+.chead .meta{ font-family:var(--mono); font-size:12.5px; color:var(--txt-2); margin-top:5px }
+
+.attr{ border:1px solid rgba(108,178,228,.34); border-radius:var(--r); background:linear-gradient(180deg,rgba(108,178,228,.07),rgba(108,178,228,.02)); padding:15px 17px; display:grid; grid-template-columns:1fr 1fr 1.6fr; gap:16px }
+.attr--dead{ border-color:var(--line-2); background:var(--surface) }
+.attr .f .k{ font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--txt-3); font-weight:600 }
+.attr .f .v{ font-size:14.5px; font-weight:600; margin-top:3px }
+.attr .f .v.mono{ font-family:var(--mono); font-size:13px; font-variant-numeric:tabular-nums }
+.attr .f .v.blue{ color:var(--m-lblue) }
+.bar{ height:5px; border-radius:3px; background:var(--surface-3); overflow:hidden; margin-top:7px }
+.bar i{ display:block; height:100%; background:var(--m-lblue); border-radius:3px }
+
+.veh{ display:flex; align-items:center; gap:12px; padding:12px 15px; border-bottom:1px solid var(--line) }
+.veh:last-child{ border-bottom:0 }
+.veh .badge{ width:40px; height:40px; border-radius:9px; background:var(--surface-2); border:1px solid var(--line); display:grid; place-items:center; font-family:var(--mono); font-size:10.5px; font-weight:600; color:var(--txt-2); flex:none }
+.veh b{ font-size:13.5px; font-weight:600 }
+.veh .l{ font-size:12px; color:var(--txt-3) }
+.veh .r{ margin-left:auto; text-align:right; font-family:var(--mono); font-size:11px; color:var(--txt-2); line-height:1.5 }
+.veh .r em{ font-style:normal; color:var(--txt-3) }
+
+.trail li{ display:grid; grid-template-columns:118px 1fr; gap:12px; padding:10px 15px; border-bottom:1px solid var(--line); font-size:12.5px }
+.trail li:last-child{ border-bottom:0 }
+.trail time{ font-family:var(--mono); font-size:11px; color:var(--txt-3) }
+.trail .by{ color:var(--txt-3); font-size:12px }
+
+/* ═══ Звіт ═════════════════════════════════════════════════════════ */
+.hero3{ display:grid; grid-template-columns:repeat(3,1fr); gap:11px }
+.hero3 .h{ background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:17px 18px }
+.hero3 .h .k{ font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--txt-3); font-weight:600 }
+.hero3 .h .v{ font-family:var(--mono); font-size:32px; font-weight:600; letter-spacing:-.03em; margin-top:6px; font-variant-numeric:tabular-nums }
+.hero3 .h .d{ font-size:12px; color:var(--txt-3); margin-top:3px }
+.hero3 .h--pay{ border-color:rgba(108,178,228,.4); background:linear-gradient(180deg,rgba(108,178,228,.08),transparent) }
+.hero3 .h--pay .v{ color:var(--m-lblue) }
+
+.chart{ padding:16px 18px 12px }
+.chart__h{ display:flex; align-items:baseline; margin-bottom:16px }
+.chart__h h2{ font-size:13.5px; font-weight:600 }
+.chart__h .u{ font-family:var(--mono); font-size:11px; color:var(--txt-3); margin-left:auto }
+.bars{ display:grid; gap:11px; align-items:end; height:132px }
+.bars .col{ display:flex; flex-direction:column; justify-content:flex-end; height:100%; gap:6px }
+.bars .val{ font-family:var(--mono); font-size:11px; color:var(--txt-2); text-align:center; font-variant-numeric:tabular-nums }
+.bars .stem{ background:rgba(108,178,228,.3); border-radius:4px 4px 0 0; min-height:2px }
+.bars .col--now .stem{ background:var(--m-lblue) }
+.bars .col--now .val{ color:var(--m-lblue); font-weight:600 }
+.axis{ border-top:1px solid var(--line-2); padding-top:7px; display:grid; gap:11px }
+.axis .mo{ font-family:var(--mono); font-size:10px; color:var(--txt-3); text-align:center; letter-spacing:.04em }
+
+/* ═══ Вікно закриття роботи ════════════════════════════════════════ */
+.modal{ position:fixed; inset:0; background:rgba(4,4,6,.78); display:grid; place-items:center; padding:18px; z-index:60 }
+.modal__box{ background:var(--bg-alt); border:1px solid var(--line-2); border-radius:16px; width:100%; max-width:400px; overflow:hidden; max-height:92vh; display:flex; flex-direction:column }
+.modal__h{ display:flex; align-items:center; gap:10px; padding:15px 18px; border-bottom:1px solid var(--line) }
+.modal__h h2{ font-size:16px; font-weight:700 }
+.modal__h .reg{ font-family:var(--mono); font-size:11px; color:var(--txt-3); margin-left:auto }
+.modal__b{ padding:16px 18px; display:flex; flex-direction:column; gap:13px; overflow-y:auto }
+.fld .k{ font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--txt-3); font-weight:600; margin-bottom:5px }
+.fld .in{ display:flex; align-items:center; gap:7px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:0 13px }
+.fld .in .cur{ font-family:var(--mono); color:var(--txt-3) }
+.fld .in input{ flex:1; background:none; border:0; padding:12px 0; font-family:var(--mono); font-size:16px; width:100%; min-height:44px }
+.fld .in:focus-within{ border-color:var(--m-lblue); box-shadow:0 0 0 3px rgba(108,178,228,.14) }
+.pays{ display:flex; gap:7px }
+.pays button{ flex:1; padding:11px 0; border:1px solid var(--line); border-radius:9px; font-size:13px; color:var(--txt-2); background:var(--surface); min-height:44px }
+.pays button[aria-pressed="true"]{ border-color:var(--m-lblue); background:rgba(108,178,228,.11); color:var(--txt); font-weight:600 }
+.sum{ background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:6px }
+.sum .row{ display:flex; font-size:13px; color:var(--txt-2) }
+.sum .row .n{ margin-left:auto; font-family:var(--mono); font-variant-numeric:tabular-nums }
+.sum .row--tot{ border-top:1px solid var(--line); padding-top:8px; color:var(--txt); font-weight:700; font-size:15px }
+.note{ font-size:11.5px; color:var(--txt-3); line-height:1.5 }
+.note b{ color:var(--txt-2) }
+.modal__f{ display:flex; gap:9px; padding:0 18px 18px }
+.modal__f .btn{ flex:1; padding:13px; font-size:14px; min-height:46px }
+
+/* ═══ Сповіщення ═══════════════════════════════════════════════════ */
+.toast{
+  position:fixed; left:50%; bottom:26px; transform:translateX(-50%);
+  background:var(--surface-3); border:1px solid var(--line-2); color:var(--txt);
+  padding:11px 20px; border-radius:999px; font-size:13.5px; font-weight:600; z-index:80;
+  animation:pop .18s cubic-bezier(.22,.7,.2,1);
+}
+@keyframes pop{ from{ opacity:0; transform:translate(-50%,7px) } }
+
+/* ═══ Нижнє меню — тільки на телефоні ══════════════════════════════ */
+.tabs{ display:none }
+
+/* Рядок розкладу стає карткою раніше за решту: шість колонок на
+   вузькому ноутбуці (900px, бічна колонка ще на місці) стискаються
+   так, що текст починає обрізатись. Знайдено вимірюванням, не на око. */
+@media (max-width:1100px){
+  .slot{
+    grid-template-columns:52px 1fr auto;
+    grid-template-areas:"t nm act" ". car car" ". tags tags";
+    row-gap:7px; padding:13px 15px;
+  }
+  .slot .t{ grid-area:t } .slot .who{ grid-area:nm } .slot .car-wrap{ grid-area:car }
+  .slot .tags{ grid-area:tags; display:flex; gap:6px; flex-wrap:wrap }
+  .slot .act{ grid-area:act }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   ТЕЛЕФОН
+
+   Це не «зменшена версія». На телефоні працює механік у боксі,
+   часто в рукавичках: бічна колонка ховається, зʼявляється нижнє
+   меню, цілі дотику не менші за 44px, таблиці стають картками.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width:860px){
+  .shell{ grid-template-columns:1fr }
+  .side{ display:none }
+  .scroll{ padding:14px 14px 88px }
+  .cols{ grid-template-columns:1fr }
+  .tiles{ grid-template-columns:repeat(2,1fr) }
+  .hero3{ grid-template-columns:1fr }
+  .attr{ grid-template-columns:1fr; gap:13px }
+  .top{ padding:11px 14px; gap:9px }
+  .top h1{ font-size:16px }
+  .search{ min-width:0; width:100% }
+
+  .slot{ padding:13px 14px }
+
+  /* 🔴 44px — норма цілі дотику. У боксі механік працює в рукавичках,
+     а дрібні кнопки там не працюють узагалі. Та сама норма, яку ми вже
+     витримали на сайті. Знайдено вимірюванням у браузері, не на око. */
+  .btn,
+  .slot .act .btn,
+  .lead__act .btn{ min-height:44px; padding:11px 16px; font-size:13.5px }
+  .side__user select{ min-height:44px }
+
+  .crow{ grid-template-columns:1fr auto; gap:8px; padding:13px 14px }
+  .crow .cars{ grid-column:1/-1 }
+  .crow .vis{ display:none }
+
+  .tabs{
+    display:flex; position:fixed; left:0; right:0; bottom:0; z-index:50;
+    background:#0a0a0d; border-top:1px solid var(--line);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .tabs button{ flex:1; padding:10px 0 12px; color:var(--txt-3); font-size:10px; letter-spacing:.04em; text-transform:uppercase; font-weight:600; min-height:52px }
+  .tabs button i{ display:block; width:16px; height:16px; margin:0 auto 4px; border:1.6px solid currentColor; border-radius:5px }
+  .tabs button.on{ color:var(--m-red) }
+  .tabs button.on i{ background:rgba(228,0,43,.16) }
+}
+
+@media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important } }
