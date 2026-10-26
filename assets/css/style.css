@@ -23,6 +23,13 @@
   --red-txt: #ff3355;   /* дрібний текст на темному — 5.17:1 */
   --red-hi:  #ff1f45;
 
+  /* Бордовий — лише для блоку Stage-тюнінгу. Свідомо НЕ з палітри
+     BMW M: саме тому блок і читається як окремий, преміальний.
+     --burg-tx освітлений під дрібний текст на темному — 7.1:1. */
+  --burg:    #7b1f30;
+  --burg-hi: #a63349;
+  --burg-tx: #e8879a;
+
   /* сітка */
   --wrap: 1220px;
   --pad: clamp(20px, 5vw, 48px);
@@ -402,9 +409,26 @@ body.nav-open{ overflow:hidden }
    градієнта, смуга BMW M зверху і дуже повільний відблиск.
    Жодного нового кольору — виділяє форма і рух, а не яскравість. */
 .card--stage{
-  background:linear-gradient(115deg, var(--surface-2), var(--surface) 58%);
+  /* Бордовий обідок — єдиний такий на сторінці: решта карток має сірий
+     --line. Плюс внутрішній волосок, тепла пляма у верхньому правому
+     куті і глибока тінь того ж тону. Око бачить «це інше» ще до того,
+     як прочитає заголовок. */
+  /* Обідок бере СВІТЛІШИЙ бордовий, не базовий: базовий #7b1f30 дає
+     проти тла сторінки лише 1.98:1 — норму 3:1 для елементів
+     інтерфейсу не тягне, та й «виділяється» з нього ніяке.
+     #a63349 дає 3.04:1 і лишається винним, а не червоним. */
+  border-color:var(--burg-hi);
+  background:
+    radial-gradient(118% 140% at 88% -12%, rgba(166,51,73,.19), transparent 58%),
+    linear-gradient(115deg, var(--surface-2), var(--surface) 58%);
+  box-shadow:
+    inset 0 0 0 1px rgba(166,51,73,.13),
+    0 30px 80px -52px rgba(166,51,73,.95);
 }
 .card--stage .mstripe{ margin-bottom:18px }
+/* Смужка при наведенні успадковувала BMW-червоний від .card::before
+   і билася з бордовим обідком — два різні червоні поруч. */
+.card--stage::before{ background:var(--burg-hi) }
 /* Тег нейтральний, а не червоний: червоний у цій секції вже зайнятий
    плашкою «Our speciality», і два червоні тримали б увагу навпіл. */
 .card--stage .card__tag{ color:var(--txt-2); border-color:var(--line-2) }
@@ -427,6 +451,92 @@ body.nav-open{ overflow:hidden }
 @keyframes stage-sheen{
   from{ background-position:170% 0 }
   to  { background-position:-70% 0 }
+}
+
+/* ── Вкладки Stage ───────────────────────────────────────
+   Вибір кліком або дотиком, стрілки з клавіатури. Наведення мишею
+   лише підглядає — бачити зміст має й той, хто на телефоні. */
+.stage{ margin-top:28px }
+
+.stage__tabs{ display:flex; flex-wrap:wrap; gap:9px }
+.stage__tab{
+  appearance:none; cursor:pointer; min-height:44px;
+  font:600 12.5px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:var(--txt-2); background:rgba(255,255,255,.02);
+  border:1px solid var(--line-2); border-radius:99px; padding:12px 19px;
+  transition:color .2s, background .25s, border-color .2s, box-shadow .25s;
+}
+.stage__tab[aria-selected="true"]{
+  color:#fff; background:var(--burg); border-color:var(--burg-hi);
+  box-shadow:0 12px 28px -16px rgba(166,51,73,1);
+}
+
+.stage__panel{
+  margin-top:22px; padding-top:22px;
+  border-top:1px solid rgba(166,51,73,.3);
+  display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);
+  gap:clamp(20px,3vw,46px); align-items:start;
+}
+.stage__h{ font-size:1.04rem; font-weight:700; margin-bottom:9px; color:var(--txt) }
+.stage__p{ color:var(--txt-2); font-size:15.2px; max-width:52ch }
+
+/* Смужка приросту. Вона НЕ число і не обіцянка — це масштаб:
+   показує, наскільки один варіант більший за інший. Точні цифри
+   словами поруч, і під ними застереження. */
+.stage__meter{ display:grid; gap:11px }
+.stage__k{
+  font:500 11px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--txt-3);
+}
+.stage__bar{
+  display:block; height:6px; border-radius:99px;
+  background:rgba(255,255,255,.07); overflow:hidden;
+}
+.stage__bar i{
+  display:block; height:100%; border-radius:99px;
+  background:linear-gradient(90deg, var(--burg), var(--burg-hi));
+  transition:width .55s var(--ease);
+}
+/* Цифра — це те, заради чого людина сюди й клікнула. Тому вона
+   велика: права колонка отримує власний фокус, і блок перестає
+   виглядати як текст із тонкою рискою збоку. */
+.stage__g{
+  color:var(--burg-tx); font-weight:700; line-height:1.1;
+  font-size:clamp(1.24rem,2vw,1.62rem);
+  font-variation-settings:"wdth" 104;
+}
+/* Партнер. Відокремлений бордовим волоском — читається як підпис
+   під цифрою, а не як ще один абзац тексту. */
+.stage__partner{
+  margin-top:18px; padding-top:16px;
+  border-top:1px solid rgba(166,51,73,.22);
+  display:grid; gap:7px;
+}
+.stage__pk{
+  font:500 11px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--txt-3);
+}
+.stage__pn{
+  font-size:1.06rem; font-weight:700; color:var(--txt);
+  font-variation-settings:"wdth" 104; letter-spacing:.01em;
+}
+
+.stage__note{ margin-top:20px; color:var(--txt-3); font-size:13.4px; max-width:74ch }
+
+@media (max-width:760px){
+  .stage__panel{ grid-template-columns:1fr; gap:24px }
+}
+/* На вузькому екрані три вкладки не влазили в ряд і третя зривалась
+   окремо — виглядало як помилка верстки. На телефоні це вже не flex,
+   а сітка з трьох РІВНИХ колонок: вкладки завжди в один ряд, однакові
+   за шириною і зручніші для пальця. Висота 44px лишається. */
+@media (max-width:430px){
+  .stage__tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px }
+  .stage__tab{
+    padding-inline:8px; font-size:11.5px; letter-spacing:.04em;
+    display:flex; align-items:center; justify-content:center;
+  }
 }
 
 .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px }
@@ -869,6 +979,8 @@ body.nav-open{ overflow:hidden }
   .btn--red:hover{ background:var(--red-hi); box-shadow:0 12px 34px -12px rgba(228,0,43,1) }
   .btn--ghost:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
   .btn--wa:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
+  .stage__tab:hover{ color:var(--txt); border-color:var(--burg-hi) }
+  .stage__tab[aria-selected="true"]:hover{ color:#fff; background:var(--burg-hi) }
   .card:hover{ border-color:var(--line-2); background:var(--surface-2); transform:translateY(-3px) }
   .card:hover::before{ opacity:1; transform:scaleY(1) }
   .steps li:hover{ border-color:var(--line-2); transform:translateY(-3px) }

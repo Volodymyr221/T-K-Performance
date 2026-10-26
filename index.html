@@ -204,15 +204,65 @@
       <article class="card card--wide card--stage reveal" data-d="6">
         <span class="mstripe" aria-hidden="true"><i></i><i></i><i></i></span>
         <p class="card__tag" data-i18n="svc.7tag">Performance</p>
-        <h3 data-i18n="svc.7h">Stage tuning &mdash; engine &amp; gearbox</h3>
+        <h3 id="stage-h" data-i18n="svc.7h">Stage tuning &mdash; engine &amp; gearbox</h3>
         <p data-i18n="svc.7p">
           Stage tuning for the engine and for the gearbox. We go through what the car
           is used for and what it will take, tell you what changes and what it costs
           &mdash; and nothing is written to the car before you say yes.
         </p>
-        <ul class="chips">
-          <li>Engine</li><li>Gearbox</li><li>Stage 1</li><li>Stage 2</li>
-        </ul>
+
+        <!-- Вкладки замість плашок. Це справжній tablist: вибір кліком
+             або дотиком, стрілки з клавіатури, екранний зчитувач читає
+             стан. Наведення мишею лише ПІДГЛЯДАЄ — вибір лишається за
+             кліком, бо на дотику наведення не існує і будувати на ньому
+             єдиний спосіб дізнатись зміст означало б відрізати телефони. -->
+        <div class="stage">
+          <div class="stage__tabs" role="tablist" aria-labelledby="stage-h">
+            <button class="stage__tab" type="button" role="tab" id="stg-t1"
+                    aria-controls="stg-panel" aria-selected="true" tabindex="0"
+                    data-stage="1" data-fill="46">
+              <span data-i18n="st.1n">Stage 1</span>
+            </button>
+            <button class="stage__tab" type="button" role="tab" id="stg-t2"
+                    aria-controls="stg-panel" aria-selected="false" tabindex="-1"
+                    data-stage="2" data-fill="82">
+              <span data-i18n="st.2n">Stage 2</span>
+            </button>
+            <button class="stage__tab" type="button" role="tab" id="stg-t3"
+                    aria-controls="stg-panel" aria-selected="false" tabindex="-1"
+                    data-stage="3" data-fill="60">
+              <span data-i18n="st.3n">Gearbox</span>
+            </button>
+          </div>
+
+          <div class="stage__panel" id="stg-panel" role="tabpanel" aria-labelledby="stg-t1">
+            <div>
+              <h4 class="stage__h" data-i18n="st.1h">Software only</h4>
+              <p class="stage__p" data-i18n="st.1p">
+                A remap written to the standard car. No parts changed and nothing to undo
+                mechanically &mdash; the biggest single step you can take on stock hardware.
+              </p>
+            </div>
+
+            <div class="stage__meter">
+              <span class="stage__k" data-i18n="st.gl">Typical gain</span>
+              <span class="stage__bar"><i style="width:46%"></i></span>
+              <b class="stage__g" data-i18n="st.1g">typically +15&ndash;20%</b>
+
+              <!-- Партнер стоїть саме тут, під цифрою: він підпирає
+                   конкретно ці числа, а не блок загалом. -->
+              <p class="stage__partner">
+                <span class="stage__pk" data-i18n="st.pk">Tuning partner</span>
+                <b class="stage__pn">DGmaps</b>
+              </p>
+            </div>
+          </div>
+
+          <p class="stage__note" data-i18n="st.note">
+            Figures are typical for BMW turbo engines. What your car makes depends on the
+            engine, its condition and the fuel &mdash; we quote real numbers after diagnosis.
+          </p>
+        </div>
       </article>
     </div>
   </div>
