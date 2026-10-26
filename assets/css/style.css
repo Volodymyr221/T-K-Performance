@@ -506,6 +506,22 @@ body.nav-open{ overflow:hidden }
   font-size:clamp(1.24rem,2vw,1.62rem);
   font-variation-settings:"wdth" 104;
 }
+/* Партнер. Відокремлений бордовим волоском — читається як підпис
+   під цифрою, а не як ще один абзац тексту. */
+.stage__partner{
+  margin-top:18px; padding-top:16px;
+  border-top:1px solid rgba(166,51,73,.22);
+  display:grid; gap:7px;
+}
+.stage__pk{
+  font:500 11px/1 "JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--txt-3);
+}
+.stage__pn{
+  font-size:1.06rem; font-weight:700; color:var(--txt);
+  font-variation-settings:"wdth" 104; letter-spacing:.01em;
+}
+
 .stage__note{ margin-top:20px; color:var(--txt-3); font-size:13.4px; max-width:74ch }
 
 @media (max-width:760px){

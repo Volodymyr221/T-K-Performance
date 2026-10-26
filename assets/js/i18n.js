@@ -62,6 +62,7 @@ window.I18N = {
     "st.3p": "Shift speed, shift points and the torque the box is allowed to pass. Worth doing on its own, and needed once the engine makes more than standard.",
     "st.3g": "noticeably quicker shifts",
     "st.gl": "Typical gain",
+    "st.pk": "Tuning partner",
     "st.note": "Figures are typical for BMW turbo engines. What your car makes depends on the engine, its condition and the fuel — we quote real numbers after diagnosis.",
 
     "why.h": "Why a BMW-only garage is different",
@@ -213,6 +214,7 @@ window.I18N = {
     "st.3p": "Швидкість і моменти перемикань, а також момент, який коробці дозволено пропускати. Має сенс і окремо, і стає потрібною, коли двигун видає більше за стокове.",
     "st.3g": "помітно швидші перемикання",
     "st.gl": "Типовий приріст",
+    "st.pk": "Партнер із прошивок",
     "st.note": "Цифри типові для турбованих двигунів BMW. Скільки дасть саме ваша машина, залежить від двигуна, його стану і пального — реальні числа називаємо після діагностики.",
 
     "why.h": "Чим сервіс тільки для BMW відрізняється",
@@ -366,6 +368,7 @@ window.I18N = {
     "st.3p": "Szybkość i punkty zmiany biegów oraz moment, który skrzynia może przenieść. Ma sens samodzielnie, a staje się konieczne, gdy silnik oddaje więcej niż fabrycznie.",
     "st.3g": "wyraźnie szybsze zmiany",
     "st.gl": "Typowy przyrost",
+    "st.pk": "Partner tuningowy",
     "st.note": "Liczby są typowe dla doładowanych silników BMW. Ile da Twoje auto, zależy od silnika, jego stanu i paliwa — realne wartości podajemy po diagnostyce.",
 
     "why.h": "Czym różni się serwis wyłącznie BMW",
@@ -520,6 +523,7 @@ window.I18N = {
     "st.3p": "Скорость и моменты переключений, а также момент, который коробке разрешено пропускать. Имеет смысл и отдельно, и становится нужной, когда двигатель выдаёт больше стокового.",
     "st.3g": "заметно быстрее переключения",
     "st.gl": "Типичный прирост",
+    "st.pk": "Партнёр по прошивкам",
     "st.note": "Цифры типичны для турбированных двигателей BMW. Сколько даст именно ваша машина, зависит от двигателя, его состояния и топлива — реальные числа называем после диагностики.",
 
     "why.h": "Чем сервис только для BMW отличается",
