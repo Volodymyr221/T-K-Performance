@@ -27,7 +27,7 @@
 | поле | значення |
 |---|---|
 | адреса | 12 Arun Business Park, **Bognor Regis**, PO22 9SX, United Kingdom |
-| телефон | +44 7575 051013 |
+| телефон | +44 7522 018523 |
 | Instagram | [@t.k.performance](https://instagram.com/t.k.performance) |
 | години | Пн-Пт **09:00–18:00** · Сб **09:00–13:00** · Нд **зачинено** |
 | сайту | **немає** — це і є наша задача |
