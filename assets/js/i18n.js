@@ -7,6 +7,7 @@
 window.I18N = {
   en: {
     "a11y.skip": "Skip to content",
+    "a11y.lang": "Language",
 
     "nav.services": "Services",
     "nav.why": "Why BMW only",
@@ -137,6 +138,7 @@ window.I18N = {
 
   uk: {
     "a11y.skip": "Перейти до вмісту",
+    "a11y.lang": "Мова",
 
     "nav.services": "Послуги",
     "nav.why": "Чому лише BMW",
@@ -267,6 +269,7 @@ window.I18N = {
 
   pl: {
     "a11y.skip": "Przejdź do treści",
+    "a11y.lang": "Język",
 
     "nav.services": "Usługi",
     "nav.why": "Dlaczego tylko BMW",
@@ -400,6 +403,7 @@ window.I18N = {
 
   ru: {
     "a11y.skip": "Перейти к содержимому",
+    "a11y.lang": "Язык",
 
     "nav.services": "Услуги",
     "nav.why": "Почему только BMW",
