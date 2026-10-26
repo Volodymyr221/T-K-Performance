@@ -443,6 +443,74 @@
     paint();
   })();
 
+  /* ── 10. Stage-тюнінг: вкладки ─────────────────────────── */
+  (function initStage() {
+    var tabs = $$(".stage__tab");
+    if (!tabs.length) return;
+
+    var panel = $("#stg-panel");
+    var hEl = $(".stage__h"), pEl = $(".stage__p"),
+        gEl = $(".stage__g"), fill = $(".stage__bar i");
+    if (!panel || !hEl || !pEl || !gEl || !fill) return;
+
+    var selected = "1";
+
+    /* Панель одна на три вкладки. Міняємо не текст, а САМ КЛЮЧ
+       перекладу в data-i18n — тоді перемикач мов підхопить панель
+       сам, без жодного додаткового дроту: applyLang проходить по
+       всіх [data-i18n] і бере те, що там зараз написано. */
+    function show(n, lock) {
+      var tab = null;
+      tabs.forEach(function (b) { if (b.dataset.stage === n) tab = b; });
+      if (!tab) return;
+
+      hEl.setAttribute("data-i18n", "st." + n + "h");
+      pEl.setAttribute("data-i18n", "st." + n + "p");
+      gEl.setAttribute("data-i18n", "st." + n + "g");
+      hEl.textContent = t("st." + n + "h");
+      pEl.textContent = t("st." + n + "p");
+      gEl.textContent = t("st." + n + "g");
+
+      fill.style.width = tab.dataset.fill + "%";
+      panel.setAttribute("aria-labelledby", tab.id);
+
+      if (!lock) return;
+      selected = n;
+      tabs.forEach(function (b) {
+        var on = b.dataset.stage === n;
+        b.setAttribute("aria-selected", on ? "true" : "false");
+        b.tabIndex = on ? 0 : -1;   /* у tablist по Tab входимо один раз */
+      });
+    }
+
+    tabs.forEach(function (b) {
+      b.addEventListener("click", function () { show(b.dataset.stage, true); });
+      /* Наведення лише підглядає: вибір не змінюється, і коли миша
+         піде — панель повернеться до обраного. На дотику mouseenter
+         не буває, тому телефонів це не стосується взагалі. */
+      b.addEventListener("mouseenter", function () { show(b.dataset.stage, false); });
+    });
+
+    var list = $(".stage__tabs");
+    list.addEventListener("mouseleave", function () { show(selected, false); });
+
+    list.addEventListener("keydown", function (e) {
+      var i = tabs.indexOf(document.activeElement);
+      if (i === -1) return;
+
+      var j = null;
+      if (e.key === "ArrowRight")     j = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") j = (i + tabs.length - 1) % tabs.length;
+      else if (e.key === "Home")      j = 0;
+      else if (e.key === "End")       j = tabs.length - 1;
+      if (j === null) return;
+
+      e.preventDefault();
+      tabs[j].focus();
+      show(tabs[j].dataset.stage, true);
+    });
+  })();
+
   /* ── 9. Рік у підвалі ─────────────────────────────────── */
   var yr = $("#yr");
   if (yr) yr.textContent = new Date().getFullYear();
