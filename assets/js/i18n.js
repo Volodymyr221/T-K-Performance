@@ -54,8 +54,6 @@ window.I18N = {
     "why.2p": "The same diagnosis and the same parts quality, without the dealer hourly rate.",
     "why.3h": "You are told the price first",
     "why.3p": "We diagnose, we quote, you decide. Nothing is started before you say yes.",
-    "why.4h": "We speak English and Ukrainian",
-    "why.4p": "If it is easier to explain the problem in Ukrainian, that is no problem at all.",
 
     "pr.h": "How it works",
     "pr.sub": "Four steps, no surprises.",
@@ -186,8 +184,6 @@ window.I18N = {
     "why.2p": "Та сама діагностика і та сама якість запчастин, але без дилерської ставки за годину.",
     "why.3h": "Ціну ви дізнаєтесь першою",
     "why.3p": "Ми діагностуємо, називаємо ціну, ви вирішуєте. Нічого не починаємо без вашого «так».",
-    "why.4h": "Говоримо англійською та українською",
-    "why.4p": "Якщо простіше пояснити проблему українською — це взагалі не проблема.",
 
     "pr.h": "Як це працює",
     "pr.sub": "Чотири кроки, без сюрпризів.",
