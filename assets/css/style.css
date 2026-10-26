@@ -379,8 +379,15 @@ body.nav-open{ overflow:hidden }
 }
 .card p{ color:var(--txt-2); font-size:15.2px }
 
+/* 🪤 grid-column був ТІЛЬКИ в медіазапиті від 940px. Лід-картка це
+   переживала, бо мала власне правило тут, а нова .card--stage — ні:
+   між ~570 і 939px вона ставала звичайною вузькою карткою в ряду.
+   Дірок у сітці не лишалось (auto-fit усе вирівнював), тому очима
+   це не ловилось — зловив замір ширини на восьми точках.
+   Тепер повна ширина оголошена в базі, а не лише на широкому екрані. */
+.card--wide{ grid-column:1/-1 }
+
 .card--lead{
-  grid-column:1/-1;
   background:linear-gradient(150deg, var(--surface-2), var(--surface) 60%);
 }
 .card--lead h3{ font-size:clamp(1.5rem,2.7vw,2.05rem) }
@@ -391,6 +398,37 @@ body.nav-open{ overflow:hidden }
   text-transform:uppercase; color:var(--red-txt);
   border:1px solid rgba(228,0,43,.45); border-radius:99px; padding:7px 12px;
 }
+/* Stage-тюнінг. «Виділити, але не геть сильно»: інший нахил
+   градієнта, смуга BMW M зверху і дуже повільний відблиск.
+   Жодного нового кольору — виділяє форма і рух, а не яскравість. */
+.card--stage{
+  background:linear-gradient(115deg, var(--surface-2), var(--surface) 58%);
+}
+.card--stage .mstripe{ margin-bottom:18px }
+/* Тег нейтральний, а не червоний: червоний у цій секції вже зайнятий
+   плашкою «Our speciality», і два червоні тримали б увагу навпіл. */
+.card--stage .card__tag{ color:var(--txt-2); border-color:var(--line-2) }
+.card--stage h3{ font-size:clamp(1.34rem,2.2vw,1.72rem) }
+.card--stage p{ max-width:66ch; font-size:16px }
+
+/* Відблиск. 7 секунд і 5% білого — на межі помітності: око ловить рух
+   периферійним зором, але читати текст не заважає. border-radius:inherit
+   обрізає його по картці, тому overflow:hidden не потрібен — інакше
+   він з'їв би червону смужку .card::before при наведенні.
+   Під prefers-reduced-motion анімацію глушить загальне правило нижче. */
+.card--stage::after{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(100deg,
+    transparent 42%, rgba(255,255,255,.05) 50%, transparent 58%);
+  background-size:260% 100%;
+  animation:stage-sheen 7s linear infinite;
+}
+@keyframes stage-sheen{
+  from{ background-position:170% 0 }
+  to  { background-position:-70% 0 }
+}
+
 .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px }
 .chips li{
   font:500 12.5px/1 "JetBrains Mono",ui-monospace,monospace; color:var(--txt-2);
@@ -398,13 +436,21 @@ body.nav-open{ overflow:hidden }
   background:rgba(255,255,255,.02);
 }
 
-/* на широкому екрані останній ряд не лишає діри:
-   лід на всю ширину · 3 картки · 2 картки по половині */
+/* На широкому екрані ряди не лишають дір:
+   лід на всю ширину · 3 картки по третині · 2 по половині · stage на всю.
+
+   🪤 Було .card:nth-last-child(2), .card:last-child — ширина залежала
+   від ПОЗИЦІЇ в сітці. Варто додати сьому картку в кінець — і дві
+   попередні мовчки міняли ширину, лишаючи дірку в ряду. Плюс селектор
+   із псевдокласом (0-0-2-0) перебивав би .card--stage (0-0-1-0) — та
+   сама пастка специфічності, що з .nav a проти .nav__cta у PR #11.
+   Тепер ширину задає ЯВНИЙ клас у розмітці, і порядок карток нічого
+   не ламає. */
 @media (min-width:940px){
   .cards{ grid-template-columns:repeat(6,1fr) }
   .card{ grid-column:span 2 }
-  .card--lead{ grid-column:1/-1 }
-  .card:nth-last-child(2), .card:last-child{ grid-column:span 3 }
+  .card--half{ grid-column:span 3 }
+  .card--wide{ grid-column:1/-1 }
 }
 
 /* ═══ ЧОМУ BMW ════════════════════════════════════════════ */
