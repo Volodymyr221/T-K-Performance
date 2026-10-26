@@ -119,14 +119,80 @@ ul,ol{ margin:0; padding:0; list-style:none }
 
 .hdr__side{ display:flex; align-items:center; gap:14px; flex:none }
 
-.lang{ display:flex; flex:none; border:1px solid var(--line); border-radius:99px; overflow:hidden }
-.lang button{
-  appearance:none; background:none; border:0; cursor:pointer;
+/* Перемикач мов. Чотири кнопки в ряд у шапку не влазять:
+   на 375px логотип, мова, телефон і бургер уже стоять впритул.
+   Тому в шапці лише пігулка з поточною мовою, а вибір випадає. */
+.lang{ position:relative; flex:none }
+
+.lang__btn{
+  appearance:none; cursor:pointer;
+  display:inline-flex; align-items:center; gap:7px;
+  background:none; border:1px solid var(--line); border-radius:99px;
   color:var(--txt-3); font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;
-  letter-spacing:.06em; padding:8px 11px;
-  transition:color .2s, background .2s;
+  letter-spacing:.06em; padding:9px 11px 9px 13px;
+  transition:color .2s, border-color .2s, background .2s;
 }
-.lang button.is-on{ background:var(--txt); color:#08080a }
+.lang__btn[aria-expanded="true"]{
+  color:var(--txt); border-color:var(--line-2); background:var(--surface-2);
+}
+.lang__chev{
+  width:11px; height:11px; flex:none;
+  fill:none; stroke:currentColor; stroke-width:2.6;
+  stroke-linecap:round; stroke-linejoin:round;
+  transition:transform .24s var(--ease);
+}
+.lang__btn[aria-expanded="true"] .lang__chev{ transform:rotate(180deg) }
+
+.lang__menu{
+  position:absolute; top:calc(100% + 10px); right:0; z-index:5;
+  min-width:186px; padding:6px;
+  display:flex; flex-direction:column; gap:2px;
+  background:var(--bg); border:1px solid var(--line-2); border-radius:14px;
+  box-shadow:0 24px 48px -14px rgba(0,0,0,.85);
+
+  /* Видимість гасимо visibility, а не display:none — інакше не
+     буде переходу. visibility:hidden так само ховає список від
+     зчитувачів екрана і від Tab.
+
+     🔴 ПАСТКА, спіймана перевіркою. Якщо написати просто
+     `visibility .2s`, браузер перемикає її не одразу, а десь
+     посередині переходу. Усі 200 мс список лишається hidden —
+     і focus() на пункт меню мовчки не спрацьовує, бо на
+     невидимий елемент фокус не стає. Стрілка ↓ відкривала
+     список, але фокус лишався на пігулці.
+
+     Тому visibility не плавна, а миттєва (0s), і лише при
+     ЗАКРИТТІ відкладена на .2s — щоб список встиг згаснути,
+     перш ніж зникнути. Плавно їдуть тільки opacity і transform. */
+  transform-origin:top right;
+  transform:translateY(-6px) scale(.98); opacity:0;
+  pointer-events:none; visibility:hidden;
+  transition:opacity .2s var(--ease), transform .2s var(--ease),
+             visibility 0s linear .2s;
+}
+.lang__menu.is-open{
+  transform:none; opacity:1; pointer-events:auto; visibility:visible;
+  transition:opacity .2s var(--ease), transform .2s var(--ease),
+             visibility 0s linear 0s;
+}
+.lang__menu button{
+  appearance:none; background:none; border:0; cursor:pointer;
+  display:flex; align-items:center; gap:11px; width:100%;
+  padding:10px 12px; border-radius:9px; text-align:left;
+  color:var(--txt-2); font-size:14.5px; font-weight:500;
+  transition:color .18s, background .18s;
+}
+.lang__menu button i{
+  font:600 11px/1 "JetBrains Mono",ui-monospace,monospace;
+  font-style:normal; letter-spacing:.08em;
+  color:var(--txt-3); min-width:21px;
+  transition:color .18s;
+}
+.lang__menu button.is-on{ color:var(--txt); background:rgba(255,255,255,.06) }
+/* --m-red на темному дає лише 3.70:1 — не проходить WCAG AA
+   для 11px. --red-txt це той самий акцент, але освітлений
+   саме під дрібний текст на темному: 5.27:1. */
+.lang__menu button.is-on i{ color:var(--red-txt) }
 
 .hdr__tel{
   display:inline-flex; align-items:center; gap:8px;
@@ -660,7 +726,8 @@ body.nav-open{ overflow:hidden }
   /* Цілі дотику: Apple радить 44×44, Google 48×48. Кнопки мови були
      34×28, дзвінок 41×35, бургер 40×40 — палець промахувався.
      Розмір самих написів не чіпаємо, збільшуємо тільки зону натискання. */
-  .lang button{ min-height:44px; padding-inline:15px }
+  .lang__btn{ min-height:44px; padding-inline:15px 13px }
+  .lang__menu button{ min-height:44px }
   .hdr__tel{ min-height:44px; min-width:44px }
   .burger{ width:44px; height:44px }
   .burger span{ left:13px }
@@ -725,7 +792,7 @@ body.nav-open{ overflow:hidden }
   .form__row{ grid-template-columns:1fr }
   .hero__facts{ gap:16px 28px }
   .hero__act .btn{ flex:1 1 100%; }
-  .lang button{ padding:8px 9px }
+  .lang__btn{ padding-inline:11px 9px }
   .gal{ grid-template-columns:1fr 1fr; gap:10px }
 }
 
@@ -739,7 +806,8 @@ body.nav-open{ overflow:hidden }
    він на дотик працює правильно. */
 @media (hover: hover) and (pointer: fine){
   .nav a:hover{ color:var(--txt) }
-  .lang button:hover{ color:var(--txt) }
+  .lang__btn:hover{ color:var(--txt); border-color:var(--line-2) }
+  .lang__menu button:hover{ color:var(--txt); background:rgba(255,255,255,.06) }
   .hdr__tel:hover{ border-color:var(--m-red); background:rgba(228,0,43,.09) }
   .btn--red:hover{ background:var(--red-hi); box-shadow:0 12px 34px -12px rgba(228,0,43,1) }
   .btn--ghost:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }

@@ -15,7 +15,18 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* ── 1. Мова ───────────────────────────────────────────── */
-  var lang = "en";
+
+  /* Чотири мови. CODE — підпис на пігулці в шапці.
+     LOCALE — код для Intl: «4 дні тому» під відгуками має
+     звучати тією ж мовою, що й решта сторінки. */
+  var CODE   = { en: "EN",    uk: "UA", pl: "PL", ru: "RU" };
+  var LOCALE = { en: "en-GB", uk: "uk", pl: "pl", ru: "ru" };
+
+  var lang     = "en";
+  var langBox  = $("#lang");
+  var langBtn  = $("#lang-btn");
+  var langMenu = $("#lang-menu");
+  var langCur  = $("#lang-cur");
 
   function t(key) {
     var pack = DICT[lang] || DICT.en || {};
@@ -25,7 +36,7 @@
   function applyLang(next) {
     if (!DICT[next]) return;
     lang = next;
-    document.documentElement.lang = next === "uk" ? "uk" : "en";
+    document.documentElement.lang = next;
 
     $$("[data-i18n]").forEach(function (el) {
       var v = t(el.getAttribute("data-i18n"));
@@ -36,8 +47,15 @@
         el.placeholder = t(el.getAttribute("data-ph"));
       }
     });
+    /* Підписи для зчитувачів екрана. Їх не видно очима, але вони
+       теж мають звучати мовою сторінки — інакше українцеві
+       зчитувач каже «Language» посеред української. */
+    $$("[data-i18n-aria]").forEach(function (el) {
+      el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+    });
 
-    $$(".lang button").forEach(function (b) {
+    if (langCur) langCur.textContent = CODE[next] || next.toUpperCase();
+    $$("#lang-menu button").forEach(function (b) {
       var on = b.dataset.lang === next;
       b.classList.toggle("is-on", on);
       b.setAttribute("aria-pressed", on ? "true" : "false");
@@ -47,13 +65,66 @@
     paintDates();
   }
 
+  function setLangMenu(open) {
+    if (!langMenu || !langBtn) return;
+    langMenu.classList.toggle("is-open", open);
+    langBtn.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+
+  /* Викликається і з бургера: два випадні списки відкритими
+     одночасно на телефоні перекривали б один одного. */
+  function closeLangMenu(focusBtn) {
+    if (!langBtn || langBtn.getAttribute("aria-expanded") !== "true") return;
+    setLangMenu(false);
+    if (focusBtn) langBtn.focus();
+  }
+
   (function initLang() {
     /* Сайт ЗАВЖДИ відкривається англійською: це основна мова бізнесу
-       в Британії. Українську вмикає тільки сам відвідувач кнопкою, і
-       вибір діє до закриття вкладки — нічого не зберігаємо і мову
-       браузера не вгадуємо. */
-    $$(".lang button").forEach(function (b) {
-      b.addEventListener("click", function () { applyLang(b.dataset.lang); });
+       в Британії. Іншу вмикає тільки сам відвідувач, і вибір діє до
+       закриття вкладки — нічого не зберігаємо і мову браузера не
+       вгадуємо. */
+    if (!langBox || !langBtn || !langMenu) return;
+
+    langBtn.addEventListener("click", function (e) {
+      e.stopPropagation();                 /* щоб не спіймав слухач нижче */
+      setLangMenu(langBtn.getAttribute("aria-expanded") !== "true");
+    });
+
+    $$("#lang-menu button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        applyLang(b.dataset.lang);
+        closeLangMenu(true);
+      });
+    });
+
+    /* клік будь-де повз перемикач — закрити */
+    document.addEventListener("click", function (e) {
+      if (!langBox.contains(e.target)) closeLangMenu(false);
+    });
+
+    langBox.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { closeLangMenu(true); return; }
+      if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+
+      /* стрілки ходять по мовах по колу — як у звичайному меню */
+      e.preventDefault();
+      var items = $$("#lang-menu button");
+      if (!items.length) return;
+
+      if (langBtn.getAttribute("aria-expanded") !== "true") {
+        setLangMenu(true);
+        items[0].focus();
+        return;
+      }
+      var i = items.indexOf(document.activeElement);
+      if (i === -1) { items[0].focus(); return; }
+      items[(i + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus();
+    });
+
+    /* пішли Tab-ом за межі перемикача — теж закрити */
+    langBox.addEventListener("focusout", function (e) {
+      if (!langBox.contains(e.relatedTarget)) closeLangMenu(false);
     });
   })();
 
@@ -68,6 +139,7 @@
   var burger = $("#burger"), nav = $("#nav"), veil = $("#veil");
 
   function setNav(open) {
+    if (open) closeLangMenu(false);
     nav.classList.toggle("is-open", open);
     burger.setAttribute("aria-expanded", open ? "true" : "false");
     document.body.classList.toggle("nav-open", open);
@@ -166,7 +238,7 @@
        для днів "auto" дає «today» і «yesterday» — так і треба;
        для тижнів той самий "auto" дав би «last week» замість
        «1 week ago», а для відгуку це читається дивно. */
-    var loc = lang === "uk" ? "uk" : "en-GB", fmtDay, fmtBig;
+    var loc = LOCALE[lang] || "en-GB", fmtDay, fmtBig;
     try {
       fmtDay = new RTF(loc, { numeric: "auto" });
       fmtBig = new RTF(loc, { numeric: "always" });

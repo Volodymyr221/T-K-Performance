@@ -56,9 +56,21 @@
       <a class="nav__cta" href="#booking" data-i18n="nav.book">Book a callback</a>
     </nav>
 
-    <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang="en" class="is-on" aria-pressed="true">EN</button>
-      <button type="button" data-lang="uk" aria-pressed="false">UA</button>
+    <div class="lang" id="lang">
+      <button class="lang__btn" id="lang-btn" type="button"
+              aria-expanded="false" aria-controls="lang-menu"
+              aria-label="Language" data-i18n-aria="a11y.lang">
+        <span class="lang__cur" id="lang-cur">EN</span>
+        <svg class="lang__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+
+      <div class="lang__menu" id="lang-menu" role="group"
+           aria-label="Language" data-i18n-aria="a11y.lang">
+        <button type="button" data-lang="en" class="is-on" aria-pressed="true"><i>EN</i><span>English</span></button>
+        <button type="button" data-lang="uk" aria-pressed="false"><i>UA</i><span>Українська</span></button>
+        <button type="button" data-lang="pl" aria-pressed="false"><i>PL</i><span>Polski</span></button>
+        <button type="button" data-lang="ru" aria-pressed="false"><i>RU</i><span>Русский</span></button>
+      </div>
     </div>
 
     <div class="hdr__side">
@@ -216,10 +228,6 @@
       <li class="reveal" data-d="3">
         <h3 data-i18n="why.3h">You are told the price first</h3>
         <p data-i18n="why.3p">We diagnose, we quote, you decide. Nothing is started before you say yes.</p>
-      </li>
-      <li class="reveal" data-d="4">
-        <h3 data-i18n="why.4h">We speak English and Ukrainian</h3>
-        <p data-i18n="why.4p">If it is easier to explain the problem in Ukrainian, that is no problem at all.</p>
       </li>
     </ul>
   </div>
