@@ -42,7 +42,10 @@ jobs:
       - name: Collect site files
         run: |
           mkdir -p _site
-          cp index.html robots.txt sitemap.xml manifest.json .nojekyll _site/
+          # 🪤 CNAME обовʼязково тут: саме цим файлом GitHub Pages
+          # тримає власний домен. Забудеш — домен злітатиме після
+          # КОЖНОГО деплою, і це виглядає як «сайт то працює, то ні».
+          cp index.html robots.txt sitemap.xml manifest.json .nojekyll CNAME _site/
           cp -r assets _site/
           echo "— що виклали —"
           find _site -type f | sort

@@ -89,7 +89,11 @@ schema.org) + профіль Google та Instagram, їх Вова оновив �
 **5. Відгуки:** можна додати `5.0 ★ · 6 reviews` у заголовок (цифри
 підтверджені скріншотом Google) і кнопку «Leave a review».
 
-**6. Домен** не куплений — адреса на `github.io` виглядає як чернетка.
+**6. 🟡 ДОМЕН КУПЛЕНО — `tk-performance.co.uk`** (Cloudflare Registrar,
+2026-10-26). У коді вже прописаний: `CNAME`, canonical, og, sitemap,
+robots, schema. ➡️ Лишилось: DNS-записи, увімкнути домен у Settings →
+Pages, дочекатись сертифіката, змінити `ALLOWED_ORIGIN` воркера й
+посилання в Google-профілі та Instagram.
 
 **7. 🟡 ДІРКА В СІТЦІ на 620–939px** — «MOT preparation» сам у ряду.
 Вада давня, не від картки stage: заміряно до і після, цифри однакові.
