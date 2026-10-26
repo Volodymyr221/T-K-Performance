@@ -44,6 +44,23 @@ function clean(value, max) {
     .slice(0, max);
 }
 
+/**
+ * Телефон клієнта → цифри для посилання wa.me.
+ * У Британії номер часто пишуть місцевим форматом 07700 900000,
+ * а wa.me розуміє лише міжнародний: 447700900000.
+ *   00447700900000 → 447700900000   (міжнародний префікс 00)
+ *   07700900000    → 447700900000   (британський місцевий 0)
+ *   +44 7700 900000 → 447700900000
+ * Чужий номер лишаємо як є — здогадуватись про чужу країну не можна.
+ */
+function waNumber(raw) {
+  let d = String(raw == null ? "" : raw).replace(/\D/g, "");
+  if (d.startsWith("00")) d = d.slice(2);
+  if (d.startsWith("44")) return d;
+  if (d.startsWith("0")) return "44" + d.slice(1);
+  return d;
+}
+
 function rateLimited(ip) {
   const now = Date.now();
   const rec = hits.get(ip);
@@ -96,19 +113,26 @@ export default {
     const service = clean(data.service, 60);
     const message = clean(data.message, 1200);
     const lang = clean(data.lang, 4);
+    const wa = waNumber(phone);
 
     const text = [
       "🔧 Нова заявка з сайту",
       "",
       `👤 Імʼя: ${name}`,
       `📞 Телефон: ${phone}`,
+      // щоб написати клієнту в один дотик просто з повідомлення
+      wa ? `   ↳ https://wa.me/${wa}` : null,
       car ? `🚗 Авто: ${car}` : null,
       service ? `🛠 Послуга: ${service}` : null,
       message ? `💬 Опис: ${message}` : null,
       "",
       `🌐 Мова сторінки: ${lang || "en"}`
     ]
-      .filter(Boolean)
+      /* 🪤 Було .filter(Boolean) — воно викидало не лише порожні
+         необовʼязкові поля (null), а й порожні рядки-розділювачі "".
+         Через це блоки повідомлення злипались в один стовпчик.
+         Відсіюємо саме null, а "" лишаємо. */
+      .filter((line) => line !== null)
       .join("\n");
 
     const tg = await fetch(

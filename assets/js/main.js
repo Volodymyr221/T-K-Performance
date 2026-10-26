@@ -54,6 +54,8 @@
       el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
     });
 
+    paintWhatsApp();
+
     if (langCur) langCur.textContent = CODE[next] || next.toUpperCase();
     $$("#lang-menu button").forEach(function (b) {
       var on = b.dataset.lang === next;
@@ -63,6 +65,22 @@
 
     paintHours();
     paintDates();
+  }
+
+  /* Посилання wa.me з уже набраним текстом мовою сторінки.
+     Клієнт тисне — у нього відкривається WhatsApp, лишається
+     дописати і надіслати. Це БЕЗКОШТОВНО і без API Meta саме
+     тому, що першим пише клієнт, а не ми йому.
+
+     У розмітці лежить робоче англійське посилання — без JS
+     кнопка все одно працює, просто текст буде англійський. */
+  function paintWhatsApp() {
+    var num = CFG.whatsapp;
+    if (!num) return;
+    var txt = t("wa.text");
+    var href = "https://wa.me/" + num +
+               (txt ? "?text=" + encodeURIComponent(txt) : "");
+    $$("[data-wa]").forEach(function (a) { a.setAttribute("href", href); });
   }
 
   function setLangMenu(open) {
