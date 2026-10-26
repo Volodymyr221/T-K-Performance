@@ -397,6 +397,27 @@ body.nav-open{ overflow:hidden }
 .card--lead{
   background:linear-gradient(150deg, var(--surface-2), var(--surface) 60%);
 }
+/* Обідок у кольорах BMW M. Свідомо ТИХІШИЙ за бордовий у stage:
+   там головний акцент, тут підтримка — якщо обидва кричатимуть,
+   не виділятиметься жоден.
+
+   Як це зроблено: елемент на всю картку залитий градієнтом, а маска
+   вирізає з нього середину. Лишається сама рамка завтовшки 1px.
+   Звичайним border градієнт зробити не можна.
+
+   Градієнт гасне в прозорість під кінець — щоб це читалось як
+   фірмова смужка M, а не як кільце всіх кольорів веселки. */
+.card--lead::after{
+  content:""; position:absolute; inset:0; border-radius:inherit;
+  padding:1px; pointer-events:none; opacity:.6;
+  background:linear-gradient(118deg,
+    var(--m-lblue) 0%, var(--m-blue) 26%, var(--m-red) 58%,
+    rgba(228,0,43,.25) 78%, rgba(255,255,255,.05) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+          mask-composite:exclude;
+}
 .card--lead h3{ font-size:clamp(1.5rem,2.7vw,2.05rem) }
 .card--lead p{ max-width:68ch; font-size:16px }
 .card__tag{
