@@ -333,6 +333,22 @@
     el.addEventListener("input", function () { setErr(el, null); });
   });
 
+  /* Номерний знак одразу великими літерами. CSS робить це лише на
+     вигляд — значення лишалось би таким, як надрукували, і в Telegram
+     прилітало б «ab12 cde». Курсор не чіпаємо: ставимо назад, бо
+     присвоєння value кидає його в кінець рядка. */
+  var regEl = $("#f-reg");
+  if (regEl) {
+    regEl.addEventListener("input", function () {
+      var pos = regEl.selectionStart;
+      var up  = regEl.value.toUpperCase();
+      if (up !== regEl.value) {
+        regEl.value = up;
+        try { regEl.setSelectionRange(pos, pos); } catch (e) {}
+      }
+    });
+  }
+
   function validate() {
     var ok = true;
     if (nameEl.value.trim().length < 2) { setErr(nameEl, "f.errName"); ok = false; }
@@ -363,6 +379,7 @@
     var data = {
       name:    nameEl.value.trim(),
       phone:   phoneEl.value.trim(),
+      reg:     regEl ? regEl.value.trim() : "",
       car:     $("#f-car").value.trim(),
       service: $("#f-svc").value,
       message: $("#f-msg").value.trim(),

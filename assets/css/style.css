@@ -806,6 +806,15 @@ body.nav-open{ overflow:hidden }
 }
 .fld select option{ background:var(--bg-alt); color:var(--txt) }
 
+/* Підказка під полем. Пояснює вигоду, а не вимогу: «навіщо» піднімає
+   заповнюваність необовʼязкового поля краще, ніж зірочка «обовʼязкове». */
+.fld__hint{ font-size:12.6px; line-height:1.5; color:var(--txt-3); margin-top:-2px }
+
+/* Британські номери пишуться великими. Верстка робить це візуально,
+   а JS — у самому значенні, щоб у Telegram прилетіло теж капсом. */
+#f-reg{ text-transform:uppercase; letter-spacing:.04em }
+#f-reg::placeholder{ text-transform:none; letter-spacing:normal }
+
 .fld.is-bad input, .fld.is-bad select{ border-color:var(--m-red) }
 .fld__err{
   font-size:12.8px; color:var(--red-hi); min-height:0;
