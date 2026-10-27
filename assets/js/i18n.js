@@ -132,7 +132,7 @@ window.I18N = {
     "rv.all": "Read all reviews on Google",
 
     "bk.h": "Tell us what your BMW is doing",
-    "bk.lead": "Leave your number and a manager will get in touch within the hour during opening hours. No obligation, and the quote is free.",
+    "bk.lead": "Leave your number and a manager will get in touch within the hour. No obligation, and the quote is free.",
     "wa.text": "Hello T&K Performance. I have a question about my BMW:",
 
     "f.name": "Your name",
@@ -156,7 +156,7 @@ window.I18N = {
     "f.msg": "Describe the problem",
     "f.msgph": "Rattling noise on cold start, warning light on the dash…",
     "f.send": "Send request",
-    "f.reply": "A manager will get in touch within the hour during opening hours.",
+    "f.reply": "A manager will get in touch within the hour.",
     "f.sending": "Sending…",
     "f.note": "Your details are used only to call you back about this enquiry, nothing else.",
     "f.errName": "Please tell us your name.",
@@ -309,7 +309,7 @@ window.I18N = {
     "rv.all": "Усі відгуки в Google",
 
     "bk.h": "Розкажіть, що з вашою BMW",
-    "bk.lead": "Залиште номер — менеджер зв’яжеться з вами протягом години в робочий час. Ні до чого не зобов’язує, оцінка безкоштовна.",
+    "bk.lead": "Залиште номер — менеджер зв’яжеться з вами протягом години. Ні до чого не зобов’язує, оцінка безкоштовна.",
     "wa.text": "Вітаю, T&K Performance. Маю питання щодо своєї BMW:",
 
     "f.name": "Ваше імʼя",
@@ -333,7 +333,7 @@ window.I18N = {
     "f.msg": "Опишіть проблему",
     "f.msgph": "Стукіт на холодному запуску, горить лампа на панелі…",
     "f.send": "Відправити заявку",
-    "f.reply": "Менеджер зв’яжеться з вами протягом години в робочий час.",
+    "f.reply": "Менеджер зв’яжеться з вами протягом години.",
     "f.sending": "Надсилаємо…",
     "f.note": "Ваші дані потрібні лише для того, щоб передзвонити щодо цієї заявки.",
     "f.errName": "Будь ласка, вкажіть імʼя.",
@@ -489,7 +489,7 @@ window.I18N = {
     "rv.all": "Wszystkie opinie w Google",
 
     "bk.h": "Powiedz, co dzieje się z Twoim BMW",
-    "bk.lead": "Zostaw numer — menedżer skontaktuje się w ciągu godziny w godzinach otwarcia. Do niczego nie zobowiązuje, wycena jest bezpłatna.",
+    "bk.lead": "Zostaw numer — menedżer skontaktuje się w ciągu godziny. Do niczego nie zobowiązuje, wycena jest bezpłatna.",
     "wa.text": "Dzień dobry, T&K Performance. Mam pytanie o moje BMW:",
 
     "f.name": "Twoje imię",
@@ -513,7 +513,7 @@ window.I18N = {
     "f.msg": "Opisz problem",
     "f.msgph": "Stukanie na zimnym rozruchu, kontrolka na desce rozdzielczej…",
     "f.send": "Wyślij zgłoszenie",
-    "f.reply": "Menedżer skontaktuje się w ciągu godziny w godzinach otwarcia.",
+    "f.reply": "Menedżer skontaktuje się w ciągu godziny.",
     "f.sending": "Wysyłanie…",
     "f.note": "Twoje dane służą wyłącznie do oddzwonienia w sprawie tego zgłoszenia.",
     "f.errName": "Podaj proszę swoje imię.",
@@ -669,7 +669,7 @@ window.I18N = {
     "rv.all": "Все отзывы в Google",
 
     "bk.h": "Расскажите, что с вашей BMW",
-    "bk.lead": "Оставьте номер — менеджер свяжется с вами в течение часа в рабочее время. Ни к чему не обязывает, оценка бесплатная.",
+    "bk.lead": "Оставьте номер — менеджер свяжется с вами в течение часа. Ни к чему не обязывает, оценка бесплатная.",
     "wa.text": "Здравствуйте, T&K Performance. У меня вопрос по моей BMW:",
 
     "f.name": "Ваше имя",
@@ -693,7 +693,7 @@ window.I18N = {
     "f.msg": "Опишите проблему",
     "f.msgph": "Стук на холодном запуске, горит лампа на панели…",
     "f.send": "Отправить заявку",
-    "f.reply": "Менеджер свяжется с вами в течение часа в рабочее время.",
+    "f.reply": "Менеджер свяжется с вами в течение часа.",
     "f.sending": "Отправляем…",
     "f.note": "Ваши данные нужны только для того, чтобы перезвонить по этой заявке.",
     "f.errName": "Пожалуйста, укажите имя.",

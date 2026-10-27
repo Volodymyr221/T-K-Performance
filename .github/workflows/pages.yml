@@ -47,8 +47,35 @@ jobs:
           # КОЖНОГО деплою, і це виглядає як «сайт то працює, то ні».
           cp index.html robots.txt sitemap.xml manifest.json .nojekyll CNAME _site/
           cp -r assets _site/
-          echo "— що виклали —"
-          find _site -type f | sort
+
+      # 🪤 ЧОМУ ЦЕ ПОТРІБНО. GitHub Pages віддає файли з max-age=600,
+      # і браузер має повне право десять хвилин (а Safari на iOS і
+      # довше) показувати СТАРИЙ style.css до НОВОГО index.html.
+      # Виглядає це як «я задеплоїв, а змін не видно» — на цьому ми
+      # втратили кілька кроків поспіль.
+      #
+      # Лікується тим, що адреса файлу МІНЯЄТЬСЯ з кожним деплоєм:
+      # style.css?v=9666d5b — це для браузера інший файл, він фізично
+      # не може віддати з кешу те, чого там немає.
+      #
+      # Версія береться з коміту: нічого бампати руками, забути
+      # неможливо. Міняємо лише копії в _site, репозиторій не чіпаємо.
+      - name: Version CSS and JS so browsers cannot serve stale copies
+        run: |
+          V="${GITHUB_SHA::7}"
+          echo "версія цього деплою: $V"
+          # Тільки наші файли: href/src, що починаються з assets/ і
+          # закінчуються .css або .js. Шрифти не чіпаємо — вони
+          # незмінні, а preload із запитом ламає збіг із @font-face.
+          sed -i -E 's#((href|src)="assets/[^"?]+\.(css|js))"#\1?v='"$V"'"#g' _site/index.html
+          echo "— що проставилось —"
+          grep -oE '(href|src)="assets/[^"]+"' _site/index.html || true
+          # Без жодної версії sed нічого не знайшов — краще впасти тут,
+          # ніж тихо задеплоїти сайт, який знову показуватиме старе.
+          grep -q "?v=$V" _site/index.html || { echo "::error::версію не проставлено"; exit 1; }
+
+      - name: List what we publish
+        run: find _site -type f | sort
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3

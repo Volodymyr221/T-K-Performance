@@ -562,8 +562,8 @@
       <p class="sec__num">06</p>
       <h2 class="sec__h2" data-i18n="bk.h">Tell us what your BMW is doing</h2>
       <p class="book__lead" data-i18n="bk.lead">
-        Leave your number and a manager will get in touch within the hour during
-        opening hours. No obligation, and the quote is free.
+        Leave your number and a manager will get in touch within the hour.
+        No obligation, and the quote is free.
       </p>
     </div>
 
@@ -635,10 +635,10 @@
 
       <!-- Обіцянка часу — окремим рядком і помітніше за дрібний підпис
            про дані: це те, заради чого людина натискає кнопку.
-           «У робочий час» стоїть НАВМИСНО: о 23:00 ніхто не передзвонить
-           за годину, і обіцянка, яку не виконають, гірша за її відсутність. -->
+           ⚠️ Без застереження про робочий час — це рішення Вови. Отже
+           заявка, що прийшла вночі, теж обіцяє дзвінок за годину. -->
       <p class="form__reply" data-i18n="f.reply">
-        A manager will get in touch within the hour during opening hours.
+        A manager will get in touch within the hour.
       </p>
 
       <p class="form__note" data-i18n="f.note">
@@ -658,8 +658,13 @@
     </div>
 
     <div class="find">
-      <div class="find__info reveal">
-        <div class="find__blk">
+      <!-- Порядок у розмітці = порядок на ТЕЛЕФОНІ: адреса, карта,
+           години, контакти. Карта стоїть одразу під адресою — спершу
+           читаєш, куди їхати, потім бачиш де це.
+           На десктопі карту переставляє CSS у праву колонку на всю
+           висоту (див. .find у style.css). Обгортки .find__info більше
+           немає: з нею карта не могла стати між адресою і годинами. -->
+      <div class="find__blk find__blk--addr">
           <h3 data-i18n="fu.addr">Address</h3>
           <address>
             12 Arun Business Park<br>
@@ -670,9 +675,15 @@
           <a class="btn btn--ghost btn--sm"
              href="https://www.google.com/maps/dir/?api=1&amp;destination=50.795773%2C-0.6664628&amp;destination_place_id=0x4875add0e15a8c35%3A0xfa7821aaf3c1898c"
              target="_blank" rel="noopener" data-i18n="fu.dir">Get directions</a>
-        </div>
-
-        <div class="find__blk">
+      </div>
+      <div class="find__map reveal" data-d="1">
+        <button class="map-load" id="map-load" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5"/></svg>
+          <span data-i18n="fu.map">Show map</span>
+          <small data-i18n="fu.mapnote">Loads from Google Maps</small>
+        </button>
+      </div>
+      <div class="find__blk find__blk--hrs">
           <h3 data-i18n="fu.hrs">Opening hours</h3>
           <p class="status" id="open-status" hidden></p>
           <table class="hours">
@@ -682,23 +693,14 @@
               <tr data-day="0"><th data-i18n="fu.su">Sunday</th><td data-i18n="fu.closed">Closed</td></tr>
             </tbody>
           </table>
-        </div>
-
-        <div class="find__blk">
+      </div>
+      <div class="find__blk find__blk--con">
           <h3 data-i18n="fu.contact">Contact</h3>
           <p><a class="big-link" href="tel:+447522018523">+44 7522 018523</a></p>
           <p><a class="big-link" data-wa href="https://wa.me/447522018523?text=Hello%20T%26K%20Performance.%20I%20have%20a%20question%20about%20my%20BMW%3A" target="_blank" rel="noopener">WhatsApp</a></p>
           <p><a class="big-link" href="https://www.instagram.com/t.k.performance" target="_blank" rel="noopener">@t.k.performance</a></p>
-        </div>
       </div>
 
-      <div class="find__map reveal" data-d="1">
-        <button class="map-load" id="map-load" type="button">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5"/></svg>
-          <span data-i18n="fu.map">Show map</span>
-          <small data-i18n="fu.mapnote">Loads from Google Maps</small>
-        </button>
-      </div>
     </div>
   </div>
 </section>
@@ -719,7 +721,6 @@
       <a href="#why" data-i18n="nav.why">Why BMW only</a>
       <a href="#reviews" data-i18n="nav.rev">Reviews</a>
       <a href="#process" data-i18n="nav.process">How it works</a>
-      <a href="#booking" data-i18n="nav.book">Book a callback</a>
       <a href="#find-us" data-i18n="nav.find">Find us</a>
     </nav>
     <div class="ftr__meta">

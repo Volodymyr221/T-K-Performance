@@ -861,11 +861,26 @@ body.nav-open{ overflow:hidden }
 .form__msg.is-bad{ display:block; color:var(--red-hi) }
 
 /* ═══ КОНТАКТИ ════════════════════════════════════════════ */
+/* Адреса, карта, години, контакти — ЧОТИРИ прямі дитини сітки.
+   Обгортки .find__info більше немає: поки карта лежала поруч із нею,
+   на телефоні вона могла бути тільки ПІСЛЯ всього тексту, аж у низу
+   сторінки — за три екрани від адреси, до якої вона належить. */
 .find{
   display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
-  gap:clamp(32px,4vw,60px); align-items:start;
+  column-gap:clamp(32px,4vw,60px); row-gap:34px; align-items:start;
 }
-.find__info{ display:grid; gap:34px }
+
+/* Десктоп: текст стовпчиком ліворуч, карта праворуч НА ВСЮ ЇХ ВИСОТУ.
+   Було 340px карти біля 608px тексту — під картою зяяла діра 268px.
+   Розкладкою керує КЛАС, не позиція в розмітці: додати ще один блок
+   і мовчки зсунути карту тепер неможливо (та сама пастка, що була
+   з .card:nth-last-child у сітці послуг). */
+@media (min-width:1001px){
+  .find__blk--addr{ grid-column:1; grid-row:1 }
+  .find__blk--hrs { grid-column:1; grid-row:2 }
+  .find__blk--con { grid-column:1; grid-row:3 }
+  .find__map{ grid-column:2; grid-row:1 / span 3; align-self:stretch }
+}
 .find__blk h3{
   font:500 11.5px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.18em;
   text-transform:uppercase; color:var(--txt-3); margin-bottom:14px;
