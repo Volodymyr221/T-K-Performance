@@ -23,6 +23,7 @@ window.I18N = {
     "hero.t3": "Not sent away.",
     "hero.lead": "The heavy engine work that usually gets sent away — full rebuilds, timing chains, turbos — we do in our own workshop. Stage tuning as well. And everything else a BMW needs, from servicing to MOT prep.",
     "cta.book": "Book a callback",
+    "cta.wa": "Message the manager",
     "cta.call": "Call",
     "hero.f1b": "BMW",
     "hero.f1": "only, never anything else",
@@ -179,6 +180,7 @@ window.I18N = {
     "hero.t3": "Нікуди не возимо.",
     "hero.lead": "Важкі роботи по двигуну, які зазвичай відправляють на бік — капремонт, ланцюги ГРМ, турбіни — робимо у своїй майстерні. І stage-тюнінг. І все інше, що потрібно BMW: від ТО до підготовки до MOT.",
     "cta.book": "Замовити дзвінок",
+    "cta.wa": "Написати менеджеру",
     "cta.call": "Телефон",
     "hero.f1b": "BMW",
     "hero.f1": "тільки, і нічого іншого",
@@ -336,6 +338,7 @@ window.I18N = {
     "hero.lead": "Ciężkie prace przy silniku, które zwykle oddaje się na zewnątrz — pełne remonty, łańcuchy rozrządu, turbosprężarki — robimy we własnym warsztacie. Do tego tuning Stage. I wszystko inne, czego potrzebuje BMW: od przeglądu po przygotowanie do MOT.",
 
     "cta.book": "Zamów rozmowę",
+    "cta.wa": "Napisz do menedżera",
     "cta.call": "Telefon",
 
     "hero.f1b": "BMW",
@@ -495,6 +498,7 @@ window.I18N = {
     "hero.lead": "Тяжёлые работы по двигателю, которые обычно отдают на сторону — капремонт, цепи ГРМ, турбины — делаем в своей мастерской. И stage-тюнинг. И всё остальное, что нужно BMW: от ТО до подготовки к MOT.",
 
     "cta.book": "Заказать звонок",
+    "cta.wa": "Написать менеджеру",
     "cta.call": "Телефон",
 
     "hero.f1b": "BMW",
