@@ -109,6 +109,7 @@ export default {
       return json({ error: "validation" }, 422, env);
     }
 
+    const reg = clean(data.reg, 16).toUpperCase();
     const car = clean(data.car, 60);
     const service = clean(data.service, 60);
     const message = clean(data.message, 1200);
@@ -122,6 +123,7 @@ export default {
       `📞 Телефон: ${phone}`,
       // щоб написати клієнту в один дотик просто з повідомлення
       wa ? `   ↳ https://wa.me/${wa}` : null,
+      reg ? `🔢 Номер: ${reg}` : null,
       car ? `🚗 Авто: ${car}` : null,
       service ? `🛠 Послуга: ${service}` : null,
       message ? `💬 Опис: ${message}` : null,

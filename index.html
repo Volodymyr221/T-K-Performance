@@ -101,14 +101,15 @@
       </p>
 
       <h1 class="hero__h1 reveal" data-d="1">
-        <span data-i18n="hero.t1">We only work on</span>
-        <em data-i18n="hero.t2">BMW.</em>
-        <span data-i18n="hero.t3">That is the whole point.</span>
+        <span data-i18n="hero.t1">BMW engines,</span>
+        <em data-i18n="hero.t2">rebuilt here.</em>
+        <span data-i18n="hero.t3">Not sent away.</span>
       </h1>
 
       <p class="hero__lead reveal" data-d="2" data-i18n="hero.lead">
-        An independent BMW garage built around one thing — engines. Rebuilds,
-        timing chains, diagnostics and honest servicing, without main-dealer prices.
+        The heavy engine work that usually gets sent away — full rebuilds, timing
+        chains, turbos — we do in our own workshop. Stage tuning as well. And
+        everything else a BMW needs, from servicing to MOT prep.
       </p>
 
       <div class="hero__act reveal" data-d="3">
@@ -119,9 +120,9 @@
       </div>
 
       <ul class="hero__facts reveal" data-d="4">
-        <li><b>BMW</b><span data-i18n="hero.f1">only, never anything else</span></li>
-        <li><b data-i18n="hero.f2b">Engines</b><span data-i18n="hero.f2">rebuilt in-house</span></li>
-        <li><b data-i18n="hero.f3b">Free</b><span data-i18n="hero.f3">quote before any work</span></li>
+        <li><b data-i18n="hero.f1b">BMW</b><span data-i18n="hero.f1">only, never anything else</span></li>
+        <li><b data-i18n="hero.f2b">Stage 1&ndash;2</b><span data-i18n="hero.f2">engine and gearbox</span></li>
+        <li><b data-i18n="hero.f3b">4 languages</b><span data-i18n="hero.f3">English, Українська, Polski, Русский</span></li>
       </ul>
     </div>
 
@@ -130,19 +131,6 @@
         <source srcset="assets/img/logo.webp" type="image/webp">
         <img src="assets/img/logo.png" alt="" width="800" height="451" fetchpriority="high">
       </picture>
-    </div>
-  </div>
-
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker__row">
-      <span>Engine rebuilds</span><i></i><span>Timing chains</span><i></i>
-      <span>Diagnostics</span><i></i><span>Servicing</span><i></i>
-      <span>Suspension</span><i></i><span>Clutch &amp; gearbox</span><i></i>
-      <span>MOT preparation</span><i></i><span>Brakes</span><i></i>
-      <span>Engine rebuilds</span><i></i><span>Timing chains</span><i></i>
-      <span>Diagnostics</span><i></i><span>Servicing</span><i></i>
-      <span>Suspension</span><i></i><span>Clutch &amp; gearbox</span><i></i>
-      <span>MOT preparation</span><i></i><span>Brakes</span><i></i>
     </div>
   </div>
 </section>
@@ -289,8 +277,8 @@
         <p data-i18n="why.1p">Describe the noise and the model, and there is a good chance we already know what it is.</p>
       </li>
       <li class="reveal" data-d="2">
-        <h3 data-i18n="why.2h">Main-dealer knowledge, independent prices</h3>
-        <p data-i18n="why.2p">The same diagnosis and the same parts quality, without the dealer hourly rate.</p>
+        <h3 data-i18n="why.2h">The same engines, week after week</h3>
+        <p data-i18n="why.2p">Nine BMW engine families, the same faults over and over. That repetition is why we quote quickly and get it right the first time.</p>
       </li>
       <li class="reveal" data-d="3">
         <h3 data-i18n="why.3h">You are told the price first</h3>
@@ -577,23 +565,38 @@
         </div>
       </div>
 
+      <!-- Номерний знак іде ПЕРЕД моделлю: за ним сервіс бачить точну
+           комплектацію (у 2015-му 320d міг бути з N47 або B47 — це різні
+           деталі) і замовляє запчастини ще до приїзду машини.
+           Необовʼязкове: підказка «навіщо» піднімає заповнюваність
+           краще, ніж примус. -->
       <div class="form__row">
+        <div class="fld">
+          <label for="f-reg"><span data-i18n="f.reg">Registration number</span> <span class="opt" data-i18n="f.opt">optional</span></label>
+          <input id="f-reg" name="reg" type="text" maxlength="12" autocomplete="off"
+                 autocapitalize="characters" spellcheck="false"
+                 data-ph="f.regph" placeholder="AB12 CDE">
+          <p class="fld__hint" data-i18n="f.reghint">
+            Gives us the exact spec, so we can price the right parts before you arrive.
+          </p>
+        </div>
         <div class="fld">
           <label for="f-car"><span data-i18n="f.car">Your BMW</span> <span class="opt" data-i18n="f.opt">optional</span></label>
           <input id="f-car" name="car" type="text" maxlength="60" placeholder="320d, 2015">
         </div>
-        <div class="fld">
-          <label for="f-svc" data-i18n="f.svc">What do you need?</label>
-          <select id="f-svc" name="service">
-            <option value="Not sure yet" data-i18n="f.o0">Not sure yet</option>
-            <option value="Engine repair or rebuild" data-i18n="f.o1">Engine repair or rebuild</option>
-            <option value="Diagnostics" data-i18n="f.o2">Diagnostics</option>
-            <option value="Servicing" data-i18n="f.o3">Servicing</option>
-            <option value="Clutch or gearbox" data-i18n="f.o4">Clutch or gearbox</option>
-            <option value="Brakes or suspension" data-i18n="f.o5">Brakes or suspension</option>
-            <option value="MOT preparation" data-i18n="f.o6">MOT preparation</option>
-          </select>
-        </div>
+      </div>
+
+      <div class="fld">
+        <label for="f-svc" data-i18n="f.svc">What do you need?</label>
+        <select id="f-svc" name="service">
+          <option value="Not sure yet" data-i18n="f.o0">Not sure yet</option>
+          <option value="Engine repair or rebuild" data-i18n="f.o1">Engine repair or rebuild</option>
+          <option value="Diagnostics" data-i18n="f.o2">Diagnostics</option>
+          <option value="Servicing" data-i18n="f.o3">Servicing</option>
+          <option value="Clutch or gearbox" data-i18n="f.o4">Clutch or gearbox</option>
+          <option value="Brakes or suspension" data-i18n="f.o5">Brakes or suspension</option>
+          <option value="MOT preparation" data-i18n="f.o6">MOT preparation</option>
+        </select>
       </div>
 
       <div class="fld">
