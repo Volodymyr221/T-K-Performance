@@ -302,6 +302,11 @@ body.nav-open{ overflow:hidden }
   text-wrap:balance;
 }
 .sec__sub{ margin-top:18px; color:var(--txt-2); font-size:1.04rem; max-width:56ch }
+.sec__hint{
+  margin-top:12px; max-width:56ch;
+  font:500 13px/1.5 "JetBrains Mono",ui-monospace,monospace;
+  color:var(--txt-3); letter-spacing:.01em;
+}
 
 /* ── кнопки ──────────────────────────────────────────────── */
 .btn{
@@ -557,11 +562,42 @@ body.nav-open{ overflow:hidden }
 }
 
 .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:22px }
-.chips li{
+
+/* Плашка — це ПОСИЛАННЯ на форму, а не просто підпис. Тому в розмітці
+   лежить <a href="#booking">: вона працює і з вимкненим JavaScript,
+   просто без підстановки послуги. JS лише доповнює. */
+.chips .chip{
+  display:inline-flex; align-items:center;
   font:500 12.5px/1 "JetBrains Mono",ui-monospace,monospace; color:var(--txt-2);
-  border:1px solid var(--line); border-radius:99px; padding:8px 13px;
+  border:1px solid var(--line); border-radius:99px; padding:9px 13px;
   background:rgba(255,255,255,.02);
+  text-decoration:none; cursor:pointer;
+  transition:color .18s, border-color .18s, background .18s;
 }
+
+/* 🪤 Ціль дотику. На десктопі плашка лишається дрібною — там курсор
+   точний. На сенсорі вона мусить бути 44px, інакше в неї не влучити,
+   а плашок у ряд по чотири. Розділено саме за вказівником, а не за
+   шириною екрана: планшет з мишею не повинен роздуватись. */
+@media (pointer:coarse){
+  .chips{ gap:10px }
+  .chips .chip{ min-height:44px; padding-inline:15px }
+}
+
+/* Фокус із клавіатури мусить бути видимим: плашок на сторінці 22,
+   і без обведення по них неможливо йти Tab-ом. */
+.chips .chip:focus-visible{
+  outline:2px solid var(--red-txt); outline-offset:2px;
+  color:var(--txt); border-color:var(--red-txt);
+}
+
+/* Поле «Що потрібно?» мигає, коли його заповнила плашка: інакше
+   людина стрибає до форми і не бачить, що там уже щось обрано. */
+@keyframes tkPick{
+  0%   { box-shadow:0 0 0 0 rgba(255,51,85,.55) }
+  100% { box-shadow:0 0 0 10px rgba(255,51,85,0) }
+}
+.is-picked{ animation:tkPick .7s ease-out 2; border-color:var(--red-txt) }
 
 /* На широкому екрані ряди не лишають дір:
    лід на всю ширину · 3 картки по третині · 2 по половині · stage на всю.
@@ -1013,6 +1049,11 @@ body.nav-open{ overflow:hidden }
    курсор. Активний стан при натисканні (:active) не чіпаємо —
    він на дотик працює правильно. */
 @media (hover: hover) and (pointer: fine){
+  .chips .chip:hover{
+    color:var(--txt); border-color:var(--red-txt);
+    background:rgba(255,51,85,.07);
+  }
+
   .nav a:hover{ color:var(--txt) }
   .lang__btn:hover{ color:var(--txt); border-color:var(--line-2) }
   .lang__menu button:hover{ color:var(--txt); background:rgba(255,255,255,.06) }
