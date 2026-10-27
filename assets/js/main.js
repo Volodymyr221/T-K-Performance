@@ -55,6 +55,7 @@
     });
 
     paintWhatsApp();
+    paintChips();
 
     if (langCur) langCur.textContent = CODE[next] || next.toUpperCase();
     $$("#lang-menu button").forEach(function (b) {
@@ -65,6 +66,16 @@
 
     paintHours();
     paintDates();
+  }
+
+  /* Назва вузла («Турбіна») не каже зчитувачу екрана, що це
+     посилання на форму. Підпис збираємо з шаблону поточної мови. */
+  function paintChips() {
+    var tpl = t("a11y.chip");
+    if (!tpl) return;
+    $$(".chip[data-svc]").forEach(function (c) {
+      c.setAttribute("aria-label", tpl + c.textContent.trim());
+    });
   }
 
   /* Посилання wa.me з уже набраним текстом мовою сторінки.
@@ -526,6 +537,61 @@
       tabs[j].focus();
       show(tabs[j].dataset.stage, true);
     });
+  })();
+
+  /* ── 11. Плашки послуг → готова заявка ─────────────────
+     Людина тисне «Ремонт до техогляду» — її переносить до форми,
+     послуга вже обрана, а в описі стоїть сама плашка. Лишається
+     вписати імʼя, телефон і номер машини.
+
+     У розмітці плашка — звичайне <a href="#booking">, тому без
+     JavaScript вона просто веде до форми. Тут ми тільки
+     доповнюємо: підставляємо послугу й показуємо це. */
+  (function () {
+    var chips = $$(".chip[data-svc]");
+    if (!chips.length) return;
+
+    var svc  = $("#f-svc");
+    var msg  = $("#f-msg");
+    var name = $("#f-name");
+    var form = $("#booking");
+    if (!svc || !form) return;
+
+    /* Чи є в списку такий пункт. Якщо колись приберуть послугу з
+       форми, а плашка лишиться — мовчки нічого не обираємо,
+       замість того щоб ставити порожнє значення. */
+    function hasOption(v) {
+      return $$("#f-svc option").some(function (o) { return o.value === v; });
+    }
+
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () {
+        var want = c.dataset.svc;
+        if (hasOption(want)) {
+          svc.value = want;
+          /* Поле мигає — інакше людина доїде до форми і не помітить,
+             що послуга вже обрана. */
+          svc.classList.remove("is-picked");
+          void svc.offsetWidth;          /* перезапуск анімації */
+          svc.classList.add("is-picked");
+        }
+
+        /* Опис дописуємо ТІЛЬКИ в порожнє поле: якщо людина вже
+           щось набрала, затирати її текст не можна. */
+        if (msg && !msg.value.trim()) msg.value = c.textContent.trim();
+
+        /* Фокус у перше поле — лише там, де є справжній курсор.
+           На телефоні це миттєво викинуло б клавіатуру на півекрана
+           і сховало б форму, до якої ми щойно прокрутили. */
+        var fine = window.matchMedia && window.matchMedia("(pointer:fine)").matches;
+        if (fine && name) {
+          setTimeout(function () { name.focus({ preventScroll: true }); }, 450);
+        }
+      });
+    });
+
+    /* Прибираємо підсвітку, щойно людина сама чіпає список. */
+    svc.addEventListener("change", function () { svc.classList.remove("is-picked"); });
   })();
 
   /* ── 9. Рік у підвалі ─────────────────────────────────── */

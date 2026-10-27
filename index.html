@@ -145,6 +145,12 @@
       <p class="sec__sub" data-i18n="svc.sub">
         Everything a BMW needs, under one roof. Engine work is where we are strongest.
       </p>
+      <!-- Плашки виглядають як підписи, а на сенсорі немає наведення,
+           щоб показати інше. Тому кажемо прямо — один раз на секцію,
+           а не підписом під кожною з шести карток. -->
+      <p class="sec__hint" data-i18n="svc.hint">
+        Tap any tag below to start a request — we will ring you back.
+      </p>
     </div>
 
     <div class="cards">
@@ -224,34 +230,64 @@
           B58, S55 — we know what fails on each of them and why.
         </p>
         <ul class="chips">
-          <li>Timing chain</li><li>Head gasket</li><li>VANOS</li>
-          <li>Turbo</li><li>Oil leaks</li><li>Full rebuild</li>
+          <li><a class="chip" href="#booking" data-svc="Engine repair or rebuild" data-i18n="ch.1a">Timing chain</a></li>
+          <li><a class="chip" href="#booking" data-svc="Engine repair or rebuild" data-i18n="ch.1b">Head gasket</a></li>
+          <li><a class="chip" href="#booking" data-svc="Engine repair or rebuild" data-i18n="ch.1c">VANOS</a></li>
+          <li><a class="chip" href="#booking" data-svc="Engine repair or rebuild" data-i18n="ch.1d">Turbo</a></li>
+          <li><a class="chip" href="#booking" data-svc="Engine repair or rebuild" data-i18n="ch.1e">Oil leaks</a></li>
+          <li><a class="chip" href="#booking" data-svc="Engine repair or rebuild" data-i18n="ch.1f">Full rebuild</a></li>
         </ul>
       </article>
 
       <article class="card reveal" data-d="2">
         <h3 data-i18n="svc.2h">Diagnostics</h3>
         <p data-i18n="svc.2p">Dealer-level fault reading and live data. We find the cause, not just the code.</p>
+        <ul class="chips">
+          <li><a class="chip" href="#booking" data-svc="Diagnostics" data-i18n="ch.2a">Fault codes</a></li>
+          <li><a class="chip" href="#booking" data-svc="Diagnostics" data-i18n="ch.2b">Live data</a></li>
+          <li><a class="chip" href="#booking" data-svc="Diagnostics" data-i18n="ch.2c">Warning lights</a></li>
+        </ul>
       </article>
 
       <article class="card reveal" data-d="3">
         <h3 data-i18n="svc.3h">Servicing</h3>
         <p data-i18n="svc.3p">Oil, filters, plugs, brake fluid and inspections to BMW schedules, with genuine or OEM parts.</p>
+        <ul class="chips">
+          <li><a class="chip" href="#booking" data-svc="Servicing" data-i18n="ch.3a">Oil &amp; filters</a></li>
+          <li><a class="chip" href="#booking" data-svc="Servicing" data-i18n="ch.3b">Spark plugs</a></li>
+          <li><a class="chip" href="#booking" data-svc="Servicing" data-i18n="ch.3c">Brake fluid</a></li>
+          <li><a class="chip" href="#booking" data-svc="Servicing" data-i18n="ch.3d">Inspection</a></li>
+        </ul>
       </article>
 
       <article class="card reveal" data-d="4">
         <h3 data-i18n="svc.4h">Clutch &amp; gearbox</h3>
         <p data-i18n="svc.4p">Clutch replacement, DMF, manual and automatic gearbox servicing and repair.</p>
+        <ul class="chips">
+          <li><a class="chip" href="#booking" data-svc="Clutch or gearbox" data-i18n="ch.4a">Clutch</a></li>
+          <li><a class="chip" href="#booking" data-svc="Clutch or gearbox" data-i18n="ch.4b">DMF</a></li>
+          <li><a class="chip" href="#booking" data-svc="Clutch or gearbox" data-i18n="ch.4c">Manual gearbox</a></li>
+          <li><a class="chip" href="#booking" data-svc="Clutch or gearbox" data-i18n="ch.4d">Automatic gearbox</a></li>
+        </ul>
       </article>
 
       <article class="card card--half reveal" data-d="5">
         <h3 data-i18n="svc.5h">Brakes &amp; suspension</h3>
         <p data-i18n="svc.5p">Discs, pads, arms, bushes and geometry — set up so the car feels like a BMW again.</p>
+        <ul class="chips">
+          <li><a class="chip" href="#booking" data-svc="Brakes or suspension" data-i18n="ch.5a">Discs &amp; pads</a></li>
+          <li><a class="chip" href="#booking" data-svc="Brakes or suspension" data-i18n="ch.5b">Arms &amp; bushes</a></li>
+          <li><a class="chip" href="#booking" data-svc="Brakes or suspension" data-i18n="ch.5c">Geometry</a></li>
+        </ul>
       </article>
 
       <article class="card card--half reveal" data-d="6">
         <h3 data-i18n="svc.6h">MOT preparation</h3>
         <p data-i18n="svc.6p">We check the car over first, tell you what would fail, and fix it before the test.</p>
+        <ul class="chips">
+          <li><a class="chip" href="#booking" data-svc="MOT preparation" data-i18n="ch.6a">Pre-MOT check</a></li>
+          <li><a class="chip" href="#booking" data-svc="MOT preparation" data-i18n="ch.6b">Repairs before test</a></li>
+        </ul>
       </article>
     </div>
   </div>
@@ -592,6 +628,7 @@
         <select id="f-svc" name="service">
           <option value="Not sure yet" data-i18n="f.o0">Not sure yet</option>
           <option value="Engine repair or rebuild" data-i18n="f.o1">Engine repair or rebuild</option>
+          <option value="Stage tuning" data-i18n="f.o7">Stage tuning</option>
           <option value="Diagnostics" data-i18n="f.o2">Diagnostics</option>
           <option value="Servicing" data-i18n="f.o3">Servicing</option>
           <option value="Clutch or gearbox" data-i18n="f.o4">Clutch or gearbox</option>
