@@ -25,12 +25,6 @@ window.I18N = {
     "cta.book": "Book a callback",
     "cta.wa": "Message the manager",
     "cta.call": "Call",
-    "hero.f1b": "BMW",
-    "hero.f1": "only, never anything else",
-    "hero.f2b": "Stage 1–2",
-    "hero.f2": "engine and gearbox",
-    "hero.f3b": "4 languages",
-    "hero.f3": "English, Українська, Polski, Русский",
 
     "svc.h": "What we do",
     "svc.sub": "Everything a BMW needs, under one roof. Engine work is where we are strongest.",
@@ -182,12 +176,6 @@ window.I18N = {
     "cta.book": "Замовити дзвінок",
     "cta.wa": "Написати менеджеру",
     "cta.call": "Телефон",
-    "hero.f1b": "BMW",
-    "hero.f1": "тільки, і нічого іншого",
-    "hero.f2b": "Stage 1–2",
-    "hero.f2": "двигун і коробка",
-    "hero.f3b": "4 мови",
-    "hero.f3": "English, Українська, Polski, Русский",
 
     "svc.h": "Що ми робимо",
     "svc.sub": "Усе, що потрібно BMW, в одному місці. Двигуни — наша найсильніша сторона.",
@@ -341,12 +329,6 @@ window.I18N = {
     "cta.wa": "Napisz do menedżera",
     "cta.call": "Telefon",
 
-    "hero.f1b": "BMW",
-    "hero.f1": "tylko to i nic innego",
-    "hero.f2b": "Stage 1–2",
-    "hero.f2": "silnik i skrzynia",
-    "hero.f3b": "4 języki",
-    "hero.f3": "English, Українська, Polski, Русский",
 
     "svc.h": "Czym się zajmujemy",
     "svc.sub": "Wszystko, czego potrzebuje BMW, w jednym miejscu. Najmocniejsi jesteśmy w silnikach.",
@@ -501,12 +483,6 @@ window.I18N = {
     "cta.wa": "Написать менеджеру",
     "cta.call": "Телефон",
 
-    "hero.f1b": "BMW",
-    "hero.f1": "только, и ничего другого",
-    "hero.f2b": "Stage 1–2",
-    "hero.f2": "двигатель и коробка",
-    "hero.f3b": "4 языка",
-    "hero.f3": "English, Українська, Polski, Русский",
 
     "svc.h": "Что мы делаем",
     "svc.sub": "Всё, что нужно BMW, в одном месте. Сильнее всего мы в двигателях.",
