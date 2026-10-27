@@ -133,9 +133,6 @@ window.I18N = {
 
     "bk.h": "Tell us what your BMW is doing",
     "bk.lead": "Leave your number and we will call you back — usually the same working day. No obligation, and the quote is free.",
-    "bk.alt1": "Prefer to talk now?",
-    "bk.alt2": "Or message us",
-    "wa.btn": "Message us on WhatsApp",
     "wa.text": "Hello T&K Performance. I have a question about my BMW:",
 
     "f.name": "Your name",
@@ -310,9 +307,6 @@ window.I18N = {
 
     "bk.h": "Розкажіть, що з вашою BMW",
     "bk.lead": "Залиште номер — ми передзвонимо, зазвичай того ж робочого дня. Ні до чого не зобовʼязує, оцінка безкоштовна.",
-    "bk.alt1": "Хочете поговорити зараз?",
-    "bk.alt2": "Або напишіть нам",
-    "wa.btn": "Написати у WhatsApp",
     "wa.text": "Вітаю, T&K Performance. Маю питання щодо своєї BMW:",
 
     "f.name": "Ваше імʼя",
@@ -490,9 +484,6 @@ window.I18N = {
 
     "bk.h": "Powiedz, co dzieje się z Twoim BMW",
     "bk.lead": "Zostaw numer — oddzwonimy, zwykle tego samego dnia roboczego. Do niczego nie zobowiązuje, a wycena jest bezpłatna.",
-    "bk.alt1": "Wolisz porozmawiać teraz?",
-    "bk.alt2": "Albo napisz do nas",
-    "wa.btn": "Napisz na WhatsAppie",
     "wa.text": "Dzień dobry, T&K Performance. Mam pytanie o moje BMW:",
 
     "f.name": "Twoje imię",
@@ -670,9 +661,6 @@ window.I18N = {
 
     "bk.h": "Расскажите, что с вашей BMW",
     "bk.lead": "Оставьте номер — мы перезвоним, обычно в тот же рабочий день. Ни к чему не обязывает, оценка бесплатная.",
-    "bk.alt1": "Хотите поговорить сейчас?",
-    "bk.alt2": "Или напишите нам",
-    "wa.btn": "Написать в WhatsApp",
     "wa.text": "Здравствуйте, T&K Performance. У меня вопрос по моей BMW:",
 
     "f.name": "Ваше имя",

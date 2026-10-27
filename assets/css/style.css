@@ -333,11 +333,6 @@ body.nav-open{ overflow:hidden }
    на кольорах BMW M, і зелена плашка читалась би тут як чужа наліпка
    з чужого бренду. Упізнаваність дає сам значок і слово в підписі,
    а кнопка лишається в одній мові з рештою сторінки. */
-.btn--wa{
-  margin-top:30px;
-  border-color:var(--line-2); color:var(--txt);
-  background:rgba(255,255,255,.02);
-}
 .ic-wa{ width:19px; height:19px; flex:none; fill:currentColor }
 
 /* ═══ КАРТКИ ПОСЛУГ ═══════════════════════════════════════ */
@@ -787,17 +782,14 @@ body.nav-open{ overflow:hidden }
 }
 .book__lead{ margin-top:20px; color:var(--txt-2); font-size:1.06rem; max-width:44ch }
 
-.book__alt{ margin-top:34px; display:grid; gap:16px }
-.book__alt li{ display:flex; flex-direction:column; gap:3px }
-.book__alt-k{
-  font:500 11.5px/1 "JetBrains Mono",ui-monospace,monospace; letter-spacing:.16em;
-  text-transform:uppercase; color:var(--txt-3);
-}
-.book__alt a{
-  font-size:1.22rem; font-weight:700; text-decoration:none;
-  font-variation-settings:"wdth" 104; width:fit-content;
-  border-bottom:1px solid var(--line-2); padding-bottom:2px;
-  transition:color .2s, border-color .2s;
+/* Ліва колонка тепер коротка: під нею був лише WhatsApp і контакти,
+   які замовник попросив прибрати. Притискати заголовок до верху
+   поруч із високою формою немає сенсу — лишалась би порожня
+   половина екрана. Вирівнюємо по центру форми.
+   Тільки від 1001px: нижче .book стає одноколонковим і центрування
+   не має на що діяти. */
+@media (min-width:1001px){
+  .book__copy{ align-self:center }
 }
 
 .form{
@@ -981,8 +973,8 @@ body.nav-open{ overflow:hidden }
      висоту рядка 23–35px. Розширюємо зону дотику невидимим шаром
      поверх — вигляд і відступи не змінюються, а палець уже не
      промахується. Саме так це роблять, коли не можна чіпати верстку. */
-  .big-link, .book__alt a, .ftr__nav a, .ftr__meta a, .hdr__logo{ position:relative }
-  .big-link::after, .book__alt a::after,
+  .big-link, .ftr__nav a, .ftr__meta a, .hdr__logo{ position:relative }
+  .big-link::after,
   .ftr__nav a::after, .ftr__meta a::after, .hdr__logo::after{
     content:""; position:absolute; left:0; right:0;
     top:50%; height:44px; transform:translateY(-50%);
@@ -1061,7 +1053,6 @@ body.nav-open{ overflow:hidden }
   .btn--red:hover{ background:var(--red-hi); box-shadow:0 12px 34px -12px rgba(228,0,43,1) }
   .btn--ghost:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
   .btn--white:hover{ background:#fff; border-color:#fff }
-  .btn--wa:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
   .stage__tab:hover{ color:var(--txt); border-color:var(--burg-hi) }
   .stage__tab[aria-selected="true"]:hover{ color:#fff; background:var(--burg-hi) }
   .card:hover{ border-color:var(--line-2); background:var(--surface-2); transform:translateY(-3px) }
@@ -1071,7 +1062,6 @@ body.nav-open{ overflow:hidden }
   .revs__btn:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.06) }
   .revs__btn[disabled]:hover{ border-color:var(--line-2); background:rgba(255,255,255,.02) }
   .rev:hover{ border-color:var(--line-2); background:var(--surface-2) }
-  .book__alt a:hover{ color:var(--m-red); border-color:var(--m-red) }
   .big-link:hover{ color:var(--m-red); border-color:var(--m-red) }
   .map-load:hover{ border-color:var(--line-2); color:var(--txt) }
   .ftr__nav a:hover{ color:var(--txt) }
