@@ -283,17 +283,6 @@ body.nav-open{ overflow:hidden }
 
 .hero__act{ display:flex; flex-wrap:wrap; gap:12px; margin-top:36px }
 
-.hero__facts{
-  display:flex; flex-wrap:wrap; gap:12px 40px;
-  margin-top:44px; padding-top:28px; border-top:1px solid var(--line);
-}
-.hero__facts li{ display:flex; flex-direction:column; gap:2px }
-.hero__facts b{
-  font-size:1.02rem; font-weight:700; font-variation-settings:"wdth" 106;
-  letter-spacing:-.01em;
-}
-.hero__facts span{ font-size:13.5px; color:var(--txt-3) }
-
 .hero__mark{ justify-self:center; width:min(100%,420px) }
 .hero__mark picture{ display:block }
 .hero__mark img{ width:100%; filter:drop-shadow(0 24px 60px rgba(0,0,0,.6)) }
@@ -1010,7 +999,6 @@ body.nav-open{ overflow:hidden }
   .hero__mark{ display:none }
   .hero__in{ padding-block:44px 56px }
   .form__row{ grid-template-columns:1fr }
-  .hero__facts{ gap:16px 28px }
   .hero__act .btn{ flex:1 1 100%; }
   .lang__btn{ padding-inline:11px 9px }
   .gal{ grid-template-columns:1fr 1fr; gap:10px }
