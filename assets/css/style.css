@@ -848,6 +848,13 @@ body.nav-open{ overflow:hidden }
 
 .hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden }
 
+/* Обіцянка часу читається ПЕРШОЮ після кнопки, тому вона світліша
+   й більша за підпис про дані. Волосок зверху відділяє її від кнопки,
+   щоб не злипалось у суцільний стовпчик тексту. */
+.form__reply{
+  margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
+  font-size:14px; line-height:1.5; color:var(--txt-2); text-align:center;
+}
 .form__note{ font-size:12.8px; color:var(--txt-3); text-align:center }
 .form__msg{ font-size:14.5px; text-align:center; display:none }
 .form__msg.is-ok{ display:block; color:var(--m-lblue) }

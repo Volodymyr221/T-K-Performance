@@ -562,8 +562,8 @@
       <p class="sec__num">06</p>
       <h2 class="sec__h2" data-i18n="bk.h">Tell us what your BMW is doing</h2>
       <p class="book__lead" data-i18n="bk.lead">
-        Leave your number and we will call you back — usually the same working day.
-        No obligation, and the quote is free.
+        Leave your number and a manager will get in touch within the hour during
+        opening hours. No obligation, and the quote is free.
       </p>
     </div>
 
@@ -607,12 +607,14 @@
         <select id="f-svc" name="service">
           <option value="Not sure yet" data-i18n="f.o0">Not sure yet</option>
           <option value="Engine repair or rebuild" data-i18n="f.o1">Engine repair or rebuild</option>
-          <option value="Stage tuning" data-i18n="f.o7">Stage tuning</option>
+          <option value="Stage tuning — engine" data-i18n="f.o7">Stage tuning &mdash; engine</option>
+          <option value="Stage tuning — gearbox" data-i18n="f.o8">Stage tuning &mdash; gearbox</option>
           <option value="Diagnostics" data-i18n="f.o2">Diagnostics</option>
           <option value="Servicing" data-i18n="f.o3">Servicing</option>
           <option value="Clutch or gearbox" data-i18n="f.o4">Clutch or gearbox</option>
           <option value="Brakes or suspension" data-i18n="f.o5">Brakes or suspension</option>
           <option value="MOT preparation" data-i18n="f.o6">MOT preparation</option>
+          <option value="Something else" data-i18n="f.o9">Something else</option>
         </select>
       </div>
 
@@ -628,11 +630,19 @@
       </div>
 
       <button class="btn btn--red btn--wide" type="submit" id="f-send">
-        <span data-i18n="f.send">Request a callback</span>
+        <span data-i18n="f.send">Send request</span>
       </button>
 
+      <!-- Обіцянка часу — окремим рядком і помітніше за дрібний підпис
+           про дані: це те, заради чого людина натискає кнопку.
+           «У робочий час» стоїть НАВМИСНО: о 23:00 ніхто не передзвонить
+           за годину, і обіцянка, яку не виконають, гірша за її відсутність. -->
+      <p class="form__reply" data-i18n="f.reply">
+        A manager will get in touch within the hour during opening hours.
+      </p>
+
       <p class="form__note" data-i18n="f.note">
-        We use your number to call you back about this enquiry, nothing else.
+        Your details are used only to call you back about this enquiry, nothing else.
       </p>
       <p class="form__msg" id="f-msg-out" role="status" aria-live="polite"></p>
     </form>
