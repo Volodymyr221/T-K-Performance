@@ -581,19 +581,22 @@
         </div>
       </div>
 
-      <!-- Номерний знак — ЄДИНЕ, що тепер каже сервісу про машину
-           (поле «Ваша BMW» замовник попросив прибрати). За номером
-           видно точну комплектацію: у 2015-му 320d міг бути з N47
-           або B47, а це різні деталі.
-           🔴 Поле НЕОБОВʼЯЗКОВЕ. Якщо його не заповнять, про машину
-           не лишиться нічого, крім опису проблеми.
+      <!-- Номерний знак — ЄДИНЕ, що каже сервісу про машину (поле
+           «Ваша BMW» замовник попросив прибрати). За номером видно
+           точну комплектацію: у 2015-му 320d міг бути з N47 або B47,
+           а це різні деталі.
+           ОБОВʼЯЗКОВЕ — рішення Вови після того, як модель прибрали:
+           без номера заявка не каже про авто взагалі нічого.
+           Підказка «навіщо» лишається: людина охочіше заповнює поле,
+           коли бачить вигоду, а не лише зірочку.
            Не в form__row: він ділить рядок навпіл, а друге поле
            звідти прибрали — лишилась би порожня половина. -->
       <div class="fld">
-        <label for="f-reg"><span data-i18n="f.reg">Registration number</span> <span class="opt" data-i18n="f.opt">optional</span></label>
+        <label for="f-reg" data-i18n="f.reg">Registration number</label>
         <input id="f-reg" name="reg" type="text" maxlength="12" autocomplete="off"
-               autocapitalize="characters" spellcheck="false"
+               autocapitalize="characters" spellcheck="false" required
                data-ph="f.regph" placeholder="AB12 CDE">
+        <p class="fld__err" data-err></p>
         <p class="fld__hint" data-i18n="f.reghint">
           Gives us the exact spec, so we can price the right parts before you arrive.
         </p>
