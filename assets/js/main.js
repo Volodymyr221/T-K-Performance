@@ -391,7 +391,6 @@
       name:    nameEl.value.trim(),
       phone:   phoneEl.value.trim(),
       reg:     regEl ? regEl.value.trim() : "",
-      car:     $("#f-car").value.trim(),
       service: $("#f-svc").value,
       message: $("#f-msg").value.trim(),
       lang:    lang,

@@ -581,25 +581,22 @@
         </div>
       </div>
 
-      <!-- Номерний знак іде ПЕРЕД моделлю: за ним сервіс бачить точну
-           комплектацію (у 2015-му 320d міг бути з N47 або B47 — це різні
-           деталі) і замовляє запчастини ще до приїзду машини.
-           Необовʼязкове: підказка «навіщо» піднімає заповнюваність
-           краще, ніж примус. -->
-      <div class="form__row">
-        <div class="fld">
-          <label for="f-reg"><span data-i18n="f.reg">Registration number</span> <span class="opt" data-i18n="f.opt">optional</span></label>
-          <input id="f-reg" name="reg" type="text" maxlength="12" autocomplete="off"
-                 autocapitalize="characters" spellcheck="false"
-                 data-ph="f.regph" placeholder="AB12 CDE">
-          <p class="fld__hint" data-i18n="f.reghint">
-            Gives us the exact spec, so we can price the right parts before you arrive.
-          </p>
-        </div>
-        <div class="fld">
-          <label for="f-car"><span data-i18n="f.car">Your BMW</span> <span class="opt" data-i18n="f.opt">optional</span></label>
-          <input id="f-car" name="car" type="text" maxlength="60" placeholder="320d, 2015">
-        </div>
+      <!-- Номерний знак — ЄДИНЕ, що тепер каже сервісу про машину
+           (поле «Ваша BMW» замовник попросив прибрати). За номером
+           видно точну комплектацію: у 2015-му 320d міг бути з N47
+           або B47, а це різні деталі.
+           🔴 Поле НЕОБОВʼЯЗКОВЕ. Якщо його не заповнять, про машину
+           не лишиться нічого, крім опису проблеми.
+           Не в form__row: він ділить рядок навпіл, а друге поле
+           звідти прибрали — лишилась би порожня половина. -->
+      <div class="fld">
+        <label for="f-reg"><span data-i18n="f.reg">Registration number</span> <span class="opt" data-i18n="f.opt">optional</span></label>
+        <input id="f-reg" name="reg" type="text" maxlength="12" autocomplete="off"
+               autocapitalize="characters" spellcheck="false"
+               data-ph="f.regph" placeholder="AB12 CDE">
+        <p class="fld__hint" data-i18n="f.reghint">
+          Gives us the exact spec, so we can price the right parts before you arrive.
+        </p>
       </div>
 
       <div class="fld">
