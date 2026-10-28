@@ -340,7 +340,9 @@
   var nameEl  = $("#f-name");
   var phoneEl = $("#f-phone");
 
-  [nameEl, phoneEl].forEach(function (el) {
+  var regEl = $("#f-reg");
+
+  [nameEl, phoneEl, regEl].filter(Boolean).forEach(function (el) {
     el.addEventListener("input", function () { setErr(el, null); });
   });
 
@@ -348,7 +350,6 @@
      вигляд — значення лишалось би таким, як надрукували, і в Telegram
      прилітало б «ab12 cde». Курсор не чіпаємо: ставимо назад, бо
      присвоєння value кидає його в кінець рядка. */
-  var regEl = $("#f-reg");
   if (regEl) {
     regEl.addEventListener("input", function () {
       var pos = regEl.selectionStart;
@@ -368,6 +369,15 @@
     var digits = phoneEl.value.replace(/\D/g, "");
     if (digits.length < 9) { setErr(phoneEl, "f.errPhone"); ok = false; }
     else setErr(phoneEl, null);
+
+    /* Номер ОБОВʼЯЗКОВИЙ. Формат НЕ звіряємо: крім звичайного
+       «AB12 CDE» у Британії їздять іменні знаки, північноірландські
+       й імпортні — регулярка відсіяла б справжніх клієнтів.
+       Вимагаємо лише, щоб там щось було. */
+    if (regEl) {
+      if (regEl.value.trim().length < 2) { setErr(regEl, "f.errReg"); ok = false; }
+      else setErr(regEl, null);
+    }
 
     return ok;
   }

@@ -105,11 +105,15 @@ export default {
 
     const name = clean(data.name, 80);
     const phone = clean(data.phone, 32);
-    if (name.length < 2 || phone.replace(/\D/g, "").length < 9) {
+    const reg = clean(data.reg, 16).toUpperCase();
+    /* Номер перевіряємо і ТУТ, не лише у формі: перевірку в браузері
+       обійти — справа однієї команди в консолі, а заявка без номера
+       тепер не каже про машину нічого.
+       Формат не звіряємо (іменні, північноірландські, імпортні знаки). */
+    if (name.length < 2 || phone.replace(/\D/g, "").length < 9 || reg.length < 2) {
       return json({ error: "validation" }, 422, env);
     }
 
-    const reg = clean(data.reg, 16).toUpperCase();
     const service = clean(data.service, 60);
     const message = clean(data.message, 1200);
     const lang = clean(data.lang, 4);
@@ -122,7 +126,7 @@ export default {
       `📞 Телефон: ${phone}`,
       // щоб написати клієнту в один дотик просто з повідомлення
       wa ? `   ↳ https://wa.me/${wa}` : null,
-      reg ? `🔢 Номер: ${reg}` : null,
+      `🔢 Номер: ${reg}`,
       service ? `🛠 Послуга: ${service}` : null,
       message ? `💬 Опис: ${message}` : null,
       "",
