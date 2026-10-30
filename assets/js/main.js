@@ -603,6 +603,66 @@
     svc.addEventListener("change", function () { svc.classList.remove("is-picked"); });
   })();
 
+  /* ── 12. Згода на куки і рекламний піксель ─────────────
+     🔴 Піксель НЕ потрапляє на сторінку, поки людина не натисне
+     «Прийняти». Не «завантажується і мовчить» — його фізично немає
+     в документі. Інакше весь банер був би декорацією.
+
+     Вибір зберігаємо в localStorage. У приватному вікні звернення
+     до нього кидає виняток, тому кожен доступ у try/catch: там
+     банер просто питатиме щоразу, і це краще, ніж зламана сторінка. */
+  (function () {
+    var KEY = "tk-cc";
+    var box = $("#cc");
+    if (!box) return;
+
+    function read()   { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    function write(v) { try { localStorage.setItem(KEY, v); }    catch (e) {} }
+    function forget() { try { localStorage.removeItem(KEY); }    catch (e) {} }
+
+    /* Сюди піде завантажувач зі сторінки налаштування джерела даних.
+       🔴 ПОКИ ПОРОЖНЬО — коду пікселя ще немає. Коли зʼявиться, він
+       вставляється САМЕ тут і більше ніде: це єдине місце, куди
+       дотягується згода. Вставляти його в <head>, як радить
+       інструкція платформи, НЕ МОЖНА — звідти він спрацює до того,
+       як людину щось спитали. */
+    var loaded = false;
+    function loadPixel() {
+      if (loaded) return;
+      loaded = true;
+      /* --- початок коду пікселя --- */
+      /* --- кінець коду пікселя --- */
+    }
+
+    function hide() { box.hidden = true; }
+    function show() { box.hidden = false; }
+
+    var choice = read();
+    if (choice === "yes") loadPixel();
+    else if (choice !== "no") show();
+
+    var ok = $("#cc-ok"), no = $("#cc-no"), reopen = $("#cc-open");
+
+    if (ok) ok.addEventListener("click", function () {
+      write("yes"); hide(); loadPixel();
+    });
+
+    if (no) no.addEventListener("click", function () {
+      write("no"); hide();
+      /* Якщо піксель уже встиг завантажитись у цьому візиті, прибрати
+         його з памʼяті сторінки неможливо — перезавантажуємо. Інакше
+         «Відмовитись» була б кнопкою, яка нічого не робить. */
+      if (loaded) location.reload();
+    });
+
+    /* Відкликати згоду мусить бути так само легко, як її дати —
+       тому кнопка стоїть у підвалі, а не схована десь у тексті. */
+    if (reopen) reopen.addEventListener("click", function () {
+      forget(); show();
+      if (ok) ok.focus();
+    });
+  })();
+
   /* ── 9. Рік у підвалі ─────────────────────────────────── */
   var yr = $("#yr");
   if (yr) yr.textContent = new Date().getFullYear();
