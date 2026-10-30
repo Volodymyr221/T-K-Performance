@@ -36,6 +36,29 @@
 <body>
 <a class="skip" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
+<!-- ══ ЗГОДА НА КУКИ ══
+     Стоїть одразу після skip-посилання, щоб зчитувач екрана натрапив
+     на неї ПЕРШОЮ. Візуально її притиснуто донизу (position:fixed).
+     Зразок — банер GOV.UK: британський державний стандарт, і сайт
+     теж британський.
+
+     🔴 ДВІ КНОПКИ ОДНАКОВІ, і це не естетика. За PECR згода дійсна
+     лише тоді, коли відмовитись так само легко, як погодитись. Варто
+     зробити «Прийняти» помітнішою — і банер перестає захищати взагалі,
+     тобто вся робота намарно. Тому в них ОДИН клас на двох. -->
+<div class="cc" id="cc" role="region" data-i18n-aria="a11y.cc"
+     aria-label="Cookies on this site" hidden>
+  <div class="wrap cc__in">
+    <p class="cc__txt" data-i18n="cc.text">
+      We use cookies to measure our advertising. Nothing loads until you choose.
+    </p>
+    <div class="cc__act">
+      <button class="cc__btn" type="button" id="cc-ok" data-i18n="cc.ok">Accept</button>
+      <button class="cc__btn" type="button" id="cc-no" data-i18n="cc.no">Reject</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ HEADER ══ -->
 <header class="hdr" id="hdr">
   <div class="wrap hdr__in">
@@ -727,6 +750,7 @@
       <a href="tel:+447522018523">+44 7522 018523</a>
       <a data-wa href="https://wa.me/447522018523?text=Hello%20T%26K%20Performance.%20I%20have%20a%20question%20about%20my%20BMW%3A" target="_blank" rel="noopener">WhatsApp</a>
       <a href="https://www.instagram.com/t.k.performance" target="_blank" rel="noopener">Instagram</a>
+      <button class="ftr__cc" type="button" id="cc-open" data-i18n="cc.link">Cookies</button>
       <p>© <span id="yr">2026</span> T&amp;K Performance</p>
     </div>
   </div>

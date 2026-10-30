@@ -946,6 +946,50 @@ body.nav-open{ overflow:hidden }
 .ftr__meta a{ text-decoration:none; color:var(--txt-2); width:fit-content; transition:color .2s }
 .ftr__meta p{ color:var(--txt-3); font-size:13px; margin-top:6px }
 
+/* Кнопка «Куки» в підвалі має виглядати як сусідні посилання: для
+   людини це той самий список, а те, що технічно це <button>, —
+   деталь реалізації. */
+.ftr__cc{
+  font:inherit; font-size:14.5px; color:var(--txt-2);
+  background:none; border:0; padding:0; width:fit-content;
+  text-align:left; cursor:pointer; transition:color .2s;
+}
+
+/* ═══ ЗГОДА НА КУКИ ═══════════════════════════════════════
+   Смуга внизу, а не вікно посеред екрана: вікно перекриває контент,
+   і люди тиснуть «Прийняти» наосліп, аби його прибрати. Така згода
+   формально є, а по суті її немає. */
+.cc{
+  position:fixed; inset:auto 0 0 0; z-index:60;
+  background:var(--surface); border-top:1px solid var(--line);
+  box-shadow:0 -22px 55px -24px rgba(0,0,0,.85);
+}
+.cc[hidden]{ display:none }
+.cc__in{
+  display:flex; align-items:center; flex-wrap:wrap;
+  gap:clamp(14px,2vw,30px); padding-block:16px;
+}
+.cc__txt{ flex:1 1 320px; margin:0; font-size:14px; line-height:1.55; color:var(--txt-2) }
+.cc__act{ display:flex; gap:10px; flex:0 0 auto }
+
+/* 🔴 ОДИН КЛАС НА ОБИДВІ КНОПКИ. Доки він один, зробити «Прийняти»
+   привабливішою за «Відмовитись» неможливо навіть випадково. */
+.cc__btn{
+  min-height:44px; min-width:118px; padding-inline:18px;
+  font:600 14px/1 inherit; color:var(--txt);
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--line-2); border-radius:99px; cursor:pointer;
+  transition:border-color .2s, background .2s;
+}
+.cc__btn:focus-visible{ outline:2px solid var(--red-txt); outline-offset:2px }
+
+@media (max-width:600px){
+  .cc__in{ display:block; padding-block:14px }
+  .cc__txt{ margin-bottom:12px }
+  .cc__act{ display:grid; gap:8px }
+  .cc__btn{ width:100% }
+}
+
 /* ═══ ПОЯВА ПРИ СКРОЛІ ════════════════════════════════════ */
 .reveal{
   opacity:0; transform:translateY(18px);
@@ -1088,6 +1132,8 @@ body.nav-open{ overflow:hidden }
   .map-load:hover{ border-color:var(--line-2); color:var(--txt) }
   .ftr__nav a:hover{ color:var(--txt) }
   .ftr__meta a:hover{ color:var(--txt) }
+  .ftr__cc:hover{ color:var(--txt) }
+  .cc__btn:hover{ border-color:var(--txt-2); background:rgba(255,255,255,.09) }
 }
 
 /* ═══ ЗМЕНШЕНИЙ РУХ ═══════════════════════════════════════ */

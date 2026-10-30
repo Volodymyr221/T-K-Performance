@@ -7,6 +7,11 @@
 window.I18N = {
   en: {
     "a11y.skip": "Skip to content",
+    "cc.text": "We use cookies to measure our advertising. Nothing loads until you choose.",
+    "cc.ok": "Accept",
+    "cc.no": "Reject",
+    "cc.link": "Cookies",
+    "a11y.cc": "Cookies on this site",
     "a11y.lang": "Language",
 
     "nav.services": "Services",
@@ -184,6 +189,11 @@ window.I18N = {
 
   uk: {
     "a11y.skip": "Перейти до вмісту",
+    "cc.text": "Ми використовуємо куки, щоб вимірювати нашу рекламу. Нічого не завантажується, поки ви не оберете.",
+    "cc.ok": "Прийняти",
+    "cc.no": "Відмовитись",
+    "cc.link": "Куки",
+    "a11y.cc": "Куки на цьому сайті",
     "a11y.lang": "Мова",
 
     "nav.services": "Послуги",
@@ -361,6 +371,11 @@ window.I18N = {
 
   pl: {
     "a11y.skip": "Przejdź do treści",
+    "cc.text": "Używamy plików cookie, aby mierzyć skuteczność naszych reklam. Nic nie ładuje się, dopóki nie wybierzesz.",
+    "cc.ok": "Akceptuję",
+    "cc.no": "Odrzucam",
+    "cc.link": "Pliki cookie",
+    "a11y.cc": "Pliki cookie na tej stronie",
     "a11y.lang": "Język",
 
     "nav.services": "Usługi",
@@ -541,6 +556,11 @@ window.I18N = {
 
   ru: {
     "a11y.skip": "Перейти к содержимому",
+    "cc.text": "Мы используем куки, чтобы измерять нашу рекламу. Ничего не загружается, пока вы не выберете.",
+    "cc.ok": "Принять",
+    "cc.no": "Отклонить",
+    "cc.link": "Куки",
+    "a11y.cc": "Куки на этом сайте",
     "a11y.lang": "Язык",
 
     "nav.services": "Услуги",
