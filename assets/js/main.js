@@ -630,7 +630,29 @@
     function loadPixel() {
       if (loaded) return;
       loaded = true;
-      /* --- початок коду пікселя --- */
+      var pid = CFG.pixelId;
+      if (!pid) return;
+
+      /* --- код зі сторінки налаштування джерела даних ---
+         Заглушка складає виклики в чергу і підвантажує SDK асинхронно;
+         коли SDK приїде, він цю чергу програє. Тому oaiq() можна
+         кликати одразу, не чекаючи завантаження. */
+      (function (w, d, s, u) {
+        if (w.oaiq) return;
+        var q = function () { q.q.push(arguments); };
+        q.q = [];
+        w.oaiq = q;
+        var j = d.createElement(s); j.async = 1; j.src = u;
+        var f = d.getElementsByTagName(s)[0];
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+
+      /* 🪤 На сторінці налаштування стоїть debug:true. На живому сайті
+         це сипало б службові повідомлення в консоль КОЖНОМУ відвідувачу.
+         Лишаємо лише там, де сайт відкривають з локальної машини. */
+      var dev = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      window.oaiq("init", { pixelId: pid, debug: dev });
+      window.oaiq("measure", "page_viewed", { type: "contents" });
       /* --- кінець коду пікселя --- */
     }
 
