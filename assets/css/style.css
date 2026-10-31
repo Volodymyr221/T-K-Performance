@@ -860,6 +860,17 @@ body.nav-open{ overflow:hidden }
 .form__msg.is-ok{ display:block; color:var(--m-lblue) }
 .form__msg.is-bad{ display:block; color:var(--red-hi) }
 
+/* Запасне посилання на WhatsApp. --red-txt, а не --m-red: фірмовий
+   червоний на темному дає 3.70:1 і для дрібного тексту не проходить
+   WCAG AA (потрібно 4.5:1). */
+.form__wa{ margin-top:10px; font-size:14px; text-align:center }
+.form__wa a{ color:var(--red-txt); text-decoration:underline }
+@media (pointer:coarse){
+  /* Палець цілиться гірше за мишу: даємо посиланню висоту 44px
+     (мінімум з WCAG 2.5.8) замість висоти рядка тексту. */
+  .form__wa a{ display:inline-block; min-height:44px; line-height:44px }
+}
+
 /* ═══ КОНТАКТИ ════════════════════════════════════════════ */
 /* Адреса, карта, години, контакти — ЧОТИРИ прямі дитини сітки.
    Обгортки .find__info більше немає: поки карта лежала поруч із нею,

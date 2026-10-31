@@ -652,8 +652,14 @@
         <input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
 
+      <!-- Кнопка прямо каже, ЩО станеться: заявка їде через WhatsApp,
+           і людина сама тисне «надіслати» у своєму застосунку. Якщо
+           підписати просто «Send request», відкрите вікно WhatsApp
+           виглядає як збій — і людина його закриває.
+           Підпис перемальовує JS: зʼявиться воркер (formEndpoint) —
+           стане «Send request», бо тоді шле сам сайт. -->
       <button class="btn btn--red btn--wide" type="submit" id="f-send">
-        <span data-i18n="f.send">Send request</span>
+        <span data-i18n="f.sendWa">Send via WhatsApp</span>
       </button>
 
       <!-- Обіцянка часу — окремим рядком і помітніше за дрібний підпис
@@ -668,6 +674,14 @@
         Your details are used only to call you back about this enquiry, nothing else.
       </p>
       <p class="form__msg" id="f-msg-out" role="status" aria-live="polite"></p>
+
+      <!-- Запас на випадок, коли браузер не дав відкрити вікно WhatsApp
+           (блокувальник спливних вікон, суворі налаштування). Тоді
+           людина бачить посилання і тисне сама. До заявки — hidden. -->
+      <p class="form__wa" id="f-wa" hidden>
+        <a id="f-wa-link" href="#" target="_blank" rel="noopener"
+           data-i18n="f.waOpen">Open WhatsApp with my details</a>
+      </p>
     </form>
   </div>
 </section>

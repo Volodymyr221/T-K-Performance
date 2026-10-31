@@ -56,6 +56,7 @@
 
     paintWhatsApp();
     paintChips();
+    paintSendLabel();
 
     if (langCur) langCur.textContent = CODE[next] || next.toUpperCase();
     $$("#lang-menu button").forEach(function (b) {
@@ -92,6 +93,17 @@
     var href = "https://wa.me/" + num +
                (txt ? "?text=" + encodeURIComponent(txt) : "");
     $$("[data-wa]").forEach(function (a) { a.setAttribute("href", href); });
+  }
+
+  /* Підпис кнопки заявки залежить від того, ЧИМ вона шле.
+     Воркера немає → шле сам клієнт із WhatsApp, і кнопка це
+     мусить сказати. Зʼявиться воркер → звичайне «Send request».
+     Шукаємо вузол щоразу: функцію кличе applyLang, а він може
+     спрацювати раніше, ніж розділ 6 розбере форму. */
+  function paintSendLabel() {
+    var s = document.querySelector("#f-send span");
+    if (!s) return;
+    s.textContent = t(CFG.formEndpoint ? "f.send" : "f.sendWa");
   }
 
   function setLangMenu(open) {
@@ -382,6 +394,57 @@
     return ok;
   }
 
+  /* ── Заявка через WhatsApp, без сервера ──────────────────
+     Сайт на GitHub Pages — статика: свого сервера немає, а токен
+     бота в публічний JS класти не можна. Тому заявку надсилає САМ
+     клієнт зі свого WhatsApp: ми лише складаємо текст і відкриваємо
+     застосунок із уже набраним повідомленням.
+
+     🔴 ЧЕСНА МЕЖА: якщо людина не натисне «надіслати» ВЖЕ У WhatsApp —
+     заявка не дійде, і ми про неї навіть не дізнаємось. Форма тут
+     нічого не гарантує; гарантує лише воркер (`worker/README.md`).
+
+     Текст повідомлення — АНГЛІЙСЬКИЙ при будь-якій мові сторінки:
+     його читає сервіс, а не клієнт. Опис проблеми лишається тією
+     мовою, якою людина друкувала. */
+  function waBody() {
+    var svc = $("#f-svc");
+    var box = $("#f-msg");
+    var lines = [
+      "New enquiry from tk-performance.co.uk",
+      "",
+      "Name: "    + nameEl.value.trim(),
+      "Phone: "   + phoneEl.value.trim(),
+      "Reg: "     + (regEl ? regEl.value.trim() : "—"),
+      "Service: " + (svc ? svc.value : "—")
+    ];
+    var msg = box ? box.value.trim() : "";
+    if (msg) lines.push("Details: " + msg);
+    return lines.join("\n");
+  }
+
+  function sendViaWhatsApp() {
+    var href = "https://wa.me/" + CFG.whatsapp +
+               "?text=" + encodeURIComponent(waBody());
+
+    /* Посилання і повідомлення ставимо ДО відкриття: нижче можливий
+       перехід тим самим вікном, після нього код уже не виконається. */
+    var link = $("#f-wa-link"), box = $("#f-wa");
+    if (link) link.setAttribute("href", href);
+    if (box) box.hidden = false;
+    say("f.wa", true);
+
+    /* Без "noopener" у третьому аргументі: з ним Chrome віддає null
+       і при УСПІШНОМУ відкритті — ми б вирішили, що вікно заблоковано,
+       і пішли переходом удруге. Звʼязок рвемо вручну. */
+    var w = window.open(href, "_blank");
+    if (w) { try { w.opener = null; } catch (err) {} }
+    else   { location.href = href; }
+
+    /* Форму НЕ чистимо: якщо у WhatsApp людина не дотисла «надіслати»
+       і повернулась — поля мають бути на місці. */
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     out.className = "form__msg";
@@ -395,7 +458,13 @@
     /* пастка для ботів: люди це поле не бачать */
     if ($("#f-web").value) { say("f.ok", true); form.reset(); return; }
 
-    if (!CFG.formEndpoint) { say("f.offline", false); return; }
+    /* Воркера немає — шлемо через WhatsApp. Немає й номера WhatsApp
+       (хтось вичистив config) — чесно просимо подзвонити. */
+    if (!CFG.formEndpoint) {
+      if (CFG.whatsapp) sendViaWhatsApp();
+      else say("f.offline", false);
+      return;
+    }
 
     var data = {
       name:    nameEl.value.trim(),
