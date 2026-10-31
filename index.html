@@ -712,8 +712,7 @@
           <table class="hours">
             <tbody>
               <tr data-day="1,2,3,4,5"><th data-i18n="fu.mf">Monday – Friday</th><td>09:00 – 18:00</td></tr>
-              <tr data-day="6"><th data-i18n="fu.sa">Saturday</th><td>09:00 – 13:00</td></tr>
-              <tr data-day="0"><th data-i18n="fu.su">Sunday</th><td data-i18n="fu.closed">Closed</td></tr>
+              <tr data-day="6,0"><th data-i18n="fu.ss">Saturday &ndash; Sunday</th><td>09:00 &ndash; 17:00</td></tr>
             </tbody>
           </table>
       </div>
@@ -780,7 +779,7 @@
   "sameAs": ["https://www.instagram.com/t.k.performance"],
   "openingHoursSpecification": [
     { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "09:00", "closes": "18:00" },
-    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday","Sunday"], "opens": "09:00", "closes": "17:00" }
   ]
 }
 </script>
