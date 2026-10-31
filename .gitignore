@@ -6,3 +6,6 @@ node_modules/
 .env.*
 .idea/
 .vscode/
+
+# прапорець токен-запобіжника (.claude/hooks/token-guard.js)
+.claude/.token-halt
