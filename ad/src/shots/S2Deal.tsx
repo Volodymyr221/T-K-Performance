@@ -51,6 +51,8 @@ const STACK_STEP = 6;
 
 /* Детермінований «випадок»: рендер мусить бути відтворюваним
    покадрово. Math.random() дав би смикання між прогонами. */
+const DEPTH = (k: number) => CARDS.length - 1 - k; // k=0 лежить ЗВЕРХУ: з колоди
+                                                   // здають верхню, а перша в сітку йде «Engine»
 const jitterX = (k: number) => (((k * 7) % 9) - 4) * 3;
 const jitterR = (k: number) => (((k * 5) % 7) - 3) * 0.9;
 
@@ -153,7 +155,7 @@ export const S2Deal: React.FC = () => {
             const prog = t * 0.86 + st * 0.14; // переліт живе в settle
 
             const fromX = PILE.x + jitterX(k);
-            const fromY = PILE.y - k * STACK_STEP + pileDrop + (k === CARDS.length - 1 ? topPull : 0);
+            const fromY = PILE.y - DEPTH(k) * STACK_STEP + pileDrop + (k === 0 ? topPull : 0);
             const x = fromX + (slot.x - fromX) * prog;
             const y = fromY + (slot.y - fromY) * prog;
             const arc = Math.sin(Math.PI * t) * 140; // дуга по z: картка летить ПО ПОВІТРЮ
@@ -169,7 +171,7 @@ export const S2Deal: React.FC = () => {
             // Тінь згортається на 3 кадри ПІЗНІШЕ за саму картку:
             // якщо всі шари зупиняються в один кадр, читається механічно.
             const shLag = interpolate(f, [cue + 11, cue + 15], [1, 0], clamp);
-            const z = k * 0.6 + arc;
+            const z = DEPTH(k) * 1.2 + arc;
 
             const landed = f > cue + 14;
             const tex = (
@@ -206,8 +208,8 @@ export const S2Deal: React.FC = () => {
                     top: y,
                     width: slot.w,
                     height: slot.h,
-                    opacity: f >= cue - 1 ? 1 : k >= CARDS.length - 3 ? 1 : 0,
-                    transform: landed ? `translateZ(${(k * 0.6).toFixed(2)}px)` : `translateZ(${z}px) scale(${(sc * pr).toFixed(4)})`,
+                    opacity: 1,
+                    transform: landed ? `translateZ(${(k * 0.6).toFixed(2)}px)` : `translateZ(${z}px) rotate(${(jitterR(k) * (1 - prog)).toFixed(2)}deg) scale(${(sc * pr).toFixed(4)})`,
                     transformOrigin: "center center",
                     borderRadius: RADIUS * SCALE,
                     boxShadow: `0 ${(2 + 30 * shLag).toFixed(1)}px ${(8 + 48 * shLag).toFixed(1)}px rgba(${INK},${(0.3 + 0.35 * shLag).toFixed(3)})`,
