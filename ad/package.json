@@ -1,0 +1,15 @@
+{
+  "name": "tk-ad",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": { "studio": "remotion studio", "render": "remotion render" },
+  "dependencies": {
+    "@remotion/cli": "4.0.484",
+    "@remotion/google-fonts": "4.0.484",
+    "@remotion/motion-blur": "4.0.484",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.484"
+  },
+  "devDependencies": { "@types/react": "19.2.17", "typescript": "~5.9.0" }
+}

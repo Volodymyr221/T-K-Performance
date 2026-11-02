@@ -1,0 +1,132 @@
+{
+  "pageW": 540,
+  "pageH": 9610,
+  "dsf": 4,
+  "el": {
+    "logo": {
+      "x": 27,
+      "y": 19,
+      "w": 75.6,
+      "h": 34
+    },
+    "heroH1": {
+      "x": 27,
+      "y": 155.5,
+      "w": 486,
+      "h": 95.6
+    },
+    "svcHead": {
+      "x": 27,
+      "y": 666.3,
+      "w": 486,
+      "h": 185.9
+    },
+    "card1": {
+      "x": 27,
+      "y": 892.2,
+      "w": 486,
+      "h": 762.5
+    },
+    "card2": {
+      "x": 27,
+      "y": 1670.7,
+      "w": 486,
+      "h": 333.3
+    },
+    "card3": {
+      "x": 27,
+      "y": 2020,
+      "w": 486,
+      "h": 170.9
+    },
+    "card4": {
+      "x": 27,
+      "y": 2206.9,
+      "w": 486,
+      "h": 211.4
+    },
+    "card5": {
+      "x": 27,
+      "y": 2434.3,
+      "w": 486,
+      "h": 170.9
+    },
+    "card6": {
+      "x": 27,
+      "y": 2621.2,
+      "w": 486,
+      "h": 170.9
+    },
+    "card7": {
+      "x": 27,
+      "y": 2808.1,
+      "w": 486,
+      "h": 170.9
+    }
+  },
+  "cards": [
+    {
+      "h": "Stage tuning — engine & gearbox",
+      "p": "Performance",
+      "chips": []
+    },
+    {
+      "h": "Engine rebuilds & repair",
+      "p": "Our speciality",
+      "chips": [
+        "Timing chain",
+        "Head gasket",
+        "VANOS",
+        "Turbo",
+        "Oil leaks",
+        "Full rebuild"
+      ]
+    },
+    {
+      "h": "Diagnostics",
+      "p": "Dealer-level fault reading and live data. We find the cause, not just the code.",
+      "chips": [
+        "Fault codes",
+        "Live data",
+        "Warning lights"
+      ]
+    },
+    {
+      "h": "Servicing",
+      "p": "Oil, filters, plugs, brake fluid and inspections to BMW schedules, with genuine or OEM parts.",
+      "chips": [
+        "Oil & filters",
+        "Spark plugs",
+        "Brake fluid",
+        "Inspection"
+      ]
+    },
+    {
+      "h": "Clutch & gearbox",
+      "p": "Clutch replacement, DMF, servicing and replacement of manual and automatic gearboxes.",
+      "chips": [
+        "Clutch",
+        "DMF",
+        "Manual gearbox",
+        "Automatic gearbox"
+      ]
+    },
+    {
+      "h": "Brakes & suspension",
+      "p": "Discs, pads, arms, bushes and geometry — set up so the car feels like a BMW again.",
+      "chips": [
+        "Discs & pads",
+        "Arms & bushes",
+        "Geometry"
+      ]
+    },
+    {
+      "h": "MOT preparation",
+      "p": "We check the car over first, tell you what would fail, and fix it before the test.",
+      "chips": [
+        "Pre-MOT check",
+        "Repairs before test"
+      ]
+    }
+  ]
+}
