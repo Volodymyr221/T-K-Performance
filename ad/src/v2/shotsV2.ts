@@ -45,14 +45,14 @@ export const SHOTS: Shot[] = [
 
   // ── Позиція: двигун не їде нікуди, його роблять ТУТ ─────
   { id: "stay", from: b(5), photo: "work-8.jpg", cam: { from: 1.1, to: 1.24, oy: 3 },
-    line: "Don't send it away.", hl: "away",
+    line: "Don't send it away.", hl: "away.",
     sub: "We rebuild BMW engines here.", cut: "flash" },
 
   // ── Що вміємо: швидка нарізка, одна думка на кадр ───────
   { id: "svc1", from: b(8), photo: "work-1.jpg", cam: { from: 1.34, to: 1.46, ox: -8, oy: 6 },
     line: "Engine rebuilds", cut: "mwipe-l" },
   { id: "svc2", from: b(10), photo: "work-3.jpg", cam: { from: 1.24, to: 1.34, ox: 6 },
-    line: "Diagnostics", sub: "We find the cause, not just the code.", cut: "hard" },
+    line: "Diagnostics", sub: "We find the cause,\nnot just the code.", cut: "hard" },
   { id: "svc3", from: b(12), photo: "work-7.jpg", cam: { from: 1.12, to: 1.24 },
     line: "Servicing & MOT", cut: "mwipe-r" },
   { id: "svc4", from: b(14), photo: "work-6.jpg", cam: { from: 1.14, to: 1.26, ox: -5 },
@@ -68,7 +68,7 @@ export const SHOTS: Shot[] = [
     sub: "9–6 Mon–Fri · 9–5 Sat & Sun", cut: "flash" },
 
   { id: "only", from: b(22), photo: "work-2.jpg", cam: { from: 1.1, to: 1.22, oy: -3 },
-    line: "BMW only.", hl: "only",
+    line: "BMW only.", hl: "only.",
     sub: "Bognor Regis · PO22 9SX", cut: "mwipe-r" },
 
   // ── Заклик ──────────────────────────────────────────────

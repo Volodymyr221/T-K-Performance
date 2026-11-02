@@ -54,7 +54,7 @@ const Photo: React.FC<{ s: Shot; local: number; dur: number; dim?: boolean }> = 
 /** Кадр із кодами двигунів — довіра для того, хто розуміється. */
 const Codes: React.FC<{ local: number }> = ({ local }) => (
   <div style={{ position: "absolute", left: 72, right: 72, top: 430 }}>
-    <div style={{ font: `500 ${T.aux}px ${FONTS.mono}`, letterSpacing: "0.14em", color: C.redTxt, marginBottom: 34, textShadow: `0 2px 24px rgba(${INK},0.95)` }}>
+    <div style={{ font: `500 ${T.aux}px ${FONTS.mono}`, letterSpacing: "0.14em", color: C.redTxt, marginBottom: 34, textShadow: `0 2px 10px rgba(${INK},1), 0 0 34px rgba(${INK},1)` }}>
       ENGINES WE KNOW
     </div>
     <div style={{ display: "flex", flexWrap: "wrap", gap: 18 }}>

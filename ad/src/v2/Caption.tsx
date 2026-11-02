@@ -90,7 +90,9 @@ export const Caption: React.FC<{
             transform: `translateY(${((1 - ps) * 18).toFixed(1)}px)`,
           }}
         >
-          {sub}
+          {sub.split("\n").map((l, i) => (
+            <div key={i}>{l}</div>
+          ))}
         </div>
       ) : null}
     </div>
