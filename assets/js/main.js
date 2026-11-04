@@ -57,6 +57,10 @@
     paintWhatsApp();
     paintChips();
     paintSendLabel();
+    /* 🪤 applyLang спрацьовує ще на старті, коли розділ 13 нижче
+       ЩЕ НЕ виконався і CALC дорівнює undefined. Без перевірки
+       сторінка падала б на першому ж рядку. */
+    if (typeof CALC !== "undefined" && CALC.relang) CALC.relang();
 
     if (langCur) langCur.textContent = CODE[next] || next.toUpperCase();
     $$("#lang-menu button").forEach(function (b) {
@@ -410,13 +414,17 @@
   function waBody() {
     var svc = $("#f-svc");
     var box = $("#f-msg");
+    /* Калькулятор увімкнено і щось обрано — у заявку йде перелік
+       робіт і вилка. Менеджер одразу бачить, на яку суму людина
+       розраховує, і розмова починається не з нуля. */
+    var work = (typeof CALC !== "undefined" && CALC.on) ? CALC.line() : "";
     var lines = [
       "New enquiry from tk-performance.co.uk",
       "",
       "Name: "    + nameEl.value.trim(),
       "Phone: "   + phoneEl.value.trim(),
       "Reg: "     + (regEl ? regEl.value.trim() : "—"),
-      "Service: " + (svc ? svc.value : "—")
+      "Service: " + (work || (svc ? svc.value : "—"))
     ];
     var msg = box ? box.value.trim() : "";
     if (msg) lines.push("Details: " + msg);
@@ -645,7 +653,21 @@
     chips.forEach(function (c) {
       c.addEventListener("click", function () {
         var want = c.dataset.svc;
-        if (hasOption(want)) {
+
+        /* Калькулятор увімкнено — плашка позначає свій пункт у ньому.
+           Список НЕ відкриваємо: він виштовхнув би форму вниз, до якої
+           ми щойно прокрутили. Видимий відгук дає плашка обраного,
+           що зʼявляється під кнопкою, і спалах самої кнопки. */
+        if (typeof CALC !== "undefined" && CALC.on && c.dataset.calc) {
+          if (CALC.select(c.dataset.calc, false)) {
+            var cb = $("#calc-btn");
+            if (cb) {
+              cb.classList.remove("is-picked");
+              void cb.offsetWidth;
+              cb.classList.add("is-picked");
+            }
+          }
+        } else if (hasOption(want)) {
           svc.value = want;
           /* Поле мигає — інакше людина доїде до форми і не помітить,
              що послуга вже обрана. */
@@ -670,6 +692,221 @@
 
     /* Прибираємо підсвітку, щойно людина сама чіпає список. */
     svc.addEventListener("change", function () { svc.classList.remove("is-picked"); });
+  })();
+
+
+  /* ── 13. Калькулятор орієнтовної ціни ──────────────────
+     Людина позначає, що їй треба, і одразу бачить вилку «від–до».
+     Це не рахунок, а орієнтир: точну ціну без огляду машини не
+     називає жоден чесний сервіс.
+
+     🛑 ПОКИ `calc.confirmed !== true` РОЗДІЛ НІЧОГО НЕ РОБИТЬ.
+     Ціни в config.js поставив Claude за типовими британськими
+     розцінками — власник їх не називав. Оманлива вказівка ціни в
+     Британії карається, тому до звірки на сторінці лишається
+     звичайний список послуг, і сторінка виглядає як раніше.
+
+     Список пунктів = послуги з карток вище, ТІ САМІ ключі перекладу.
+     Нічого нового не вигадано: калькулятор не може пропонувати
+     робіт, яких немає на сайті. */
+  var CALC = (function () {
+    var cfg  = CFG.calc || {};
+    var wrap = $("#calc-wrap");
+    var est  = $("#calc-est");
+    var api  = { on: false, relang: function () {}, select: function () { return false; }, line: function () { return ""; } };
+    if (!wrap || !est || cfg.confirmed !== true) return api;
+
+    var svcWrap = $("#svc-wrap");
+    var btn   = $("#calc-btn");
+    var panel = $("#calc-list");
+    var valEl = $("#calc-val");
+    var selEl = $("#calc-sel");
+    var sumEl = $("#calc-sum");
+    var poaEl = $("#calc-poa");
+    var opts  = $$(".pick__opt", panel);
+    var P     = cfg.prices || {};
+    var cur   = cfg.currency || "£";
+
+    /* Пункт без ціни в таблиці прибираємо з розмітки зовсім.
+       Показати послугу й не сказати про неї нічого — гірше, ніж не
+       показати: людина вирішить, що це безкоштовно. */
+    opts = opts.filter(function (o) {
+      if (P[o.dataset.calc]) return true;
+      o.parentNode.removeChild(o);
+      return false;
+    });
+    /* Заголовок групи, під яким не лишилось жодного пункту, теж геть. */
+    $$(".pick__grp", panel).forEach(function (g) {
+      var n = g.nextElementSibling;
+      if (!n || !n.classList.contains("pick__opt")) g.parentNode.removeChild(g);
+    });
+    if (!opts.length) return api;
+
+    wrap.hidden = false;
+    /* Старий список ховаємо, але лишаємо в розмітці: вимкнув
+       калькулятор у config.js — він одразу на місці. */
+    if (svcWrap) svcWrap.hidden = true;
+
+    var picked = [];   // порядок = порядок натискання
+
+    /* Гроші друкуємо через Intl: «1,650», а не «1650». Без
+       роздільника чотиризначна сума читається як помилка. */
+    var nf = new Intl.NumberFormat("en-GB");
+    function money(n) { return cur + nf.format(n); }
+
+    function priceLabel(id) {
+      var p = P[id];
+      if (!p) return "";
+      return p.poa ? t("cal.poaShort") : money(p.from) + "–" + money(p.to);
+    }
+
+    function paintPrices() {
+      opts.forEach(function (o) {
+        var el = $("[data-price]", o);
+        if (el) el.textContent = priceLabel(o.dataset.calc);
+      });
+    }
+
+    function nameOf(id) {
+      var o = opts.filter(function (x) { return x.dataset.calc === id; })[0];
+      return o ? $(".pick__name", o).textContent.trim() : id;
+    }
+
+    function total() {
+      var from = 0, to = 0, poa = false;
+      picked.forEach(function (id) {
+        var p = P[id];
+        if (!p) return;
+        if (p.poa) { poa = true; return; }
+        from += p.from;
+        to += p.to;
+      });
+      return { from: from, to: to, poa: poa, any: from > 0 || to > 0 };
+    }
+
+    function clearNode(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+
+    function paint() {
+      /* Підпис на кнопці */
+      if (!picked.length) {
+        valEl.textContent = t("cal.ph");
+        valEl.classList.remove("is-set");
+      } else {
+        valEl.textContent = picked.length + " " + t("cal.sel");
+        valEl.classList.add("is-set");
+      }
+
+      /* Позначки у списку */
+      opts.forEach(function (o) {
+        var on = picked.indexOf(o.dataset.calc) > -1;
+        o.setAttribute("aria-checked", on ? "true" : "false");
+        o.classList.toggle("is-on", on);
+      });
+
+      /* Плашки обраного — щоб не відкривати список заради того,
+         аби згадати, що ти вибрав. */
+      clearNode(selEl);
+      picked.forEach(function (id) {
+        var li = document.createElement("li");
+        var b  = document.createElement("button");
+        b.type = "button";
+        b.className = "pick__tag";
+        b.setAttribute("aria-label", t("cal.drop") + " " + nameOf(id));
+        b.appendChild(document.createTextNode(nameOf(id)));
+        var x = document.createElement("span");
+        x.className = "pick__x";
+        x.setAttribute("aria-hidden", "true");
+        b.appendChild(x);
+        b.addEventListener("click", function () { toggle(id); });
+        li.appendChild(b);
+        selEl.appendChild(li);
+      });
+
+      /* Сума */
+      var s = total();
+      if (!picked.length) {
+        est.hidden = true;
+      } else {
+        est.hidden = false;
+        sumEl.textContent = s.any ? money(s.from) + " – " + money(s.to) : t("cal.poaOnly");
+        poaEl.hidden = !(s.poa && s.any);
+      }
+    }
+
+    function toggle(id) {
+      var i = picked.indexOf(id);
+      if (i > -1) picked.splice(i, 1);
+      else picked.push(id);
+      paint();
+    }
+
+    function setOpen(open) {
+      panel.hidden = !open;
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      wrap.classList.toggle("is-open", open);
+    }
+    function isOpen() { return btn.getAttribute("aria-expanded") === "true"; }
+
+    btn.addEventListener("click", function () { setOpen(!isOpen()); });
+
+    opts.forEach(function (o, i) {
+      o.addEventListener("click", function () { toggle(o.dataset.calc); });
+      /* Стрілки ходять по пунктах, Esc закриває і повертає фокус на
+         кнопку. Tab теж працює: пункти — звичайні кнопки. */
+      o.addEventListener("keydown", function (e) {
+        var k = e.key, n = null;
+        if (k === "ArrowDown") n = opts[(i + 1) % opts.length];
+        else if (k === "ArrowUp") n = opts[(i - 1 + opts.length) % opts.length];
+        else if (k === "Home") n = opts[0];
+        else if (k === "End") n = opts[opts.length - 1];
+        else if (k === "Escape") { setOpen(false); btn.focus(); e.preventDefault(); return; }
+        if (n) { n.focus(); e.preventDefault(); }
+      });
+    });
+
+    btn.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isOpen()) { setOpen(false); e.preventDefault(); }
+      if ((e.key === "ArrowDown" || e.key === "Enter") && !isOpen()) {
+        setOpen(true);
+        if (opts[0]) opts[0].focus();
+        e.preventDefault();
+      }
+    });
+
+    /* Клік повз список і вихід Tab-ом закривають його — так само,
+       як поводиться перемикач мов у шапці. */
+    document.addEventListener("click", function (e) {
+      if (isOpen() && !wrap.contains(e.target)) setOpen(false);
+    });
+    wrap.addEventListener("focusout", function (e) {
+      if (isOpen() && !wrap.contains(e.relatedTarget)) setOpen(false);
+    });
+
+    paintPrices();
+    paint();
+
+    api.on = true;
+    /* Плашка на картці послуги позначає свій пункт у калькуляторі. */
+    api.select = function (id, open) {
+      if (!P[id]) return false;
+      if (picked.indexOf(id) < 0) picked.push(id);
+      paint();
+      if (open) setOpen(true);
+      return true;
+    };
+    /* Мову перемкнули: назви пунктів уже перемальовані загальним
+       механізмом, лишається перебити ціни, підпис кнопки і плашки. */
+    api.relang = function () { paintPrices(); paint(); };
+    /* Рядок для заявки: що саме обрано і на яку суму.
+       Англійською при будь-якій мові сторінки — його читає сервіс. */
+    api.line = function () {
+      if (!picked.length) return "";
+      var s = total();
+      var sum = s.any ? money(s.from) + "–" + money(s.to) : "quote after inspection";
+      if (s.poa && s.any) sum += " + quote";
+      return picked.map(nameOf).join(", ") + "  (est. " + sum + ")";
+    };
+    return api;
   })();
 
   /* ── 12. Згода на куки і рекламний піксель ─────────────
