@@ -6,7 +6,7 @@
 
      --eye  "NOW OPEN IN BOGNOR REGIS"   рядок червоним капсом над заголовком
      --head "Engine work.\nDone here."   головний рядок (\n = перенос)
-     --sub  "BMW ONLY · BOGNOR REGIS"    рядок дрібним моноширинним
+     --sub  "BMW ONLY · BOGNOR REGIS"    дрібний рядок під заголовком (\n = перенос)
      --site "tk-performance.co.uk"
      --pos  "center 38%"                 що лишити в кадрі при обрізанні
      --hsize 74                          кегль головного рядка
@@ -57,7 +57,7 @@ function arg(name, fallback) {
     .replace("__HSIZE__", arg("hsize", "74"))
     .replace("__EYE__", esc(arg("eye", "")))
     .replace("__HEAD__", esc(arg("head", "BMW only.\nBognor Regis.")).replace(/\\n/g, "\n"))
-    .replace("__SUB__", esc(arg("sub", "Engines · Diagnostics · Servicing · MOT")))
+    .replace("__SUB__", esc(arg("sub", "Engines · Diagnostics · Servicing · MOT")).replace(/\\n/g, "\n"))
     .replace("__SITE__", esc(arg("site", "tk-performance.co.uk")));
 
   const b = await chromium.launch();
