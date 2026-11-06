@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>T&K social card</title>
+<!--
+  ═══════════════════════════════════════════════════════════
+  Шаблон рекламного креативу для Facebook.
+  Фото + логотип + адреса сайту. 1080×1350 (4:5) — формат стрічки.
+
+  🔑 ГОЛОВНА ВИМОГА ВОВИ: «щоб не виглядало як Фотошоп».
+  Що саме видає накладений шар і як це знято тут:
+
+  1. РІЗКІ ПРЯМОКУТНИКИ. Підкладка під текст — не смуга, а довгий
+     градієнт із ВЛАСНОЇ темряви фото, з повільним початком. Око
+     читає його як затінення в кадрі, а не як плашку.
+  2. ТІНІ ПІД ТЕКСТОМ, ЯКИХ НЕ БУВАЄ. Їх тут немає зовсім — текст
+     тримає підкладка. Тінь без джерела світла — перша ознака накладки.
+  3. РІЗНЕ ЗЕРНО. Фото має шум матриці, а намальований шар — ні, і
+     саме це око ловить, навіть не розуміючи чому. Тому зерно
+     накладається ЗВЕРХУ НА ВСЕ: і на фото, і на текст, і на логотип.
+     Це найважливіший прийом з усіх трьох.
+  4. ПЕРЕТЯГНУТИЙ КОЛІР. Корекція фото мінімальна (контраст 1.04).
+     Витягнута насиченість читається як «оброблено».
+  5. Логотип не на повній непрозорості і стоїть там, де фото само
+     темне, — не посеред кадру наліпкою.
+
+  Рендериться у 2× і зменшується — текст виходить чистий, а шари
+  після зменшення трохи «сідають» один в одного.
+  ═══════════════════════════════════════════════════════════
+-->
+<style>
+  /* Шрифти й кольори — ті самі, що на сайті. Вставляє make.cjs. */
+  __FONTS__
+
+  :root{
+    --bg:#08080a;
+    --txt:#f4f5f7;
+    --txt-2:#a3a6ae;
+    --m-lblue:#6cb2e4;
+    --m-blue:#0c63b0;
+    --m-red:#e4002b;
+    --ink:14,12,10;          /* теплий чорний: гасимо кадр, не вбиваючи колір */
+  }
+  *{ margin:0; padding:0; box-sizing:border-box }
+  html,body{ width:1080px; height:1350px; background:var(--bg); overflow:hidden }
+
+  .card{ position:relative; width:1080px; height:1350px; overflow:hidden }
+
+  /* ── Фото ─────────────────────────────────────────────── */
+  .ph{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; object-position:__POS__;
+    /* 🔴 Корекція навмисно мікроскопічна. Усе, що сильніше,
+       читається як «фотошоп» швидше за будь-який текст. */
+    filter:contrast(1.04) saturate(1.02);
+  }
+
+  /* ── Затінення знизу під текст ────────────────────────────
+     Багато стопів з повільним початком: лінійний градієнт має
+     видимий «старт», і він читається як край плашки. */
+  .dim-b{
+    position:absolute; left:0; right:0; bottom:0; height:62%;
+    background:linear-gradient(180deg,
+      rgba(var(--ink),0)    0%,
+      rgba(var(--ink),.04) 18%,
+      rgba(var(--ink),.14) 32%,
+      rgba(var(--ink),.40) 46%,
+      rgba(var(--ink),.64) 60%,
+      rgba(var(--ink),.80) 73%,
+      rgba(var(--ink),.87) 85%,
+      rgba(var(--ink),.94) 100%);
+  }
+  /* Зверху — ледь-ледь, тільки щоб логотип не загубився */
+  .dim-t{
+    position:absolute; left:0; right:0; top:0; height:26%;
+    background:linear-gradient(180deg,
+      rgba(var(--ink),.52) 0%, rgba(var(--ink),.22) 45%, rgba(var(--ink),0) 100%);
+  }
+  /* Віньєтка об'єктива: ледь помітна, але зшиває кадр */
+  .vig{
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 78% 68% at 50% 44%,
+      rgba(var(--ink),0) 52%, rgba(var(--ink),.16) 78%, rgba(var(--ink),.34) 100%);
+  }
+
+  /* ── Логотип ──────────────────────────────────────────── */
+  .logo{ position:absolute; left:58px; top:52px; width:262px; opacity:.92 }
+  /* clip-path зрізає нижній рядок логотипа: на цьому розмірі він
+     дає ~6px висоти — не текст, а шум. */
+  .logo img{ width:100%; display:block; clip-path:inset(0 0 15% 0) }
+
+  /* ── Текст унизу ──────────────────────────────────────── */
+  .foot{ position:absolute; left:58px; right:58px; bottom:62px }
+
+  .h{
+    font:800 __HSIZE__px/0.98 "Archivo",sans-serif;
+    letter-spacing:-.03em; color:var(--txt); white-space:pre-line;
+  }
+  .sub{
+    margin-top:20px;
+    font:500 27px/1.3 "JetBrains Mono",monospace;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--txt-2);
+  }
+  .site{
+    margin-top:30px; display:inline-block;
+    font:800 38px/1 "Archivo",sans-serif; letter-spacing:-.01em; color:var(--txt);
+    padding-bottom:11px; border-bottom:3px solid var(--m-red);
+  }
+
+  /* ── Зерно ПОВЕРХ УСЬОГО ──────────────────────────────────
+     Саме це зшиває фото й намальований шар в один знімок.
+     Накладається останнім, після тексту й логотипа. */
+  .grain{
+    position:absolute; inset:0; mix-blend-mode:overlay; opacity:.07;
+    background-image:url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'>\
+<filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/>\
+<feColorMatrix type='saturate' values='0'/></filter>\
+<rect width='220' height='220' filter='url(%23n)'/></svg>");
+    background-size:220px 220px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <img class="ph" src="__PHOTO__" alt="">
+    <div class="dim-t"></div>
+    <div class="dim-b"></div>
+    <div class="vig"></div>
+
+    <div class="logo"><img src="__LOGO__" alt=""></div>
+
+    <div class="foot">
+      <div class="h">__HEAD__</div>
+      <div class="sub">__SUB__</div>
+      <div class="site">__SITE__</div>
+    </div>
+
+    <div class="grain"></div>
+  </div>
+</body>
+</html>
