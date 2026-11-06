@@ -4,6 +4,7 @@
 
    node ad/social/make.cjs <фото> <вихід.jpg> [опції]
 
+     --eye  "NOW OPEN IN BOGNOR REGIS"   рядок червоним капсом над заголовком
      --head "Engine work.\nDone here."   головний рядок (\n = перенос)
      --sub  "BMW ONLY · BOGNOR REGIS"    рядок дрібним моноширинним
      --site "tk-performance.co.uk"
@@ -25,7 +26,11 @@ const b64 = (p, mime) => "data:" + mime + ";base64," + fs.readFileSync(p).toStri
 
 function arg(name, fallback) {
   const i = process.argv.indexOf("--" + name);
-  return i > -1 && process.argv[i + 1] ? process.argv[i + 1] : fallback;
+  /* 🪤 Було `process.argv[i+1] ? …`, і порожнє значення (`--eye ''`)
+     як «хибне» підмінялось замовчуванням: вимкнути рядок було
+     неможливо, а перевірка контрасту на картці без тексту мовчки
+     міряла картку З текстом. */
+  return i > -1 && process.argv[i + 1] !== undefined ? process.argv[i + 1] : fallback;
 }
 
 (async () => {
@@ -50,6 +55,7 @@ function arg(name, fallback) {
     .replace("__LOGO__", b64(path.join(ROOT, "assets/img/logo.png"), "image/png"))
     .replace("__POS__", arg("pos", "center 38%"))
     .replace("__HSIZE__", arg("hsize", "74"))
+    .replace("__EYE__", esc(arg("eye", "")))
     .replace("__HEAD__", esc(arg("head", "BMW only.\nBognor Regis.")).replace(/\\n/g, "\n"))
     .replace("__SUB__", esc(arg("sub", "Engines · Diagnostics · Servicing · MOT")))
     .replace("__SITE__", esc(arg("site", "tk-performance.co.uk")));
