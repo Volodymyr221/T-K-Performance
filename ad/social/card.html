@@ -119,6 +119,9 @@
     margin-top:20px; max-width:860px;
     font:500 27px/1.35 "Archivo",sans-serif; color:var(--txt-2);
   }
+  /* Порожній рядок сайту ховаємо повністю: інакше від нього лишався
+     б відступ зверху і червона риска нульової ширини. */
+  .site:empty{ display:none }
   .site{
     margin-top:30px; display:inline-block;
     font:800 38px/1 "Archivo",sans-serif; letter-spacing:-.01em; color:var(--txt);
